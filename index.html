@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard v27.5</title>
+    <title>GeoTrackPro | Vanguard Enterprise</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
@@ -18,12 +18,15 @@
     <div class="nav-group">
         <button onclick="nav('prod-menu')" class="btn-v btn-blue">PRODUCTS</button>
         <button onclick="nav('contact')" class="btn-v btn-blue">CONTACT</button>
-        <button onclick="nav('contact')" class="btn-v btn-purple">DEMO REQUEST</button>
+        <button onclick="nav('contact')" class="btn-v" style="background:#6366f1;">DEMO REQUEST</button>
         <button onclick="window.open('https://tracksolidpro.com')" class="btn-v btn-green">PLATFORM</button>
-        <select style="background:var(--blue); color:white; border:none; border-radius:20px; padding:5px 10px; font-weight:800; font-size:0.6rem;">
-            <option>EN</option>
-            <option>IT</option>
-        </select>
+        
+        <div style="background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.3);">
+            <select onchange="changeLang(this.value)" style="background:transparent; color:white; border:none; font-weight:800; font-size:0.6rem; cursor:pointer; outline:none;">
+                <option value="en" style="color:black;">EN</option>
+                <option value="it" style="color:black;">IT</option>
+            </select>
+        </div>
     </div>
 </header>
 
@@ -31,15 +34,30 @@
     <div class="hero">
         <h1>VANGUARD GLOBAL</h1>
         <div style="display:flex; gap:15px; margin-top:30px;">
-            <button onclick="nav('prod-menu')" class="btn-v btn-blue">EXPLORE CATALOG</button>
-            <button onclick="nav('contact')" class="btn-v" style="background:white; color:#0f172a!important;">SALES CONSULTATION</button>
+            <button onclick="nav('prod-menu')" class="btn-v btn-blue" style="padding:12px 25px;">EXPLORE CATALOG</button>
+            <button onclick="nav('contact')" class="btn-v" style="padding:12px 25px; background:white; color:#0f172a!important;">SALES CONSULTATION</button>
         </div>
     </div>
 </div>
 
-<div id="about" class="view" style="padding: 120px 7%;">
-    <h1>THE VANGUARD STANDARD</h1>
-    <p>Global Asset Intelligence for the Modern Enterprise.</p>
+<div id="about" class="view" style="padding: 120px 7% 60px;">
+    <h1 style="font-size: 3rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 20px;">THE VANGUARD STANDARD</h1>
+    <p style="font-size: 1.2rem; color: #475569; margin-bottom: 50px;">Global Asset Intelligence for the Modern Enterprise.</p>
+    
+    <div class="about-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+        <div class="about-card" style="background:white; padding:30px; border-radius:20px; border:1px solid #e2e8f0;">
+            <h3 style="color:var(--accent);">Our Mission</h3>
+            <p>To provide an unblinking eye over your most valuable assets, bridging the gap between physical logistics and digital oversight.</p>
+        </div>
+        <div class="about-card" style="background:white; padding:30px; border-radius:20px; border:1px solid #e2e8f0;">
+            <h3 style="color:var(--accent);">Global Reach</h3>
+            <p>Hardware engineered for international connectivity, backed by a support network that understands local enterprise needs.</p>
+        </div>
+        <div class="about-card" style="background:white; padding:30px; border-radius:20px; border:1px solid #e2e8f0;">
+            <h3 style="color:var(--accent);">Adaptive Security</h3>
+            <p>Custom-tailored configurations developed by our technical team to meet the specific demands of your operational landscape.</p>
+        </div>
+    </div>
 </div>
 
 <footer>
@@ -52,12 +70,19 @@
 
 <script>
     function nav(id) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        window.scrollTo(0,0);
+        const views = document.querySelectorAll('.view');
+        views.forEach(v => v.classList.remove('active'));
+        const target = document.getElementById(id);
+        if(target) {
+            target.classList.add('active');
+            window.scrollTo(0,0);
+        } else {
+            console.error("View ID not found: " + id);
+        }
     }
-    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
+    setInterval(() => { 
+        document.getElementById('clock').innerText = new Date().toLocaleString('it-IT'); 
+    }, 1000);
 </script>
 </body>
 </html>
-
