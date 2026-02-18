@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise v22.0</title>
+    <title>GeoTrackPro | Vanguard Enterprise v23.0</title>
     <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -11,44 +11,37 @@
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 70px; }
         header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.62rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-v:hover { filter: brightness(1.1); transform: translateY(-1px); }
         .view { display: none; padding: calc(var(--header-h) + 40px) 5%; min-height: 100vh; }
         .view.active { display: block; }
-        /* PRODUCT GRID FIXES */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 25px; margin-top: 30px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-top: 30px; }
         .card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; padding: 25px; display: flex; gap: 20px; height: 260px; align-items: center; }
-        .card-img { flex: 0 0 160px; height: 100%; display: flex; align-items: center; justify-content: center; background: #fcfcfc; border-radius: 15px; border: 1px solid #f1f5f9; }
+        .card-img { flex: 0 0 150px; height: 100%; display: flex; align-items: center; justify-content: center; background: #fcfcfc; border-radius: 15px; border: 1px solid #f1f5f9; }
         .card-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-        /* CONTACT & MAP FIXES */
         .contact-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; background: white; padding: 40px; border-radius: 30px; border: 1px solid #e2e8f0; }
-        #map-container { border-radius: 20px; overflow: hidden; height: 450px; border: 1px solid #e2e8f0; }
-        /* FOOTER & NAV */
         footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.7rem; z-index: 10000; }
-        .footer-links a { color: #94a3b8; text-decoration: none; margin-left: 15px; }
-        .footer-links a:hover { color: white; }
+        .footer-links a { color: #94a3b8; text-decoration: none; margin-left: 15px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="display:flex; align-items:center; gap:15px;">
+    <div style="display:flex; align-items:center; gap:10px;">
         <img src="IMAGES/ui/logo.png" height="30" onclick="nav('home')" style="cursor:pointer" alt="Logo">
+        <button onclick="nav('about')" class="btn-v" style="background:#475569;">ABOUT US</button>
         <button onclick="nav('home')" class="btn-v" style="background:#1e293b;">HOME</button>
     </div>
-    <div style="display:flex; gap:10px;">
+    <div style="display:flex; gap:6px;">
         <button onclick="nav('prod-menu')" class="btn-v" id="nav-prod">PRODUCTS</button>
-        <button onclick="openForm('GENERAL INQUIRY')" class="btn-v" style="background:#6366f1;" id="nav-contact">CONTACT US</button>
+        <button onclick="openForm('CONTACT US')" class="btn-v">CONTACT</button>
+        <button onclick="openForm('DEMO REQUEST')" class="btn-v" style="background:#6366f1;">DEMO REQUEST</button>
+        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" style="background:#059669;">PLATFORM</button>
     </div>
-    <div>
-        <select id="langSelect" onchange="applyTranslation()" style="border-radius:20px; font-weight:800; font-size:0.65rem; padding: 8px 15px; background: var(--accent); color: white; border: none; cursor:pointer;">
-            <option value="en">ENGLISH</option>
-            <option value="it">ITALIANO</option>
-            <option value="es">ESPAÑOL</option>
-            <option value="fr">FRANÇAIS</option>
-        </select>
-    </div>
+    <select id="langSelect" onchange="applyTranslation()" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 12px; background: var(--accent); color: white; border: none; cursor:pointer;">
+        <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option>
+    </select>
 </header>
 
 <div id="home" class="view active" style="padding:0; background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover;">
@@ -58,10 +51,14 @@
     </div>
 </div>
 
-<div id="prod-menu" class="view">
-    <div class="cat-grid" id="cat-anchor" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px;"></div>
+<div id="about" class="view">
+    <div style="max-width:800px; margin: 0 auto; line-height:1.6;">
+        <h2>About Vanguard Enterprise</h2>
+        <p>Vanguard is a global leader in high-performance asset intelligence and tracking solutions. We empower creators and founders with the data they need to secure their future.</p>
+    </div>
 </div>
 
+<div id="prod-menu" class="view"><div class="cat-grid" id="cat-anchor" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px;"></div></div>
 <div id="list-view" class="view">
     <button onclick="nav('prod-menu')" class="btn-v" style="background:#64748b; margin-bottom:25px;">← BACK</button>
     <div class="product-grid" id="gridAnchor"></div>
@@ -70,40 +67,34 @@
 <div id="contact" class="view">
     <div class="contact-stack">
         <form id="contactForm" action="https://formspree.io/f/mwvnvzee" method="POST">
-            <h2 id="f-title" style="margin:0 0 20px 0;">INQUIRY</h2>
+            <h2 id="f-title">INQUIRY</h2>
             <input type="text" name="name" placeholder="Full Name *" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:10px; border:1px solid #ccc;">
             <input type="email" name="email" placeholder="Email *" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:10px; border:1px solid #ccc;">
+            <input type="hidden" name="_subject" id="form-sub" value="Vanguard Inquiry">
             <textarea name="message" rows="5" placeholder="Details *" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:10px; border:1px solid #ccc;"></textarea>
             <button type="submit" class="btn-v" style="width:100%; height:50px;">SEND OFFICIAL INQUIRY</button>
         </form>
-        <div id="map-container">
-            <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=London,UK&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+        <div style="border-radius:20px; overflow:hidden; border:1px solid #e2e8f0;">
+            <iframe width="100%" height="400" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.540424380271!2d-0.1216174!3d51.503324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604b900d26973%3A0x4291f3172409ea92!2sLondon%20Eye!5e0!3m2!1sen!2suk!4v1708285537000!5m2!1sen!2suk"></iframe>
         </div>
     </div>
 </div>
 
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span></div>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span style="height:8px; width:8px; background:#00FF00; border-radius:50%; display:inline-block; margin-left:5px; box-shadow:0 0 8px #00FF00;"></span></div>
     <div class="footer-links">
-        <a href="#" onclick="alert('Terms Loading...')">TERMS</a>
-        <a href="#" onclick="alert('Privacy Loading...')">PRIVACY</a>
+        <a onclick="showLegal('TERMS OF SERVICE')">TERMS</a>
+        <a onclick="showLegal('PRIVACY POLICY')">PRIVACY</a>
     </div>
 </footer>
 
 <script>
     const client = contentful.createClient({ space: 'i5s6f0gd4tb8', accessToken: 'swHDtaIfiaaF3J7XXWlKy7Ta0qjNIgPrpUT9SI4VXeI' });
-    let LIVE_WAREHOUSE = [];
+    let WAREHOUSE = [];
 
-    const DICT = {
-        en: { v: "Vehicle", a: "Asset", d: "Dashcam", o: "OBD", p: "PRODUCTS", c: "CONTACT US", h: "VANGUARD GLOBAL" },
-        it: { v: "Veicoli", a: "Asset", d: "Dashcam", o: "OBD", p: "PRODOTTI", c: "CONTATTI", h: "VANGUARD GLOBALE" },
-        es: { v: "Vehículo", a: "Activos", d: "Dashcam", o: "OBD", p: "PRODUCTOS", c: "CONTACTO", h: "VANGUARDIA GLOBAL" },
-        fr: { v: "Véhicule", a: "Actifs", d: "Dashcam", o: "OBD", p: "PRODUITS", c: "CONTACT", h: "VANGUARD MONDIAL" }
-    };
-
-    async function syncData() {
+    async function sync() {
         const res = await client.getEntries({ content_type: 'device' });
-        LIVE_WAREHOUSE = res.items.map(i => ({
+        WAREHOUSE = res.items.map(i => ({
             id: i.fields.modelId,
             cat: (i.fields.category || "").toLowerCase(),
             name: i.fields.name,
@@ -113,28 +104,18 @@
         renderCats();
     }
 
-    function applyTranslation() {
-        const l = document.getElementById('langSelect').value;
-        const t = DICT[l];
-        document.getElementById('nav-prod').innerText = t.p;
-        document.getElementById('nav-contact').innerText = t.c;
-        document.getElementById('h-title').innerText = t.h;
-        renderCats();
-    }
-
+    function nav(id) { document.querySelectorAll('.view').forEach(v => v.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+    function openForm(t) { document.getElementById('f-title').innerText = t; document.getElementById('form-sub').value = "Inquiry: " + t; nav('contact'); }
+    function showLegal(t) { alert(t + "\n\nVanguard Legal content is being updated for 2026 compliance."); }
+    
     function renderCats() {
-        const l = document.getElementById('langSelect').value;
-        const t = DICT[l];
-        const cats = [{id:'vehicle', n:t.v, i:'🚗'}, {id:'asset', n:t.a, i:'📦'}, {id:'dashcam', n:t.d, i:'📹'}, {id:'obd', n:t.o, i:'🔌'}];
-        document.getElementById('cat-anchor').innerHTML = cats.map(c => 
-            `<div style="background:white; padding:30px; border-radius:20px; text-align:center; cursor:pointer; border:1px solid #e2e8f0;" onclick="renderList('${c.id}')">
-                <span style="font-size:2rem; display:block;">${c.i}</span><b>${c.n}</b>
-            </div>`).join('');
+        const cats = [{id:'vehicle', n:'Vehicle', i:'🚗'}, {id:'asset', n:'Asset', i:'📦'}, {id:'dashcam', n:'Dashcam', i:'📹'}, {id:'obd', n:'OBD', i:'🔌'}];
+        document.getElementById('cat-anchor').innerHTML = cats.map(c => `<div style="background:white; padding:30px; border-radius:20px; text-align:center; cursor:pointer; border:1px solid #e2e8f0;" onclick="renderList('${c.id}')"><span style="font-size:2rem; display:block;">${c.i}</span><b>${c.n}</b></div>`).join('');
     }
 
     function renderList(cat) {
         nav('list-view');
-        const items = LIVE_WAREHOUSE.filter(d => d.cat === cat);
+        const items = WAREHOUSE.filter(d => d.cat === cat);
         document.getElementById('gridAnchor').innerHTML = items.map(d => `
             <div class="card">
                 <div class="card-img"><img src="${d.img}"></div>
@@ -148,9 +129,7 @@
             </div>`).join('');
     }
 
-    function nav(id) { document.querySelectorAll('.view').forEach(v => v.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
-    function openForm(t) { document.getElementById('f-title').innerText = t; nav('contact'); }
-    window.onload = syncData;
+    window.onload = sync;
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
 </script>
 </body>
