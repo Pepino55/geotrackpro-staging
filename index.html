@@ -1,50 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoTrackPro | Vanguard Enterprise</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <div class="nav-group">
+        <img src="IMAGES/ui/logo.png" height="35" onclick="nav('home')" style="cursor:pointer">
+        <button onclick="nav('about')" class="btn-v" style="background:#475569">ABOUT US</button>
+        <button onclick="nav('home')" class="btn-v btn-navy">HOME</button>
+    </div>
+    <div class="nav-group">
+        <button onclick="nav('prod-menu')" class="btn-v btn-blue">PRODUCTS</button>
+        <button onclick="nav('contact')" class="btn-v btn-blue">CONTACT</button>
+        <button onclick="nav('contact')" class="btn-v btn-purple">DEMO REQUEST</button>
+        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v btn-green">PLATFORM</button>
+        <select style="background:var(--accent); color:white; border:none; border-radius:20px; padding:5px 10px; font-weight:800; font-size:0.6rem; cursor:pointer;">
+            <option>EN</option>
+            <option>IT</option>
+        </select>
+    </div>
+</header>
+
+<div id="home" class="view active" style="padding:0;">
+    <div class="hero">
+        <h1>VANGUARD GLOBAL</h1>
+        <div style="display:flex; gap:15px;">
+            <button onclick="nav('prod-menu')" class="btn-v btn-blue" style="padding:15px 30px;">EXPLORE CATALOG</button>
+            <button onclick="nav('contact')" class="btn-v" style="padding:15px 30px; background:white; color:#0f172a!important;">SALES CONSULTATION</button>
+        </div>
+    </div>
+</div>
+
 <div id="about" class="view">
-    <div class="about-container" style="padding: 40px 0;">
-        <h1 style="font-size: 3rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 20px;">THE VANGUARD STANDARD</h1>
-        <p style="font-size: 1.2rem; color: #475569; margin-bottom: 50px;">Global Asset Intelligence for the Modern Enterprise.</p>
-        <div class="about-grid">
-            <div class="about-card">
-                <h3>Our Mission</h3>
-                <p>To provide an unblinking eye over your most valuable assets, bridging the gap between physical logistics and digital oversight.</p>
-            </div>
-            <div class="about-card">
-                <h3>Global Reach</h3>
-                <p>Hardware engineered for international connectivity, backed by a support network that understands local enterprise needs.</p>
-            </div>
-            <div class="about-card">
-                <h3>Adaptive Security</h3>
-                <p>Custom-tailored configurations developed by our technical team to meet the specific demands of your operational landscape.</p>
-            </div>
-        </div>
+    <h1 style="font-size: 3rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block;">THE VANGUARD STANDARD</h1>
+    <p style="font-size: 1.2rem; color: #475569; margin: 20px 0 40px;">Global Asset Intelligence for the Modern Enterprise.</p>
+    <div class="about-grid">
+        <div class="about-card"><h3>Our Mission</h3><p>To provide an unblinking eye over your most valuable assets.</p></div>
+        <div class="about-card"><h3>Global Reach</h3><p>Hardware engineered for international connectivity.</p></div>
+        <div class="about-card"><h3>Adaptive Security</h3><p>Custom-tailored configurations for your operations.</p></div>
     </div>
 </div>
 
-<div id="prod-menu" class="view">
-    <h2 style="margin-bottom: 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Hardware Catalog</h2>
-    <div id="cat-anchor" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px;">
-        </div>
-</div>
+<div id="prod-menu" class="view"><h1>PRODUCTS</h1><div id="cat-anchor"></div></div>
+<div id="contact" class="view"><h1>CONTACT US</h1></div>
 
-<div id="list-view" class="view">
-    <button onclick="nav('prod-menu')" class="btn-v btn-navy" style="margin-bottom:25px;">← BACK TO CATEGORIES</button>
-    <div id="gridAnchor" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:25px;">
-        </div>
-</div>
-
-<div id="contact" class="view">
-    <div class="contact-container">
-        <div>
-            <h2 id="f-title" style="font-size: 2.5rem; margin-top:0; font-weight: 800;">CONTACT VANGUARD</h2>
-            <form action="https://formspree.io/f/mwvnvzee" method="POST">
-                <input type="text" name="name" placeholder="Full Name *" required>
-                <input type="text" name="company" placeholder="Company Name">
-                <input type="email" name="email" placeholder="Business Email *" required>
-                <textarea name="message" rows="5" placeholder="How can we assist your operations? *" required></textarea>
-                <button type="submit" class="btn-v btn-blue" style="width:100%; height:60px; font-size:0.8rem;">SEND OFFICIAL INQUIRY</button>
-            </form>
-        </div>
-        <div style="border-radius:20px; overflow:hidden; border:1px solid #e2e8f0; min-height: 400px;">
-            <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Milano,Italy"></iframe>
-        </div>
+<footer>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="status-led"></span></div>
+    <div class="footer-links">
+        <a href="DOCS/LEGAL/terms.pdf" target="_blank" style="color:white; text-decoration:none; margin-left:15px;">TERMS</a>
+        <a href="DOCS/LEGAL/privacy.pdf" target="_blank" style="color:white; text-decoration:none; margin-left:15px;">PRIVACY</a>
     </div>
-</div>
+</footer>
+
+<script>
+    function nav(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        const target = document.getElementById(id);
+        if(target) target.classList.add('active');
+        window.scrollTo(0,0);
+    }
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
+</script>
+</body>
+</html>
