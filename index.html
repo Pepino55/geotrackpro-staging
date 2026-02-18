@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise v23.1</title>
+    <title>GeoTrackPro | Vanguard Enterprise v24.0</title>
     <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -11,31 +11,29 @@
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 80px; }
         
-        /* HEADER REPAIRED */
         header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 3%; z-index: 9999; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
-        .nav-group { display: flex; align-items: center; gap: 8px; }
-        .btn-v { background: var(--accent); color: white!important; padding: 10px 16px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; transition: 0.2s; white-space: nowrap; }
+        .nav-group { display: flex; align-items: center; gap: 10px; }
+        
+        .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; transition: 0.2s; white-space: nowrap; }
         .btn-v:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
-        /* VIEW SYSTEM */
         .view { display: none; padding: calc(var(--header-h) + 40px) 5%; min-height: 100vh; }
         .view.active { display: block; }
         
-        /* PRODUCT UI FIXES */
+        /* FIXING THE "STRANGE" LAYOUT */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-top: 30px; }
         .card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; padding: 25px; display: flex; gap: 20px; height: 260px; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .card-img { flex: 0 0 140px; height: 100%; display: flex; align-items: center; justify-content: center; background: #fcfcfc; border-radius: 15px; border: 1px solid #f1f5f9; padding: 10px; }
         .card-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
 
-        /* CONTACT & MAP */
-        .contact-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; background: white; padding: 40px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 1200px; margin: 0 auto; }
-        input, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #cbd5e1; margin-bottom: 12px; font-size: 0.9rem; }
-        
-        /* FOOTER REPAIRED */
+        /* LEGAL & FOOTER */
         footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.7rem; z-index: 10000; }
-        .footer-links a { color: #94a3b8; text-decoration: none; margin-left: 20px; cursor: pointer; font-weight: 600; }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a { color: #94a3b8; text-decoration: none; cursor: pointer; font-weight: 600; text-transform: uppercase; }
         .footer-links a:hover { color: white; }
+        
+        .status-led { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; display: inline-block; margin-left: 8px; box-shadow: 0 0 10px #00FF00; }
     </style>
 </head>
 <body>
@@ -48,26 +46,26 @@
     </div>
     <div class="nav-group">
         <button onclick="nav('prod-menu')" class="btn-v">PRODUCTS</button>
-        <button onclick="openForm('CONTACT US')" class="btn-v">CONTACT</button>
         <button onclick="openForm('DEMO REQUEST')" class="btn-v" style="background:#6366f1;">DEMO REQUEST</button>
         <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" style="background:#059669;">PLATFORM</button>
     </div>
     <select id="langSelect" onchange="translateUI()" style="border-radius:20px; font-weight:800; font-size:0.65rem; padding: 8px 15px; background: var(--accent); color: white; border: none; cursor:pointer;">
-        <option value="en">ENGLISH</option><option value="it">ITALIANO</option><option value="es">ESPAÑOL</option>
+        <option value="en">ENGLISH</option>
+        <option value="it">ITALIANO</option>
     </select>
 </header>
 
 <div id="home" class="view active" style="padding:0; background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover;">
     <div style="height:85vh; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; text-align:center;">
-        <h1 id="hero-txt" style="font-size: 4rem; margin:0; font-weight:800;">VANGUARD GLOBAL</h1>
-        <button onclick="nav('prod-menu')" class="btn-v" style="padding:18px 50px; margin-top:30px; font-size:0.9rem;">ENTER SHOWROOM</button>
+        <h1 style="font-size: 4.5rem; margin:0; font-weight:800;">VANGUARD GLOBAL</h1>
+        <button onclick="nav('prod-menu')" class="btn-v" style="padding:20px 60px; margin-top:30px; font-size:1rem;">ENTER SHOWROOM</button>
     </div>
 </div>
 
 <div id="about" class="view">
-    <div style="max-width:800px; margin: 0 auto; line-height:1.8;">
-        <h2 style="font-size: 2.5rem; color: var(--accent);">About Vanguard Enterprise</h2>
-        <p style="font-size: 1.1rem; color: #475569;">Vanguard is a global leader in high-performance asset intelligence. We provide the hardware and platform infrastructure required for founders and enterprises to secure assets with surgical precision.</p>
+    <div style="max-width:800px; margin: 0 auto;">
+        <h2 style="font-size: 2.5rem; color: var(--accent);">About Vanguard</h2>
+        <p>Vanguard Enterprise delivers military-grade tracking precision for global logistics and asset security.</p>
     </div>
 </div>
 
@@ -81,26 +79,22 @@
 </div>
 
 <div id="contact" class="view">
-    <div class="contact-stack">
-        <form id="contactForm" action="https://formspree.io/f/mwvnvzee" method="POST">
-            <h2 id="f-title" style="font-size: 1.8rem; margin-bottom: 25px;">INQUIRY</h2>
-            <input type="text" name="name" placeholder="Full Name *" required>
-            <input type="email" name="email" placeholder="Business Email *" required>
-            <input type="hidden" name="_subject" id="email-sub" value="Vanguard Site Inquiry">
-            <textarea name="message" rows="5" placeholder="How can we help? *" required></textarea>
-            <button type="submit" class="btn-v" style="width:100%; height:50px; font-size: 0.8rem;">SEND OFFICIAL INQUIRY</button>
+    <div style="background:white; padding:40px; border-radius:30px; border:1px solid #e2e8f0; max-width:600px; margin: 0 auto;">
+        <form action="https://formspree.io/f/mwvnvzee" method="POST">
+            <h2 id="f-title">INQUIRY</h2>
+            <input type="text" name="name" placeholder="Full Name *" required style="width:100%; padding:12px; margin-bottom:12px; border-radius:10px; border:1px solid #ccc;">
+            <input type="email" name="email" placeholder="Email *" required style="width:100%; padding:12px; margin-bottom:12px; border-radius:10px; border:1px solid #ccc;">
+            <textarea name="message" rows="5" placeholder="Message *" required style="width:100%; padding:12px; margin-bottom:12px; border-radius:10px; border:1px solid #ccc;"></textarea>
+            <button type="submit" class="btn-v" style="width:100%; height:50px;">SUBMIT</button>
         </form>
-        <div style="border-radius:20px; overflow:hidden; border:1px solid #e2e8f0; height: 450px;">
-            <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.905021942478!2d-0.125191!3d51.50853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604ce3941eb1f%3A0x1a5342fdfd16b970!2sLondon!5e0!3m2!1sen!2suk!4v1700000000000"></iframe>
-        </div>
     </div>
 </div>
 
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span style="height:8px; width:8px; background:#00FF00; border-radius:50%; display:inline-block; margin-left:5px; box-shadow: 0 0 8px #00FF00;"></span></div>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="status-led"></span></div>
     <div class="footer-links">
-        <a onclick="showLegal('TERMS')">TERMS</a>
-        <a onclick="showLegal('PRIVACY')">PRIVACY</a>
+        <a href="DOCS/TERMS.pdf" target="_blank">TERMS</a>
+        <a href="DOCS/PRIVACY.pdf" target="_blank">PRIVACY</a>
     </div>
 </footer>
 
@@ -109,46 +103,43 @@
     let DB = [];
 
     async function sync() {
-        try {
-            const res = await client.getEntries({ content_type: 'device' });
-            DB = res.items.map(i => ({
-                id: i.fields.modelId || "N/A",
-                cat: (i.fields.category || "").toLowerCase(),
-                name: i.fields.name || "Unnamed",
-                img: i.fields.deviceImage?.fields?.file?.url ? 'https:' + i.fields.deviceImage.fields.file.url : 'IMAGES/ui/coming-soon.png',
-                pdf: i.fields.specsPdf?.fields?.file?.url ? 'https:' + i.fields.specsPdf.fields.file.url : '#'
-            }));
-            renderCats();
-        } catch(e) { console.error("Sync Error", e); }
+        const res = await client.getEntries({ content_type: 'device' });
+        DB = res.items.map(i => ({
+            id: i.fields.modelId || "N/A",
+            cat: (i.fields.category || "").toLowerCase(),
+            name: i.fields.name || "Device",
+            img: i.fields.deviceImage?.fields?.file?.url ? 'https:' + i.fields.deviceImage.fields.file.url : 'IMAGES/ui/coming-soon.png',
+            pdf: i.fields.specsPdf?.fields?.file?.url ? 'https:' + i.fields.specsPdf.fields.file.url : '#'
+        }));
+        renderCats();
     }
 
     function nav(id) { document.querySelectorAll('.view').forEach(v => v.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
-    function openForm(t) { document.getElementById('f-title').innerText = t; document.getElementById('email-sub').value = "Inquiry: " + t; nav('contact'); }
-    function showLegal(type) { alert(type + " POLICY: GeoTrackPro Vanguard version 23.1. Full documentation is available in the partner portal."); }
+    function openForm(t) { document.getElementById('f-title').innerText = t; nav('contact'); }
 
     function renderCats() {
         const cats = [{id:'vehicle', n:'Vehicle', i:'🚗'}, {id:'asset', n:'Asset', i:'📦'}, {id:'dashcam', n:'Dashcam', i:'📹'}, {id:'obd', n:'OBD', i:'🔌'}];
         document.getElementById('cat-anchor').innerHTML = cats.map(c => `
-            <div style="background:white; padding:35px; border-radius:24px; text-align:center; cursor:pointer; border:1px solid #e2e8f0; transition:0.3s;" onclick="renderList('${c.id}')" onmouseover="this.style.borderColor='#3E63DD'" onmouseout="this.style.borderColor='#e2e8f0'">
+            <div style="background:white; padding:35px; border-radius:24px; text-align:center; cursor:pointer; border:1px solid #e2e8f0;" onclick="renderList('${c.id}')">
                 <span style="font-size:2.5rem; display:block; margin-bottom:10px;">${c.i}</span>
-                <b style="font-size:0.9rem; letter-spacing:1px;">${c.n.toUpperCase()}</b>
+                <b>${c.n.toUpperCase()}</b>
             </div>`).join('');
     }
 
     function renderList(cat) {
         nav('list-view');
         const items = DB.filter(d => d.cat === cat);
-        document.getElementById('gridAnchor').innerHTML = items.length ? items.map(d => `
+        document.getElementById('gridAnchor').innerHTML = items.map(d => `
             <div class="card">
                 <div class="card-img"><img src="${d.img}"></div>
                 <div class="card-info">
-                    <div><h3 style="margin:0; font-size:1.3rem;">${d.name}</h3><small style="color:#64748b;">MODEL: ${d.id}</small></div>
+                    <div><h3 style="margin:0;">${d.name}</h3><small>MODEL: ${d.id}</small></div>
                     <div style="display:flex; gap:10px;">
                         <a href="${d.pdf}" target="_blank" class="btn-v" style="flex:1; background:#64748b;">SPECS</a>
                         <button onclick="openForm('${d.id}')" class="btn-v" style="flex:1;">INQUIRY</button>
                     </div>
                 </div>
-            </div>`).join('') : `<h2 style="grid-column:1/-1; text-align:center; opacity:0.3;">NO DEVICES FOUND IN THIS CATEGORY</h2>`;
+            </div>`).join('');
     }
 
     window.onload = sync;
