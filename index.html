@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Milestone</title>
+    <title>GeoTrackPro | Vanguard Sovereign</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        .lang-wrapper { background: rgba(0,0,0,0.1); border-radius: 20px; padding: 2px 10px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.3); margin-left: 10px; }
-        select#langSelect { background: transparent; color: white; border: none; font-weight: 800; font-size: 0.65rem; cursor: pointer; outline: none; text-transform: uppercase; }
+        /* HEADER REPAIR */
+        .lang-wrapper { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 4px 8px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.2); margin-left: 10px; }
+        select#langSelect { background: transparent; color: white; border: none; font-weight: 700; font-size: 0.75rem; cursor: pointer; outline: none; }
         select#langSelect option { color: black; }
-        .feature-tag { background: #f1f5f9; padding: 4px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; text-transform: uppercase; }
-        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; background: white; padding: 40px; border-radius: 25px; border: 1px solid #e2e8f0; }
+
+        /* FOOTER VISIBILITY REPAIR */
+        footer { background: #0f172a; color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; }
+        .footer-right a { color: #94a3b8!important; text-decoration: none; margin-left: 20px; font-weight: 600; transition: 0.3s; }
+        .footer-right a:hover { color: white!important; }
+        .status-led { height: 8px; width: 8px; background: #22c55e; border-radius: 50%; display: inline-block; margin-left: 8px; box-shadow: 0 0 8px #22c55e; }
+
+        /* GRID REPAIR */
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; padding: 20px; }
+        .card-v { background: white; border-radius: 15px; padding: 30px; text-align: center; cursor: pointer; border: 1px solid #e2e8f0; transition: 0.3s; }
+        .card-v:hover { transform: translateY(-5px); border-color: #3b82f6; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -27,6 +37,7 @@
         <button onclick="nav('contact')" class="btn-v btn-blue">CONTACT</button>
         <button onclick="openForm('DEMO REQUEST')" class="btn-v" style="background:#6366f1;">DEMO REQUEST</button>
         <button onclick="window.open('https://tracksolidpro.com')" class="btn-v btn-green">PLATFORM</button>
+        
         <div class="lang-wrapper">
             <select id="langSelect">
                 <option value="en">EN</option>
@@ -47,47 +58,29 @@
 </div>
 
 <div id="about" class="view">
-    <h1 style="font-size: 3rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block;">THE VANGUARD STANDARD</h1>
-    <div class="about-grid">
+    <h1 style="font-weight:800; border-bottom:4px solid #3b82f6; display:inline-block;">THE VANGUARD STANDARD</h1>
+    <div class="about-grid" style="margin-top:40px;">
         <div class="about-card"><h3>Our Mission</h3><p>Providing unblinking oversight for global assets.</p></div>
-        <div class="about-card"><h3>Global Reach</h3><p>Hardware engineered for international connectivity.</p></div>
+        <div class="about-card"><h3>Global Reach</h3><p>Military-grade hardware for international logistics.</p></div>
         <div class="about-card"><h3>Adaptive Security</h3><p>Custom telemetry for complex operational needs.</p></div>
     </div>
 </div>
 
 <div id="prod-menu" class="view">
     <h1 style="font-weight:800; margin-bottom:40px;">HARDWARE SHOWROOM</h1>
-    <div class="about-grid">
-        <div class="about-card" style="text-align:center; cursor:pointer;" onclick="renderList('vehicle')">
-            <img src="IMAGES/categories/vehicle.png" style="width:80px; margin-bottom:15px;">
-            <h3>VEHICLE</h3>
-        </div>
-        <div class="about-card" style="text-align:center; cursor:pointer;" onclick="renderList('asset')">
-            <img src="IMAGES/categories/asset.png" style="width:80px; margin-bottom:15px;">
-            <h3>ASSET</h3>
-        </div>
-        <div class="about-card" style="text-align:center; cursor:pointer;" onclick="renderList('dashcam')">
-            <img src="IMAGES/categories/dashcam.png" style="width:80px; margin-bottom:15px;">
-            <h3>DASHCAM</h3>
-        </div>
-        <div class="about-card" style="text-align:center; cursor:pointer;" onclick="renderList('obd')">
-            <img src="IMAGES/categories/obd.png" style="width:80px; margin-bottom:15px;">
-            <h3>OBD</h3>
-        </div>
-        <div class="about-card" style="text-align:center; cursor:pointer;" onclick="renderList('personal')">
-            <img src="IMAGES/categories/personal.png" style="width:80px; margin-bottom:15px;">
-            <h3>PERSONAL</h3>
-        </div>
-        <div class="about-card" style="text-align:center; cursor:pointer;" onclick="renderList('acc')">
-            <img src="IMAGES/categories/acc.png" style="width:80px; margin-bottom:15px;">
-            <h3>ACCESSORIES</h3>
-        </div>
+    <div class="cat-grid">
+        <div class="card-v" onclick="renderList('vehicle')"><img src="IMAGES/categories/vehicle.png" width="60"><br><h3>VEHICLE</h3></div>
+        <div class="card-v" onclick="renderList('asset')"><img src="IMAGES/categories/asset.png" width="60"><br><h3>ASSET</h3></div>
+        <div class="card-v" onclick="renderList('dashcam')"><img src="IMAGES/categories/dashcam.png" width="60"><br><h3>DASHCAM</h3></div>
+        <div class="card-v" onclick="renderList('obd')"><img src="IMAGES/categories/obd.png" width="60"><br><h3>OBD</h3></div>
+        <div class="card-v" onclick="renderList('personal')"><img src="IMAGES/categories/personal.png" width="60"><br><h3>PERSONAL</h3></div>
+        <div class="card-v" onclick="renderList('acc')"><img src="IMAGES/categories/acc.png" width="60"><br><h3>ACC.</h3></div>
     </div>
 </div>
 
 <div id="list-view" class="view">
-    <button onclick="nav('prod-menu')" class="btn-v btn-navy" style="margin-bottom:30px;">← BACK</button>
-    <div id="gridAnchor" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap:25px;"></div>
+    <button onclick="nav('prod-menu')" class="btn-v btn-navy" style="margin-bottom:30px;">← BACK TO CATEGORIES</button>
+    <div id="gridAnchor" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:25px;"></div>
 </div>
 
 <div id="contact" class="view">
@@ -101,41 +94,62 @@
                 <button type="submit" class="btn-v btn-blue" style="width:100%; height:55px;">SEND INQUIRY</button>
             </form>
         </div>
-        <div style="background:#eee; border-radius:20px; overflow:hidden;">
-             <iframe width="100%" height="100%" frameborder="0" src="http://googleusercontent.com/maps.google.com/8"></iframe>
+        <div style="background:#eee; border-radius:20px; overflow:hidden; min-height:350px;">
+             <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.086369165!2d-122.4194155!3d37.7749295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c6c8f4459%3A0xb10ed6d9b5050c62!2sCivic%20Center%2C%20San%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1700000000000"></iframe>
         </div>
     </div>
 </div>
 
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="status-led"></span></div>
-    <div class="footer-links">
+    <div class="footer-left">
+        © 2026 GEOTRACKPRO | <span id="clock"></span> <span class="status-led"></span>
+    </div>
+    <div class="footer-right">
         <a href="DOCS/LEGAL/terms.pdf" target="_blank">TERMS</a>
         <a href="DOCS/LEGAL/privacy.pdf" target="_blank">PRIVACY</a>
     </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 <script>
-    // FULL WAREHOUSE SYNCED TO YOUR ORIGINAL DEFINITIONS
-    const WAREHOUSE = [
-        { id: "VL103", cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
-        { id: "VL106", cat: ["vehicle"], name: "VL106", desc: "LTE vehicle tracker.", features:[{icon:"🛰️",label:"GNSS"}] },
-        { id: "VL111", cat: ["vehicle"], name: "VL111", desc: "High-IO LTE terminal.", features:[{icon:"📡",label:"4G"}] },
-        { id: "LL702", cat: ["asset"], name: "LL702", desc: "Wireless asset tracker.", features:[{icon:"📦",label:"Asset"}] },
-        { id: "VL505", cat: ["obd"], name: "VL505", desc: "Plug & Play OBDII.", features:[{icon:"🔌",label:"OBDII"}] },
-        { id: "JC400", cat: ["dashcam"], name: "JC400", desc: "Pro dashcam.", features:[{icon:"📡",label:"LTE"}] },
-        { id: "CI01", cat: ["acc"], name: "CI01", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] }
-        // ... (remaining items follow same logic)
-    ];
+    const client = contentful.createClient({ space: 'i5s6f0gd4tb8', accessToken: 'swHDtaIfiaaF3J7XXWlKy7Ta0qjNIgPrpUT9SI4VXeI' });
+    let db = [];
+
+    async function sync() {
+        try {
+            const res = await client.getEntries({ content_type: 'device' });
+            db = res.items.map(i => ({
+                id: i.fields.modelId,
+                name: i.fields.name,
+                cat: i.fields.category, // MUST BE "vehicle", "asset", etc.
+                img: i.fields.deviceImage?.fields?.file?.url ? 'https:' + i.fields.deviceImage.fields.file.url : 'IMAGES/ui/coming-soon.png',
+                pdf: i.fields.specsPdf?.fields?.file?.url ? 'https:' + i.fields.specsPdf.fields.file.url : '#'
+            }));
+        } catch (e) { console.error("Sync Failure", e); }
+    }
 
     function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        const target = document.getElementById(id);
-        if(target) target.classList.add('active');
+        document.getElementById(id).classList.add('active');
         window.scrollTo(0,0);
     }
 
     function renderList(filter) {
         nav('list-view');
-        const items = WAREHOUSE.filter(d => d.cat.includes(filter));
+        const items = db.filter(d => d.cat === filter);
         const grid = document.getElementById('gridAnchor');
+        
+        if(items.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:100px;"><h2>No devices found in ${filter.toUpperCase()}</h2><button onclick="nav('prod-menu')" class="btn-v btn-navy">BACK</button></div>`;
+            return;
+        }
+
+        grid.innerHTML = items.map(d => `
+            <div class="card-v" style="display:flex; text-align:left; gap:20px; align-items:center;">
+                <img src="${d.img}" style="width:100px; height:100px; object-fit:contain;">
+                <div style="flex:1;">
+                    <h3 style="margin:0; color:#3b82f6;">${d.name}</h3>
+                    <p style="font-size:0.7rem; color:#64748b; margin:5px 0;">MODEL: ${d.id}</p>
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <a href="${d.pdf}" target="_blank" class="btn-v" style="background:#f1f5f9; color:#0f172a!important; flex:1; text-align:center; font-size:0.7rem;">SPECS</a>
+                        <button onclick="openForm('${d.id}')" class
