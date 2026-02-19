@@ -3,201 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Sovereign Operations</title>
+    <title>GeoTrackPro | Vanguard Global</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 80px; }
+        :root { --accent: #3E63DD; --navy: #1a202c; --gold-bg: #e8ddc7; }
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { margin: 0; background: #fcfcfc; color: var(--navy); padding-bottom: 80px; }
-        
-        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 15px rgba(0,0,0,0.08); }
-        .logo { height: 42px; cursor: pointer; }
-        
-        .nav-group { display: flex; gap: 12px; align-items: center; }
-        .btn-v { background: var(--accent); color: white!important; padding: 10px 22px; border-radius: 50px; font-weight: 800; font-size: 0.75rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; transition: 0.2s; border: 1px solid transparent; }
-        .btn-v:hover { background: var(--navy); transform: translateY(-1px); }
-        .btn-outline { background: transparent; border: 1px solid var(--navy); color: var(--navy)!important; }
+        body { margin: 0; background: #fff; color: var(--navy); overflow-x: hidden; }
 
-        .view { display: none; padding: calc(var(--header-h) + 40px) 5%; min-height: 100vh; animation: fadeIn 0.3s ease; }
+        /* HEADER & NAV */
+        header { background: var(--gold-bg); padding: 15px 4%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .logo { height: 35px; cursor: pointer; }
+        .nav-links { display: flex; gap: 10px; align-items: center; }
+        
+        .btn-nav { padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 0.7rem; border: none; cursor: pointer; text-transform: uppercase; transition: 0.2s; background: #4a5568; color: white; }
+        .btn-blue { background: #3182ce; }
+        .btn-purple { background: #805ad5; }
+        .btn-green { background: #38a169; }
+        .btn-nav:hover { filter: brightness(1.2); transform: translateY(-1px); }
+
+        /* HERO SECTION */
+        .hero { height: 60vh; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('IMAGES/ui/hero-bg.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; margin: 15px 0 30px; }
+        
+        /* CATEGORY GRID */
+        .section-title { text-align: center; font-size: 2rem; margin: 50px 0 30px; font-weight: 800; }
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; padding: 0 5% 50px; max-width: 1200px; margin: 0 auto; }
+        .cat-card { background: white; border: 1px solid #edf2f7; border-radius: 20px; padding: 30px 10px; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .cat-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 12px 20px rgba(0,0,0,0.06); }
+        .cat-card img { width: 40px; margin-bottom: 15px; }
+        .cat-card strong { display: block; font-size: 0.9rem; color: #4a5568; }
+
+        /* VIEWS */
+        .view { display: none; min-height: 80vh; padding: 40px 5%; animation: fadeIn 0.3s ease; }
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; max-width: 1100px; margin: 40px auto; }
-        .cat-card { background: white; padding: 30px 15px; border-radius: 20px; text-align: center; border: 1px solid #eee; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .cat-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .cat-card span { font-size: 2rem; display: block; margin-bottom: 10px; }
+        /* FOOTER */
+        footer { background: #0a0f1d; color: white; padding: 15px 4%; display: flex; align-items: center; justify-content: space-between; font-size: 0.7rem; }
+        .status-led { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; display: inline-block; margin-left: 5px; box-shadow: 0 0 5px #00FF00; }
 
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; }
-        .card { background: white; border-radius: 24px; border: 1px solid #eef2f6; padding: 20px; display: flex; gap: 15px; height: 260px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .card-img { flex: 0 0 120px; background: #f8fafc; border-radius: 18px; display: flex; align-items: center; justify-content: center; padding: 10px; border: 1px solid #f1f5f9; }
-        .card-img img { width: 100%; max-height: 120px; object-fit: contain; }
-        .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-
-        .contact-container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 30px; border: 1px solid #eee; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
-        .form-side { padding: 40px; }
-        input, textarea, select { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 10px; border: 1px solid #ddd; font-size: 0.9rem; }
-        
-        footer { background: var(--navy); color: white; height: 50px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.7rem; z-index: 10000; }
-        .status-led { height: 9px; width: 9px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; display: inline-block; margin-left: 8px; }
-
-        @media (max-width: 800px) { .contact-container { grid-template-columns: 1fr; } .card { height: auto; flex-direction: column; } .card-img { flex: 0 0 150px; } }
+        select.lang-btn { background: #3182ce; color: white; border: none; padding: 8px 15px; border-radius: 50px; font-weight: 800; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="nav-group">
-        <img src="IMAGES/ui/logo.png" class="logo" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/200x50?text=GeoTrackPro'">
-        <button onclick="nav('home')" class="btn-v">Home</button>
-        <button onclick="nav('cat-view')" class="btn-v">Catalog</button>
-    </div>
-    <div class="nav-group">
-        <button onclick="nav('contact')" class="btn-v btn-outline">Contact</button>
-        <select id="langSelect" onchange="updateLang(this.value)" style="padding:8px; border-radius:15px; background:var(--accent); color:white; border:none; font-weight:800; cursor:pointer;">
-            <option value="en">EN</option><option value="it">IT</option>
+    <img src="IMAGES/ui/logo.png" class="logo" onclick="showView('home')" onerror="this.src='https://via.placeholder.com/150x40?text=GeoTrackPro'">
+    <div class="nav-links">
+        <button class="btn-nav" onclick="showView('about')" data-t="nav_about">About Us</button>
+        <button class="btn-nav" onclick="showView('home')" data-t="nav_home">Home</button>
+        <button class="btn-nav btn-blue" onclick="showView('catalog')" data-t="nav_products">Products</button>
+        <button class="btn-nav btn-blue" onclick="showView('contact')" data-t="nav_contact">Contact</button>
+        <button class="btn-nav btn-purple" onclick="showView('contact')" data-t="nav_demo">Demo Request</button>
+        <button class="btn-nav btn-green" onclick="window.open('https://geotrackpro.com', '_blank')" data-t="nav_platform">Platform</button>
+        <select class="lang-btn" onchange="setLang(this.value)">
+            <option value="en">EN</option>
+            <option value="it">IT</option>
+            <option value="es">ES</option>
+            <option value="fr">FR</option>
         </select>
     </div>
 </header>
 
-<div id="home" class="view active" style="text-align:center; padding-top:120px;">
-    <h1 style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
-    <p style="font-size: 1.2rem; color: #64748b; margin: 20px 0 40px;">Sovereign Telemetry & Professional Asset Intelligence</p>
-    <button onclick="nav('cat-view')" class="btn-v" style="padding: 18px 50px; font-size: 1rem;">View Operations</button>
-</div>
-
-<div id="cat-view" class="view">
-    <h2 style="text-align:center; margin-bottom:40px;">Operational Categories</h2>
-    <div class="cat-grid" id="cat-anchor"></div>
-</div>
-
-<div id="list-view" class="view">
-    <button onclick="nav('cat-view')" class="btn-v" style="background:#64748b; margin-bottom:30px;">← Back to Categories</button>
-    <div class="product-grid" id="gridAnchor"></div>
-</div>
-
-<div id="contact" class="view">
-    <div class="contact-container">
-        <div class="form-side" id="form-wrap">
-            <form id="vanguardForm">
-                <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
-                <h2 id="f-header">Direct Inquiry</h2>
-                <input type="text" name="name" placeholder="Full Name *" required>
-                <input type="email" name="email" placeholder="Business Email *" required>
-                <select name="country" id="country-select" required></select>
-                <textarea name="message" rows="4" placeholder="Briefing Requirements *" required></textarea>
-                <button type="submit" id="submit-btn" class="btn-v" style="width:100%; height:55px; font-size:1rem;">Send Transmission</button>
-            </form>
+<div id="view-home" class="view active" style="padding:0;">
+    <section class="hero">
+        <h1 id="hero-title">VANGUARD GLOBAL</h1>
+        <p id="hero-sub">Sovereign Telemetry & Professional Asset Intelligence</p>
+        <div style="display:flex; gap:15px;">
+            <button class="btn-nav btn-blue" style="padding:15px 30px;" onclick="showView('catalog')" data-t="hero_btn_explore">Explore Catalog</button>
+            <button class="btn-nav" style="padding:15px 30px; background:white; color:var(--navy);" onclick="showView('contact')" data-t="hero_btn_sales">Sales Consultation</button>
         </div>
-        <div id="success-ui" style="display:none; padding:80px 40px; text-align:center;">
-            <div style="font-size:70px; margin-bottom:20px;">✅</div>
-            <h2>Transmission Sent</h2>
-            <p>A specialist will review your request.</p>
-            <button onclick="resetForm()" class="btn-v">Reset</button>
-        </div>
-        <div style="background:#f1f5f9;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11186.27133682944!2d9.1170366!3d45.4886494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sit!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-    </div>
+    </section>
 </div>
 
-<footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="status-led"></span></div>
-    <div style="display:flex; gap:25px;">
-        <a href="DOCS/LEGAL/terms.pdf" target="_blank" style="color:white; text-decoration:none; font-weight:800;">TERMS</a>
-        <a href="DOCS/LEGAL/privacy.pdf" target="_blank" style="color:white; text-decoration:none; font-weight:800;">PRIVACY</a>
-    </div>
-</footer>
-
-<script>
-    const WAREHOUSE = [
-        // DASHCAMS
-        { id: "jc170", cat: "dashcam", name: "JC170", desc: "4G DMS Smart Terminal" },
-        { id: "jc181", cat: "dashcam", name: "JC181", desc: "Advanced AI Video Terminal" },
-        { id: "jc261", cat: "dashcam", name: "JC261", desc: "Professional Dual Dashcam" },
-        { id: "jc400", cat: "dashcam", name: "JC400", desc: "Edge AI Visual Intelligence" },
-        // VEHICLE
-        { id: "vl103", cat: "vehicle", name: "VL103", desc: "4G Multimodal LTE Tracker" },
-        { id: "vl111", cat: "vehicle", name: "VL111", desc: "Hardwired Global 4G Tracker" },
-        { id: "vl502", cat: "vehicle", name: "VL502", desc: "OBDII Interface Tracker" },
-        // ASSET
-        { id: "ll301", cat: "asset", name: "LL301", desc: "Global Asset Power-Tracker" },
-        { id: "ll701", cat: "asset", name: "LL701", desc: "Heavy-Duty Asset Master" },
-        // PERSONAL
-        { id: "pl200", cat: "personal", name: "PL200", desc: "Personal Security Terminal" },
-        { id: "pl601", cat: "personal", name: "PL601", desc: "Global SOS Communicator" },
-        // TAGS / ACC
-        { id: "ci01", cat: "tags", name: "CI01", desc: "Bluetooth Asset Tag" },
-        { id: "cd02", cat: "acc", name: "CD02", desc: "Digital Driver Sensor" }
-    ];
-
-    const CATEGORIES = [
-        { id: "vehicle", n: "Vehicle", i: "🚗" },
-        { id: "asset", n: "Asset", i: "📦" },
-        { id: "dashcam", n: "Dashcam", i: "📹" },
-        { id: "personal", n: "Personal", i: "🏃" },
-        { id: "tags", n: "Tags", i: "🏷️" },
-        { id: "acc", n: "Accessories", i: "⚙️" },
-        { id: "motorcycle", n: "Motorcycle", i: "🏍️" }
-    ];
-
-    function init() {
-        renderCats();
-        populateCountries();
-        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
-        document.getElementById('vanguardForm').addEventListener('submit', handleSubmission);
-    }
-
-    function renderCats() {
-        document.getElementById('cat-anchor').innerHTML = CATEGORIES.map(c => `
-            <div class="cat-card" onclick="renderList('${c.id}')">
-                <span>${c.i}</span>
-                <strong>${c.n.toUpperCase()}</strong>
-            </div>`).join('');
-    }
-
-    function renderList(catId) {
-        nav('list-view');
-        const items = WAREHOUSE.filter(i => i.cat === catId);
-        const anchor = document.getElementById('gridAnchor');
-        
-        if(items.length === 0) {
-            anchor.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:100px;"><h3>CATEGORY UPDATE IN PROGRESS</h3></div>`;
-            return;
-        }
-
-        anchor.innerHTML = items.map(d => `
-            <div class="card">
-                <div class="card-img">
-                    <img src="IMAGES/${d.cat}/${d.id}.png" onerror="this.src='IMAGES/ui/coming-soon.png'">
-                </div>
-                <div class="card-info">
-                    <div><h3 style="margin:0;">${d.name}</h3><p style="color:#64748b; font-size:0.85rem;">${d.desc}</p></div>
-                    <div style="display:flex; gap:10px;">
-                        <a href="DOCS/SPECS/${d.id}.pdf" target="_blank" class="btn-v btn-outline" style="flex:1; text-align:center; font-size:0.65rem;">SPECS</a>
-                        <button onclick="openForm('${d.name}')" class="btn-v" style="flex:1; font-size:0.65rem;">INQUIRY</button>
-                    </div>
-                </div>
-            </div>`).join('');
-    }
-
-    function populateCountries() {
-        const list = ["Italy", "France", "Spain", "UK", "USA", "Other"];
-        document.getElementById('country-select').innerHTML = '<option value="">Select Country *</option>' + 
-            list.map(c => `<option value="${c}">${c}</option>`).join('');
-    }
-
-    function nav(id) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        window.scrollTo(0,0);
-    }
-
-    function openForm(prodName) {
-        document.getElementById('f-header').innerText = prodName;
-        nav('contact');
-    }
-
-    async function handleSubmission(e) {
-        e.preventDefault();
-        const btn = document.getElementById('submit-btn');
-        btn.disabled = true; btn
+<div id="view-catalog" class="view">
+    <h2 class="section-title" data-t="cat_title">Product Categories</h2>
+    <div class="cat-grid">
+        <div class="cat-card" onclick="alert('Filtering for Vehicle...')">
+            <img src="https://cdn-icons-png.flaticon.com/512/741/741407.png" alt="Vehicle">
+            <strong data-t="cat_vehicle">Vehicle</strong>
+        </div>
+        <div class="cat-card" onclick="alert('Filtering for Asset...')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2892/2892027.png" alt="Asset">
+            <strong data-t="cat_asset">Asset</strong>
+        </div>
+        <div class="cat-card" onclick="alert('Filtering for Dashcam...')">
+            <img src="https://cdn-icons-png.flaticon.com/512/3012/3012497.png" alt="Dashcam">
+            <strong data-t="cat_dashcam">Dashcam</strong>
+        </div>
+        <div class="cat-card" onclick="alert('Filtering for OBD...')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2163/2163151.png" alt="OBD">
+            <strong data-t="cat_obd">OBD</strong>
+        </div>
+        <div class="cat-card" onclick="alert('Filtering for Personal...')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="Personal">
+            <strong data-t="cat_personal">Personal</strong>
+        </div>
+        <div class="cat-card" onclick="alert('Filtering for Tags...')">
+            <img
