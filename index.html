@@ -3,190 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Sovereign</title>
-    <link rel="stylesheet" href="style.css">
+    <title>GeoTrackPro | Vanguard Sovereign v42.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        .lang-wrapper { background: rgba(0,0,0,0.1); border-radius: 20px; padding: 2px 10px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.3); margin-left: 10px; }
-        select#langSelect { background: transparent; color: white; border: none; font-weight: 800; font-size: 0.65rem; cursor: pointer; outline: none; text-transform: uppercase; }
-        select#langSelect option { color: black; }
-        footer { background: #0f172a; color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .footer-right a { color: #94a3b8!important; text-decoration: none; margin-left: 20px; font-weight: 800; }
-        .footer-right a:hover { color: white!important; }
-        .status-led { height: 10px; width: 10px; background: #22c55e; border-radius: 50%; display: inline-block; margin-left: 10px; box-shadow: 0 0 8px #22c55e; }
+        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --whatsapp: #25D366; --header-h: 75px; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 60px; }
+        
+        /* HEADER */
+        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-v:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        
+        /* HERO */
+        .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; min-height: 70vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
+        
+        /* VIEWS */
+        .view { display: none; padding: calc(var(--header-h) + 20px) 5%; min-height: 100vh; }
+        .view.active { display: block; }
+        
+        /* CATEGORIES & CARDS */
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 50px; }
+        .cat-card { background: white; padding: 25px; border-radius: 20px; text-align: center; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.3s; }
+        .cat-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .cat-card span { font-size: 2rem; display: block; margin-bottom: 8px; }
+        
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 450px)); gap: 25px; margin-top: 30px; justify-content: center; }
+        .card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; padding: 25px; display: flex; gap: 20px; align-items: stretch; height: 320px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .card-img { flex: 0 0 130px; background: #fcfcfc; border-radius: 15px; display: flex; align-items: center; justify-content: center; padding: 10px; border: 1px solid #f1f5f9; }
+        .card-img img { width: 100%; max-height: 140px; object-fit: contain; }
+        .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+        
+        /* TOAST NOTIFICATION */
+        #toast {
+            visibility: hidden; min-width: 280px; background-color: var(--navy); color: #fff; text-align: center;
+            border-radius: 12px; padding: 16px; position: fixed; z-index: 10001; left: 50%; bottom: 80px;
+            transform: translateX(-50%); border: 1px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-weight: 800; font-size: 0.8rem;
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 80px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 80px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        /* FOOTER */
+        footer { background: var(--navy); color: white; height: 50px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
+        .led-dot { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; display: inline-block; margin-left: 5px; }
     </style>
 </head>
 <body>
 
+<div id="toast">TRANSMISSION SUCCESSFUL</div>
+
 <header>
-    <div class="nav-group">
-        <img src="IMAGES/ui/logo.png" height="35" onclick="nav('home')" style="cursor:pointer">
-        <button onclick="nav('about')" class="btn-v" id="btn-about" style="background:#475569">ABOUT US</button>
-        <button onclick="nav('home')" class="btn-v btn-navy" id="btn-home">HOME</button>
+    <div style="display:flex; align-items:center; gap:15px;">
+        <img src="IMAGES/ui/logo.png" height="30" onclick="nav('home')" style="cursor:pointer" alt="Logo">
+        <button onclick="nav('about-us')" class="btn-v" id="nav-about" style="background:#475569;">About Us</button>
+        <button onclick="nav('home')" class="btn-v" id="nav-home" style="background:#1e293b;">Home</button>
     </div>
-    <div class="nav-group">
-        <button onclick="nav('prod-menu')" class="btn-v btn-blue" id="btn-prod">PRODUCTS</button>
-        <button onclick="nav('contact')" class="btn-v btn-blue" id="btn-cont">CONTACT</button>
-        <button onclick="openForm('DEMO')" class="btn-v" id="btn-demo" style="background:#6366f1;">DEMO REQUEST</button>
-        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v btn-green" id="btn-plat">PLATFORM</button>
-        <div class="lang-wrapper">
-            <select id="langSelect" onchange="applyLang()">
-                <option value="en">EN</option>
-                <option value="fr">FR</option>
-                <option value="it">IT</option>
-                <option value="es">ES</option>
-            </select>
-        </div>
+    <div style="display:flex; gap:8px;">
+        <button onclick="nav('prod-menu')" class="btn-v" id="nav-prod">PRODUCTS</button>
+        <button onclick="openForm('CONTACT')" class="btn-v" id="nav-cont">Contact</button>
+        <button onclick="openForm('DEMO REQUEST')" class="btn-v" id="nav-demo" style="background:#6366f1;">Demo Request</button>
+        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" id="nav-plat" style="background:#059669;">PLATFORM</button>
+    </div>
+    <div>
+        <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none; width: auto;">
+            <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option><option value="fr">FR</option>
+        </select>
     </div>
 </header>
 
 <div id="home" class="view active" style="padding:0;">
-    <div class="hero">
-        <h1 id="hero-title">VANGUARD GLOBAL</h1>
-        <div style="display:flex; gap:15px; margin-top:30px;">
-            <button onclick="nav('prod-menu')" class="btn-v btn-blue" id="hero-btn-1" style="padding:15px 35px;">EXPLORE CATALOG</button>
-            <button onclick="openForm('SALES')" class="btn-v" id="hero-btn-2" style="padding:15px 35px; background:white; color:#0f172a!important;">SALES CONSULTATION</button>
+    <section class="hero">
+        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
+        <div style="display:flex; gap:15px; margin-top:20px;">
+            <button onclick="nav('prod-menu')" class="btn-v" id="hero-btn-1" style="padding:15px 40px;">Explore Catalog</button>
+            <button onclick="openForm('SALES CONSULTATION')" class="btn-v" id="hero-btn-2" style="background:white; color:black!important; padding:15px 40px;">Sales Consultation</button>
+        </div>
+    </section>
+</div>
+
+<div id="about-us" class="view">
+    <div style="max-width: 1100px; margin: 0 auto; line-height: 1.8; color: #1e293b;">
+        <h2 id="ab-title" style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 30px;">THE VANGUARD STANDARD</h2>
+        <p id="ab-subtitle" style="font-size: 1.1rem; font-weight: 600;"></p>
+        <p id="ab-p1"></p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;">
+            <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
+                <h3 id="ab-m-title" style="margin-top:0; color: var(--accent);">Our Mission</h3>
+                <p id="ab-m-p" style="font-size: 0.9rem; margin-bottom:0;"></p>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
+                <h3 id="ab-g-title" style="margin-top:0; color: var(--accent);">Global Reach</h3>
+                <p id="ab-g-p" style="font-size: 0.9rem; margin-bottom:0;"></p>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
+                <h3 id="ab-s-title" style="margin-top:0; color: var(--accent);">Adaptive Security</h3>
+                <p id="ab-s-p" style="font-size: 0.9rem; margin-bottom:0;"></p>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="about" class="view">
-    <h1 id="about-title" style="font-size: 3rem; font-weight: 800; border-bottom: 4px solid #3b82f6; display: inline-block;">THE VANGUARD STANDARD</h1>
-    <div class="about-grid">
-        <div class="about-card"><h3 id="ab-h1">Our Mission</h3><p id="ab-p1">To provide an unblinking eye over your most valuable assets, bridging the gap between physical logistics and digital oversight.</p></div>
-        <div class="about-card"><h3 id="ab-h2">Global Reach</h3><p id="ab-p2">Hardware engineered for international connectivity, backed by a support network that understands local enterprise needs.</p></div>
-        <div class="about-card"><h3 id="ab-h3">Adaptive Security</h3><p id="ab-p3">Custom-tailored configurations developed by our technical team to meet the specific demands of your operational landscape.</p></div>
-    </div>
-</div>
-
-<div id="prod-menu" class="view">
-    <h1 id="prod-title" style="font-weight:800; margin-bottom:40px;">HARDWARE SHOWROOM</h1>
-    <div class="about-grid" id="cat-anchor"></div>
-</div>
-
+<div id="prod-menu" class="view"><div class="cat-grid" id="cat-anchor"></div></div>
 <div id="list-view" class="view">
-    <button onclick="nav('prod-menu')" class="btn-v btn-navy" id="btn-back" style="margin-bottom:30px;">← BACK</button>
-    <div id="gridAnchor" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap:25px;"></div>
+    <button onclick="nav('prod-menu')" id="btn-back" class="btn-v" style="background:#64748b; margin-bottom:20px;">← Back</button>
+    <div class="product-grid" id="gridAnchor"></div>
 </div>
 
 <div id="contact" class="view">
-    <div class="contact-container">
-        <div>
-            <h2 id="f-title" style="font-weight:800; font-size:2.5rem; margin-top:0;">CONTACT US</h2>
-            <form action="https://formspree.io/f/mwvnvzee" method="POST">
-                <input type="text" name="name" id="in-name" placeholder="Full Name *" required>
-                <input type="email" name="email" id="in-mail" placeholder="Business Email *" required>
-                <textarea name="message" id="in-msg" rows="5" placeholder="Message *" required></textarea>
-                <button type="submit" class="btn-v btn-blue" id="btn-send" style="width:100%; height:55px;">SEND INQUIRY</button>
-            </form>
-        </div>
-        <div style="background:#eee; border-radius:20px; overflow:hidden;">
-             <iframe width="100%" height="100%" frameborder="0" src="https://maps.google.com/maps?q=Civic%20Center%20San%20Francisco&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+    <div class="contact-stack">
+        <form id="vanguardForm">
+            <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
+            <h2 id="f-title" style="margin:0 0 20px 0;">CONTACT</h2>
+            <input type="text" name="name" id="in-name" placeholder="Full Name *" required>
+            <input type="text" name="company" id="in-comp" placeholder="Company *" required>
+            <input type="email" name="email" id="in-email" placeholder="Email *" required>
+            <input type="tel" name="phone" id="in-tel" placeholder="Phone *" required>
+            <select name="country" id="in-country" required>
+                <option value="">Select Country *</option>
+                <option value="US">United States</option><option value="IT">Italy</option>
+                <option value="ES">Spain</option><option value="FR">France</option>
+                <option value="GLOBAL">Other</option>
+            </select>
+            <textarea name="message" id="in-msg" rows="4" placeholder="Message *" required></textarea>
+            <button type="submit" id="btn-submit" class="btn-v" style="width:100%; height:45px;">SEND INQUIRY</button>
+        </form>
+        <div style="border-radius:20px; overflow:hidden; background:#eee; min-height: 300px;">
+             <iframe src="http://googleusercontent.com/maps.google.com/9" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
 </div>
 
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="status-led"></span></div>
-    <div class="footer-right">
-        <a href="DOCS/LEGAL/terms.pdf" target="_blank" id="lnk-terms">TERMS</a>
-        <a href="DOCS/LEGAL/privacy.pdf" target="_blank" id="lnk-priv">PRIVACY</a>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span></div>
+    <div style="display:flex; gap:20px;">
+       <a href="DOCS/LEGAL/terms-of-service.pdf" target="_blank" style="color:white; text-decoration:none;">TERMS</a>
+       <a href="DOCS/LEGAL/privacy-policy.pdf" target="_blank" style="color:white; text-decoration:none;">PRIVACY</a>
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 <script>
-    const client = contentful.createClient({ space: 'i5s6f0gd4tb8', accessToken: 'swHDtaIfiaaF3J7XXWlKy7Ta0qjNIgPrpUT9SI4VXeI' });
-    let db = [];
+    const WAREHOUSE = [
+        { id: "VL103", cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
+        { id: "VL111", cat: ["vehicle"], name: "VL111", desc: "High-IO LTE terminal.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
+        { id: "LL301", cat: ["asset"], name: "LL301", desc: "Powerful wireless tracker.", features:[{icon:"🔋",label:"Battery"}] },
+        { id: "JC400", cat: ["dashcam"], name: "JC400", desc: "Pro AI dashcam.", features:[{icon:"🤖",label:"AI"}] },
+        { id: "VL505", cat: ["obd"], name: "VL505", desc: "Plug & Play OBDII.", features:[{icon:"🔌",label:"OBD"}] }
+    ];
 
-    const DICT = {
-        en: { about:"ABOUT US", home:"HOME", prod:"PRODUCTS", cont:"CONTACT", demo:"DEMO REQUEST", plat:"PLATFORM", showroom:"HARDWARE SHOWROOM", back:"← BACK", send:"SEND INQUIRY", contact_h:"CONTACT US", demo_h:"DEMO REQUEST", cats: ["VEHICLE", "ASSET", "DASHCAM", "OBD", "PERSONAL", "ACC."] },
-        fr: { about:"À PROPOS", home:"ACCUEIL", prod:"PRODUITS", cont:"CONTACT", demo:"DEMO", plat:"PLATEFORME", showroom:"SALON MATÉRIEL", back:"← RETOUR", send:"ENVOYER", contact_h:"CONTACTEZ-NOUS", demo_h:"DEMANDE DE DÉMO", cats: ["VÉHICULE", "ACTIF", "DASHCAM", "OBD", "PERSONNEL", "ACC."] },
-        it: { about:"CHI SIAMO", home:"HOME", prod:"PRODOTTI", cont:"CONTATTI", demo:"DEMO", plat:"PIATTAFORMA", showroom:"SHOWROOM HARDWARE", back:"← INDIETRO", send:"INVIA", contact_h:"CONTATTACI", demo_h:"RICHIESTA DEMO", cats: ["VEICOLI", "ASSET", "DASHCAM", "OBD", "PERSONALE", "ACC."] },
-        es: { about:"NOSOTROS", home:"INICIO", prod:"PRODUCTOS", cont:"CONTACTO", demo:"DEMO", plat:"PLATAFORMA", showroom:"CATÁLOGO", back:"← VOLVER", send:"ENVIAR", contact_h:"CONTÁCTENOS", demo_h:"SOLICITAR DEMO", cats: ["VEHÍCULO", "ACTIVOS", "DASHCAM", "OBD", "PERSONAL", "ACC."] }
+    const TXT = {
+        en: { 
+            h: "VANGUARD GLOBAL", p: "PRODUCTS", ab: "ABOUT US", home: "HOME", cont: "CONTACT", demo: "DEMO REQUEST", plat: "PLATFORM",
+            v: "Vehicle", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags",
+            abT: "THE VANGUARD STANDARD", abS: "Global Asset Intelligence for the Modern Enterprise.",
+            abP1: "Vanguard Global provides hardware and telemetry to secure assets and eliminate variables.",
+            abMT: "Our Mission", abMP: "To provide an unblinking eye over your most valuable assets.",
+            abGT: "Global Reach", abGP: "Hardware engineered for international connectivity.",
+            abST: "Adaptive Security", abSP: "Custom-tailored configurations for your operations.",
+            fName: "Full Name *", cName: "Company *", email: "Email *", phone: "Phone *", help: "Message *", selectC: "Select Country *", submit: "SEND INQUIRY",
+            msg_success: "TRANSMISSION SUCCESSFUL", hero_b1: "Explore Catalog", hero_b2: "Sales Consultation", back: "← Back"
+        },
+        it: { 
+            h: "VANGUARD GLOBALE", p: "PRODOTTI", ab: "CHI SIAMO", home: "HOME", cont: "CONTATTI", demo: "DEMO", plat: "PIATTAFORMA",
+            v: "Veicoli", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personale", ac: "Acc.", tg: "Tags",
+            abT: "LO STANDARD VANGUARD", abS: "Intelligenza globale per l'impresa moderna.",
+            abP1: "Vanguard Global fornisce strumenti di precisione per proteggere i vostri asset strategici.",
+            abMT: "Missione", abMP: "Eliminare i punti ciechi con l'innovazione tecnologica.",
+            abGT: "Portata Globale", abGP: "Hardware progettato per la connettività internazionale.",
+            abST: "Sicurezza Adattiva", abSP: "Configurazioni su misura per le vostre esigenze.",
+            fName: "Nome *", cName: "Azienda *", email: "Email *", phone: "Tel *", help: "Messaggio *", selectC: "Paese *", submit: "INVIA",
+            msg_success: "TRASMISSIONE COMPLETATA", hero_b1: "Esplora Catalogo", hero_b2: "Consulenza Vendite", back: "← Indietro"
+        }
     };
 
-    function applyLang() {
-        const l = document.getElementById('langSelect').value;
-        const d = DICT[l];
-        document.getElementById('btn-about').innerText = d.about;
-        document.getElementById('btn-home').innerText = d.home;
-        document.getElementById('btn-prod').innerText = d.prod;
-        document.getElementById('btn-cont').innerText = d.cont;
-        document.getElementById('btn-demo').innerText = d.demo;
-        document.getElementById('btn-plat').innerText = d.plat;
-        document.getElementById('prod-title').innerText = d.showroom;
-        document.getElementById('btn-back').innerText = d.back;
-        document.getElementById('btn-send').innerText = d.send;
-        renderCategories();
-    }
-
-    function renderCategories() {
-        const l = document.getElementById('langSelect').value;
-        const names = DICT[l].cats;
-        const keys = ['vehicle', 'asset', 'dashcam', 'obd', 'personal', 'acc'];
-        document.getElementById('cat-anchor').innerHTML = keys.map((k, i) => `
-            <div class="about-card" style="text-align:center; cursor:pointer;" onclick="renderList('${k}')">
-                <img src="IMAGES/categories/${k}.png" style="width:80px; margin-bottom:15px;" onerror="this.src='IMAGES/ui/coming-soon.png'">
-                <h3>${names[i]}</h3>
-            </div>
-        `).join('');
-    }
-
-    async function sync() {
-        try {
-            const res = await client.getEntries({ content_type: 'device' });
-            db = res.items.map(i => ({
-                id: i.fields.modelId,
-                name: i.fields.name,
-                cat: i.fields.category,
-                img: i.fields.deviceImage?.fields?.file?.url ? 'https:' + i.fields.deviceImage.fields.file.url : 'IMAGES/ui/coming-soon.png',
-                pdf: i.fields.specsPdf?.fields?.file?.url ? 'https:' + i.fields.specsPdf.fields.file.url : '#'
-            }));
-            renderCategories();
-        } catch (e) { console.error("Sync Failure", e); }
+    function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.innerText = msg;
+        t.className = "show";
+        setTimeout(() => { t.className = ""; }, 3000);
     }
 
     function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(id).classList.add('active');
+        if(id === 'prod-menu') renderCats();
         window.scrollTo(0,0);
     }
 
-    function renderList(filter) {
-        nav('list-view');
-        const items = db.filter(d => d.cat === filter);
-        const grid = document.getElementById('gridAnchor');
-        grid.innerHTML = items.map(d => `
-            <div class="about-card" style="display:flex; gap:20px; align-items:center;">
-                <img src="${d.img}" style="width:120px; height:120px; object-fit:contain;">
-                <div style="flex:1;">
-                    <h3 style="margin:0; color:#3b82f6;">${d.name}</h3>
-                    <p style="font-size:0.75rem; margin:10px 0;">MODEL: ${d.id}</p>
-                    <div style="display:flex; gap:10px;">
-                        <a href="${d.pdf}" target="_blank" class="btn-v btn-gray" style="flex:1; text-align:center;">SPECS</a>
-                        <button onclick="openForm('${d.id}')" class="btn-v btn-blue" style="flex:1;">INQUIRY</button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
+    function renderCats() {
+        const lang = document.getElementById('langSelect').value;
+        const t = TXT[lang] || TXT.en;
+        const cats = [
+            { id: 'vehicle', n: t.v, i: '🚗' }, { id: 'asset', n: t.a, i: '📦' },
+            { id: 'dashcam', n: t.dc, i: '📹' }, { id: 'obd', n: t.o, i: '🔌' },
+            { id: 'personal', n: t.s, i: '👤' }, { id: 'tags', n: t.tg, i: '🏷️' }, { id: 'acc', n: t.ac, i: '⚙️' }
+        ];
+        document.getElementById('cat-anchor').innerHTML = cats.map(c => 
+            `<div class="cat-card" onclick="renderList('${c.id}')"><span>${c.i}</span>${c.n}</div>`
+        ).join('');
     }
 
-    function openForm(type) {
-        const l = document.getElementById('langSelect').value;
-        const title = document.getElementById('f-title');
-        if(type === 'DEMO') title.innerText = DICT[l].demo_h;
-        else if(type === 'SALES') title.innerText = "SALES CONSULTATION";
-        else title.innerText = type;
+    function renderList(cat) {
+        nav('list-view');
+        const items = WAREHOUSE.filter(d => d.cat.includes(cat));
+        document.getElementById('gridAnchor').innerHTML = items.map(d => `
+            <div class="card">
+                <div class="card-img"><img src="IMAGES/${cat}/${d.id.toLowerCase()}.png" onerror="this.src='IMAGES/ui/coming-soon.png';"></div>
+                <div class="card-info">
+                    <div><h4 style="margin:0; font-weight:800;">${d.name}</h4><p style="font-size:0.75rem;">${d.desc}</p></div>
+                    <div style="display:flex; gap:10px;"><a href="DOCS/SPECS/${d.id.toLowerCase()}.pdf" target="_blank" class="btn-v" style="flex:1; background:#64748b;">SPECS</a>
+                    <button onclick="openForm('${d.id}')" class="btn-v" style="flex:1;">INQUIRY</button></div>
+                </div>
+            </div>`).join('');
+    }
+
+    function openForm(t) {
+        document.getElementById('f-title').innerText = t;
         nav('contact');
     }
 
-    setInterval(() => { 
+    function updateLang(l) {
+        const t = TXT[l] || TXT.en;
+        document.getElementById('nav-about').innerText = t.ab;
+        document.getElementById('nav-home').innerText = t.home;
+        document.getElementById('nav-prod').innerText = t.p;
+        document.getElementById('nav-cont').innerText = t.cont;
+        document.getElementById('nav-demo').innerText = t.demo;
+        document.getElementById('nav-plat').innerText = t.plat;
+        document.getElementById('h-title').innerText = t.h;
+        document.getElementById('hero-btn-1').innerText = t.hero_b1;
+        document.getElementById('hero-btn-2').innerText = t.hero_b2;
+        document.getElementById('ab-title').innerText = t.abT;
+        document.getElementById('ab-subtitle').innerText = t.abS;
+        document.getElementById('ab-p1').innerText = t.abP1;
+        document.getElementById('ab-m-p').innerText = t.abMP;
+        document.getElementById('ab-g-p').innerText = t.abGP;
+        document.getElementById('ab-s-p').innerText = t.abSP;
+        document.getElementById('btn-submit').innerText = t.submit;
+        document.getElementById('btn-back').innerText = t.back;
+        renderCats();
+    }
+
+    document.getElementById('vanguardForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const l = document.getElementById('langSelect').value;
+        const btn = document.getElementById('btn-submit');
+        btn.disabled = true; btn.innerText = "...";
+
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(new FormData(this)))
+        })
+        .then(res => {
+            if (res.status == 200) {
+                showToast(TXT[l].msg_success);
+                this.reset();
+                setTimeout(() => nav('home'), 2500);
+            }
+        })
+        .finally(() => { btn.disabled = false; btn.innerText = TXT[l].submit; });
+    });
+
+    setInterval(() => {
         const now = new Date();
-        document.getElementById('clock').innerText = now.toLocaleDateString('it-IT') + ' ' + now.toLocaleTimeString('it-IT'); 
+        document.getElementById('clock').innerText = now.toLocaleDateString('it-IT') + ' ' + now.toLocaleTimeString('it-IT');
     }, 1000);
 
-    window.onload = sync;
+    window.onload = () => { updateLang('en'); };
 </script>
 </body>
 </html>
