@@ -37,3 +37,4 @@ header { background: var(--gold); height: var(--header-h); position: fixed; top:
 footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.7rem; z-index: 10000; }
 .status-led { height: 10px; width: 10px; background: #00FF00; border-radius: 50%; display: inline-block; margin-left: 10px; box-shadow: 0 0 10px #00FF00; }
 
+
