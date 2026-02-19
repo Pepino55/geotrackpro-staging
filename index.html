@@ -3,120 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Sovereign</title>
+    <title>Vanguard | Operational Stable</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 75px; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 60px; line-height: 1.5; }
+        
+        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .btn-v { background: var(--accent); color: white!important; padding: 10px 20px; border-radius: 50px; font-weight: 800; font-size: 0.7rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+        
+        .view { display: none; padding: calc(var(--header-h) + 40px) 5%; min-height: 100vh; }
+        .view.active { display: block; }
+        
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 40px; }
+        .cat-card { background: white; padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.2s; }
+        .cat-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; padding: 20px; display: flex; gap: 15px; height: 280px; }
+        .card-img { flex: 0 0 130px; background: #fcfcfc; border-radius: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; padding: 10px; }
+        .card-img img { width: 100%; max-height: 130px; object-fit: contain; }
+        .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+
+        .contact-container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 25px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
+        .form-side { padding: 40px; }
+        input, textarea, select { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #cbd5e1; font-size: 0.9rem; }
+        
+        footer { background: var(--navy); color: white; height: 50px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.7rem; }
+        .status-led { height: 9px; width: 9px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; display: inline-block; margin-left: 8px; }
+        
+        @media (max-width: 800px) { .contact-container { grid-template-columns: 1fr; } .form-side { padding: 25px; } }
+    </style>
 </head>
 <body>
 
 <header>
-    <div style="display:flex; align-items:center; gap:20px;">
-        <img src="IMAGES/ui/logo.png" class="nav-logo" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/150x40?text=GeoTrackPro'">
-        <button onclick="nav('home')" class="btn-v" id="nav-h">Home</button>
-        <button onclick="nav('prod-menu')" class="btn-v" id="nav-p">Products</button>
+    <div style="display:flex; align-items:center; gap:15px;">
+        <img src="IMAGES/ui/logo.png" height="35" onclick="nav('home')" style="cursor:pointer" onerror="this.src='https://via.placeholder.com/150x40?text=VANGUARD'">
+        <button onclick="nav('home')" class="btn-v">Home</button>
+        <button onclick="nav('prod-menu')" class="btn-v">Catalog</button>
     </div>
-    <div style="display:flex; align-items:center; gap:12px;">
-        <button onclick="nav('contact')" class="btn-v" id="nav-c" style="background:#1e293b;">Contact</button>
-        <select id="langSelect" onchange="updateLang(this.value)" style="width: auto; padding: 8px 15px; background: var(--accent); color: white; border-radius: 20px; font-weight: 800; border: none;">
-            <option value="en">EN</option>
-            <option value="it">IT</option>
-            <option value="fr">FR</option>
-            <option value="es">ES</option>
-        </select>
-    </div>
+    <select id="langSelect" onchange="updateLang(this.value)" style="padding: 6px 12px; background: var(--accent); color: white; border-radius: 20px; border: none; font-weight: 800; cursor: pointer;">
+        <option value="en">EN</option><option value="it">IT</option><option value="fr">FR</option><option value="es">ES</option>
+    </select>
 </header>
 
 <div id="home" class="view active">
-    <div style="text-align:center; padding-top:100px;">
-        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
-        <p id="h-sub" style="color: #64748b; font-size: 1.2rem; margin: 20px 0 40px;">Strategic Asset Intelligence & Telemetry</p>
-        <button onclick="nav('prod-menu')" class="btn-v" id="h-btn" style="padding:18px 50px; font-size: 1.1rem;">EXPLORE CATALOG</button>
+    <div style="text-align:center; padding-top:120px;">
+        <h1 style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
+        <p style="color: #64748b; font-size: 1.2rem; margin: 20px 0 40px;">Sovereign Telemetry & Strategic Asset Intelligence</p>
+        <button onclick="nav('prod-menu')" class="btn-v" style="padding: 18px 50px; font-size: 1rem;">Explore Catalog</button>
     </div>
 </div>
 
 <div id="prod-menu" class="view">
-    <h2 id="cat-title" style="text-align:center; font-size: 2.2rem;">Product Categories</h2>
+    <h2 style="text-align:center; font-size: 2rem;">Product Categories</h2>
     <div class="cat-grid" id="cat-anchor"></div>
 </div>
 
 <div id="list-view" class="view">
-    <button onclick="nav('prod-menu')" class="btn-v" style="background:#64748b; margin-bottom:30px;">← BACK</button>
+    <button onclick="nav('prod-menu')" class="btn-v" style="background:#64748b; margin-bottom:25px;">← Categories</button>
     <div class="product-grid" id="gridAnchor"></div>
 </div>
 
 <div id="contact" class="view">
     <div class="contact-container">
-        <div class="contact-form-side" id="form-side">
+        <div class="form-side" id="form-wrap">
             <form id="vanguardForm">
                 <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
-                <h2 id="f-title" style="margin-top:0;">CONTACT US</h2>
+                <input type="hidden" name="subject" id="form-subject" value="New Inquiry">
+                <h2 id="f-title" style="margin-top:0;">Request Briefing</h2>
                 <input type="text" name="name" placeholder="Full Name *" required>
-                <input type="email" name="email" placeholder="Email *" required>
+                <input type="email" name="email" placeholder="Business Email *" required>
                 <select name="country" id="in-country" required></select>
-                <textarea name="message" rows="5" placeholder="Message *" required></textarea>
-                <button type="submit" id="btn-submit" class="btn-v" style="width:100%; height:60px;">SEND INQUIRY</button>
+                <textarea name="message" rows="4" placeholder="Message *" required></textarea>
+                <button type="submit" id="btn-submit" class="btn-v" style="width:100%; height:50px;">Send Inquiry</button>
             </form>
         </div>
-        <div class="success-side" id="success-side">
-            <div style="font-size: 70px; margin-bottom: 20px;">✅</div>
-            <h2 id="s-title">Message Sent</h2>
-            <p id="s-text" style="color: #64748b;">A specialist will contact you shortly.</p>
-            <button onclick="resetForm()" class="btn-v" style="background:#64748b;">SEND ANOTHER</button>
+        <div id="success-ui" style="display:none; padding:60px 40px; text-align:center;">
+            <div style="font-size:60px; margin-bottom:20px;">✅</div>
+            <h2>Transmission Successful</h2>
+            <p style="color:#64748b; margin-bottom:30px;">A specialist will contact you shortly.</p>
+            <button onclick="resetForm()" class="btn-v">Send Another</button>
         </div>
-        <div style="background:#eee; position:relative;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345093643!2d144.9537353153166!3d-37.81627977975171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d2230d5700!2sMelbourne!5e0!3m2!1sen!2sau!4v1617181654321!5m2!1sen!2sau" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <div style="background:#f1f5f9; display:flex; align-items:center; justify-content:center; color:#94a3b8;">
+            <iframe src="http://googleusercontent.com/maps.google.com/5" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
 </div>
 
 <footer>
     <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="status-led"></span></div>
-    <div style="display:flex; gap:30px;">
-       <a href="DOCS/LEGAL/terms.pdf" target="_blank" style="color:white; text-decoration:none; font-weight:800;">TERMS</a>
-       <a href="DOCS/LEGAL/privacy.pdf" target="_blank" style="color:white; text-decoration:none; font-weight:800;">PRIVACY</a>
+    <div style="display:flex; gap:25px;">
+        <a href="DOCS/LEGAL/terms.pdf" target="_blank" style="color:white; text-decoration:none; font-weight:800;">TERMS</a>
+        <a href="DOCS/LEGAL/privacy.pdf" target="_blank" style="color:white; text-decoration:none; font-weight:800;">PRIVACY</a>
     </div>
 </footer>
 
 <script>
     const WAREHOUSE = [
         { id: "vl103", cat: ["vehicle"], name: "VL103", desc: "4G Multimodal LTE Tracker with GNSS." },
-        { id: "jc400", cat: ["dashcam"], name: "JC400", desc: "Edge AI Dual-Channel Dashcam." },
-        { id: "ll301", cat: ["asset"], name: "LL301", desc: "Asset GNSS Tracker (10,000mAh)." }
+        { id: "vl106", cat: ["vehicle"], name: "VL106", desc: "Advanced LTE Vehicle Terminal." },
+        { id: "ll301", cat: ["asset"], name: "LL301", desc: "Asset GNSS Tracker (10,000mAh)." },
+        { id: "jc400", cat: ["dashcam"], name: "JC400", desc: "Edge AI Dual-Channel Dashcam." }
     ];
 
-    const TXT = {
-        en: { h: "VANGUARD GLOBAL", home: "Home", prod: "Products", cont: "Contact", cat: "Product Categories", s_msg: "Message Sent", s_btn: "SEND ANOTHER" },
-        it: { h: "VANGUARDIA GLOBALE", home: "Home", prod: "Prodotti", cont: "Contatti", cat: "Categorie Prodotti", s_msg: "Messaggio Inviato", s_btn: "INVIA ALTRO" },
-        fr: { h: "VANGUARD MONDIAL", home: "Accueil", prod: "Produits", cont: "Contact", cat: "Catégories", s_msg: "Message Envoyé", s_btn: "ENVOYER UN AUTRE" },
-        es: { h: "VANGUARDIA GLOBAL", home: "Inicio", prod: "Productos", cont: "Contacto", cat: "Categorías", s_msg: "Mensaje Enviado", s_btn: "ENVIAR OTRO" }
-    };
+    const COUNTRIES = ["Italy", "France", "Spain", "UK", "USA", "Germany", "UAE", "Saudi Arabia", "Other"];
 
     function init() {
-        updateLang('en');
+        populateCountries();
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
         document.getElementById('vanguardForm').addEventListener('submit', handleSubmission);
+        renderCats();
     }
 
-    function updateLang(l) {
-        const t = TXT[l];
-        document.getElementById('nav-h').innerText = t.home;
-        document.getElementById('nav-p').innerText = t.prod;
-        document.getElementById('nav-c').innerText = t.cont;
-        document.getElementById('h-title').innerText = t.h;
-        document.getElementById('cat-title').innerText = t.cat;
-        document.getElementById('s-title').innerText = t.s_msg;
-        
-        const countries = ["Italy", "France", "Spain", "UK", "USA", "Other"];
-        document.getElementById('in-country').innerHTML = '<option value="">Select Country *</option>' + 
-            countries.map(c => `<option value="${c}">${c}</option>`).join('');
-        
-        renderCats();
+    function populateCountries() {
+        const sel = document.getElementById('in-country');
+        sel.innerHTML = '<option value="">Select Country *</option>' + 
+            COUNTRIES.map(c => `<option value="${c}">${c}</option>`).join('');
     }
 
     function renderCats() {
         const cats = [{id:'vehicle',n:'Vehicle',i:'🚗'}, {id:'asset',n:'Asset',i:'📦'}, {id:'dashcam',n:'Dashcam',i:'📹'}];
         document.getElementById('cat-anchor').innerHTML = cats.map(c => 
-            `<div class="cat-card" onclick="renderList('${c.id}')"><span>${c.i}</span><strong>${c.n}</strong></div>`).join('');
+            `<div class="cat-card" onclick="renderList('${c.id}')"><span>${c.i}</span><br><strong>${c.n}</strong></div>`).join('');
     }
 
     function renderList(cat) {
@@ -126,10 +137,10 @@
             <div class="card">
                 <div class="card-img"><img src="IMAGES/${cat}/${d.id}.png" onerror="this.src='IMAGES/ui/coming-soon.png';"></div>
                 <div class="card-info">
-                    <div><h4>${d.name}</h4><p>${d.desc}</p></div>
+                    <div><h4 style="margin:0;">${d.name}</h4><p style="font-size:0.8rem; color:#64748b;">${d.desc}</p></div>
                     <div style="display:flex; gap:10px;">
-                        <a href="DOCS/SPECS/${d.id}.pdf" target="_blank" class="btn-v btn-outline" style="flex:1;">SPECS</a>
-                        <button onclick="openForm('${d.name}')" class="btn-v" style="flex:1;">INQUIRY</button>
+                        <a href="DOCS/SPECS/${d.id}.pdf" target="_blank" class="btn-v" style="background:#64748b; flex:1; text-align:center;">Specs</a>
+                        <button onclick="openForm('${d.name}')" class="btn-v" style="flex:1;">Inquiry</button>
                     </div>
                 </div>
             </div>`).join('');
@@ -143,22 +154,24 @@
 
     function openForm(t) {
         document.getElementById('f-title').innerText = t;
+        document.getElementById('form-subject').value = "Inquiry: " + t;
         nav('contact');
     }
 
     async function handleSubmission(e) {
         e.preventDefault();
-        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(e.target) });
-        if (res.ok) {
-            document.getElementById('form-side').style.display = 'none';
-            document.getElementById('success-side').style.display = 'block';
-        }
+        const btn = document.getElementById('btn-submit');
+        btn.disabled = true; btn.innerText = "Transmitting...";
+        try {
+            const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(e.target) });
+            if (res.ok) { document.getElementById('form-wrap').style.display='none'; document.getElementById('success-ui').style.display='block'; }
+        } finally { btn.disabled = false; btn.innerText = "Send Inquiry"; }
     }
 
     function resetForm() {
         document.getElementById('vanguardForm').reset();
-        document.getElementById('form-side').style.display = 'block';
-        document.getElementById('success-side').style.display = 'none';
+        document.getElementById('form-wrap').style.display='block';
+        document.getElementById('success-ui').style.display='none';
         nav('home');
     }
 
