@@ -7,21 +7,13 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* HEADER REPAIR */
-        .lang-wrapper { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 4px 8px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.2); margin-left: 10px; }
-        select#langSelect { background: transparent; color: white; border: none; font-weight: 700; font-size: 0.75rem; cursor: pointer; outline: none; }
+        .lang-wrapper { background: rgba(0,0,0,0.1); border-radius: 20px; padding: 2px 10px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.3); margin-left: 10px; }
+        select#langSelect { background: transparent; color: white; border: none; font-weight: 800; font-size: 0.65rem; cursor: pointer; outline: none; text-transform: uppercase; }
         select#langSelect option { color: black; }
-
-        /* FOOTER VISIBILITY REPAIR */
-        footer { background: #0f172a; color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; }
-        .footer-right a { color: #94a3b8!important; text-decoration: none; margin-left: 20px; font-weight: 600; transition: 0.3s; }
+        footer { background: #0f172a; color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .footer-right a { color: #94a3b8!important; text-decoration: none; margin-left: 20px; font-weight: 800; }
         .footer-right a:hover { color: white!important; }
-        .status-led { height: 8px; width: 8px; background: #22c55e; border-radius: 50%; display: inline-block; margin-left: 8px; box-shadow: 0 0 8px #22c55e; }
-
-        /* GRID REPAIR */
-        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; padding: 20px; }
-        .card-v { background: white; border-radius: 15px; padding: 30px; text-align: center; cursor: pointer; border: 1px solid #e2e8f0; transition: 0.3s; }
-        .card-v:hover { transform: translateY(-5px); border-color: #3b82f6; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        .status-led { height: 10px; width: 10px; background: #22c55e; border-radius: 50%; display: inline-block; margin-left: 10px; box-shadow: 0 0 8px #22c55e; }
     </style>
 </head>
 <body>
@@ -29,19 +21,20 @@
 <header>
     <div class="nav-group">
         <img src="IMAGES/ui/logo.png" height="35" onclick="nav('home')" style="cursor:pointer">
-        <button onclick="nav('about')" class="btn-v" style="background:#475569">ABOUT US</button>
-        <button onclick="nav('home')" class="btn-v btn-navy">HOME</button>
+        <button onclick="nav('about')" class="btn-v" id="btn-about" style="background:#475569">ABOUT US</button>
+        <button onclick="nav('home')" class="btn-v btn-navy" id="btn-home">HOME</button>
     </div>
     <div class="nav-group">
-        <button onclick="nav('prod-menu')" class="btn-v btn-blue">PRODUCTS</button>
-        <button onclick="nav('contact')" class="btn-v btn-blue">CONTACT</button>
-        <button onclick="openForm('DEMO REQUEST')" class="btn-v" style="background:#6366f1;">DEMO REQUEST</button>
-        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v btn-green">PLATFORM</button>
-        
+        <button onclick="nav('prod-menu')" class="btn-v btn-blue" id="btn-prod">PRODUCTS</button>
+        <button onclick="nav('contact')" class="btn-v btn-blue" id="btn-cont">CONTACT</button>
+        <button onclick="openForm('DEMO')" class="btn-v" id="btn-demo" style="background:#6366f1;">DEMO REQUEST</button>
+        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v btn-green" id="btn-plat">PLATFORM</button>
         <div class="lang-wrapper">
-            <select id="langSelect">
+            <select id="langSelect" onchange="applyLang()">
                 <option value="en">EN</option>
+                <option value="fr">FR</option>
                 <option value="it">IT</option>
+                <option value="es">ES</option>
             </select>
         </div>
     </div>
@@ -49,64 +42,55 @@
 
 <div id="home" class="view active" style="padding:0;">
     <div class="hero">
-        <h1>VANGUARD GLOBAL</h1>
+        <h1 id="hero-title">VANGUARD GLOBAL</h1>
         <div style="display:flex; gap:15px; margin-top:30px;">
-            <button onclick="nav('prod-menu')" class="btn-v btn-blue" style="padding:15px 35px;">EXPLORE CATALOG</button>
-            <button onclick="openForm('SALES CONSULTATION')" class="btn-v" style="padding:15px 35px; background:white; color:#0f172a!important;">SALES CONSULTATION</button>
+            <button onclick="nav('prod-menu')" class="btn-v btn-blue" id="hero-btn-1" style="padding:15px 35px;">EXPLORE CATALOG</button>
+            <button onclick="openForm('SALES')" class="btn-v" id="hero-btn-2" style="padding:15px 35px; background:white; color:#0f172a!important;">SALES CONSULTATION</button>
         </div>
     </div>
 </div>
 
 <div id="about" class="view">
-    <h1 style="font-weight:800; border-bottom:4px solid #3b82f6; display:inline-block;">THE VANGUARD STANDARD</h1>
-    <div class="about-grid" style="margin-top:40px;">
-        <div class="about-card"><h3>Our Mission</h3><p>Providing unblinking oversight for global assets.</p></div>
-        <div class="about-card"><h3>Global Reach</h3><p>Military-grade hardware for international logistics.</p></div>
-        <div class="about-card"><h3>Adaptive Security</h3><p>Custom telemetry for complex operational needs.</p></div>
+    <h1 id="about-title" style="font-size: 3rem; font-weight: 800; border-bottom: 4px solid #3b82f6; display: inline-block;">THE VANGUARD STANDARD</h1>
+    <div class="about-grid">
+        <div class="about-card"><h3 id="ab-h1">Our Mission</h3><p id="ab-p1">To provide an unblinking eye over your most valuable assets, bridging the gap between physical logistics and digital oversight.</p></div>
+        <div class="about-card"><h3 id="ab-h2">Global Reach</h3><p id="ab-p2">Hardware engineered for international connectivity, backed by a support network that understands local enterprise needs.</p></div>
+        <div class="about-card"><h3 id="ab-h3">Adaptive Security</h3><p id="ab-p3">Custom-tailored configurations developed by our technical team to meet the specific demands of your operational landscape.</p></div>
     </div>
 </div>
 
 <div id="prod-menu" class="view">
-    <h1 style="font-weight:800; margin-bottom:40px;">HARDWARE SHOWROOM</h1>
-    <div class="cat-grid">
-        <div class="card-v" onclick="renderList('vehicle')"><img src="IMAGES/categories/vehicle.png" width="60"><br><h3>VEHICLE</h3></div>
-        <div class="card-v" onclick="renderList('asset')"><img src="IMAGES/categories/asset.png" width="60"><br><h3>ASSET</h3></div>
-        <div class="card-v" onclick="renderList('dashcam')"><img src="IMAGES/categories/dashcam.png" width="60"><br><h3>DASHCAM</h3></div>
-        <div class="card-v" onclick="renderList('obd')"><img src="IMAGES/categories/obd.png" width="60"><br><h3>OBD</h3></div>
-        <div class="card-v" onclick="renderList('personal')"><img src="IMAGES/categories/personal.png" width="60"><br><h3>PERSONAL</h3></div>
-        <div class="card-v" onclick="renderList('acc')"><img src="IMAGES/categories/acc.png" width="60"><br><h3>ACC.</h3></div>
-    </div>
+    <h1 id="prod-title" style="font-weight:800; margin-bottom:40px;">HARDWARE SHOWROOM</h1>
+    <div class="about-grid" id="cat-anchor"></div>
 </div>
 
 <div id="list-view" class="view">
-    <button onclick="nav('prod-menu')" class="btn-v btn-navy" style="margin-bottom:30px;">← BACK TO CATEGORIES</button>
-    <div id="gridAnchor" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:25px;"></div>
+    <button onclick="nav('prod-menu')" class="btn-v btn-navy" id="btn-back" style="margin-bottom:30px;">← BACK</button>
+    <div id="gridAnchor" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap:25px;"></div>
 </div>
 
 <div id="contact" class="view">
     <div class="contact-container">
         <div>
-            <h2 id="f-title" style="font-weight:800; font-size:2.5rem; margin-top:0;">CONNECT</h2>
+            <h2 id="f-title" style="font-weight:800; font-size:2.5rem; margin-top:0;">CONTACT US</h2>
             <form action="https://formspree.io/f/mwvnvzee" method="POST">
-                <input type="text" name="name" placeholder="Full Name *" required>
-                <input type="email" name="email" placeholder="Business Email *" required>
-                <textarea name="message" rows="5" placeholder="Message *" required></textarea>
-                <button type="submit" class="btn-v btn-blue" style="width:100%; height:55px;">SEND INQUIRY</button>
+                <input type="text" name="name" id="in-name" placeholder="Full Name *" required>
+                <input type="email" name="email" id="in-mail" placeholder="Business Email *" required>
+                <textarea name="message" id="in-msg" rows="5" placeholder="Message *" required></textarea>
+                <button type="submit" class="btn-v btn-blue" id="btn-send" style="width:100%; height:55px;">SEND INQUIRY</button>
             </form>
         </div>
-        <div style="background:#eee; border-radius:20px; overflow:hidden; min-height:350px;">
-             <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.086369165!2d-122.4194155!3d37.7749295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c6c8f4459%3A0xb10ed6d9b5050c62!2sCivic%20Center%2C%20San%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1700000000000"></iframe>
+        <div style="background:#eee; border-radius:20px; overflow:hidden;">
+             <iframe width="100%" height="100%" frameborder="0" src="https://maps.google.com/maps?q=Civic%20Center%20San%20Francisco&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
         </div>
     </div>
 </div>
 
 <footer>
-    <div class="footer-left">
-        © 2026 GEOTRACKPRO | <span id="clock"></span> <span class="status-led"></span>
-    </div>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="status-led"></span></div>
     <div class="footer-right">
-        <a href="DOCS/LEGAL/terms.pdf" target="_blank">TERMS</a>
-        <a href="DOCS/LEGAL/privacy.pdf" target="_blank">PRIVACY</a>
+        <a href="DOCS/LEGAL/terms.pdf" target="_blank" id="lnk-terms">TERMS</a>
+        <a href="DOCS/LEGAL/privacy.pdf" target="_blank" id="lnk-priv">PRIVACY</a>
     </div>
 </footer>
 
@@ -115,16 +99,51 @@
     const client = contentful.createClient({ space: 'i5s6f0gd4tb8', accessToken: 'swHDtaIfiaaF3J7XXWlKy7Ta0qjNIgPrpUT9SI4VXeI' });
     let db = [];
 
+    const DICT = {
+        en: { about:"ABOUT US", home:"HOME", prod:"PRODUCTS", cont:"CONTACT", demo:"DEMO REQUEST", plat:"PLATFORM", showroom:"HARDWARE SHOWROOM", back:"← BACK", send:"SEND INQUIRY", contact_h:"CONTACT US", demo_h:"DEMO REQUEST", cats: ["VEHICLE", "ASSET", "DASHCAM", "OBD", "PERSONAL", "ACC."] },
+        fr: { about:"À PROPOS", home:"ACCUEIL", prod:"PRODUITS", cont:"CONTACT", demo:"DEMO", plat:"PLATEFORME", showroom:"SALON MATÉRIEL", back:"← RETOUR", send:"ENVOYER", contact_h:"CONTACTEZ-NOUS", demo_h:"DEMANDE DE DÉMO", cats: ["VÉHICULE", "ACTIF", "DASHCAM", "OBD", "PERSONNEL", "ACC."] },
+        it: { about:"CHI SIAMO", home:"HOME", prod:"PRODOTTI", cont:"CONTATTI", demo:"DEMO", plat:"PIATTAFORMA", showroom:"SHOWROOM HARDWARE", back:"← INDIETRO", send:"INVIA", contact_h:"CONTATTACI", demo_h:"RICHIESTA DEMO", cats: ["VEICOLI", "ASSET", "DASHCAM", "OBD", "PERSONALE", "ACC."] },
+        es: { about:"NOSOTROS", home:"INICIO", prod:"PRODUCTOS", cont:"CONTACTO", demo:"DEMO", plat:"PLATAFORMA", showroom:"CATÁLOGO", back:"← VOLVER", send:"ENVIAR", contact_h:"CONTÁCTENOS", demo_h:"SOLICITAR DEMO", cats: ["VEHÍCULO", "ACTIVOS", "DASHCAM", "OBD", "PERSONAL", "ACC."] }
+    };
+
+    function applyLang() {
+        const l = document.getElementById('langSelect').value;
+        const d = DICT[l];
+        document.getElementById('btn-about').innerText = d.about;
+        document.getElementById('btn-home').innerText = d.home;
+        document.getElementById('btn-prod').innerText = d.prod;
+        document.getElementById('btn-cont').innerText = d.cont;
+        document.getElementById('btn-demo').innerText = d.demo;
+        document.getElementById('btn-plat').innerText = d.plat;
+        document.getElementById('prod-title').innerText = d.showroom;
+        document.getElementById('btn-back').innerText = d.back;
+        document.getElementById('btn-send').innerText = d.send;
+        renderCategories();
+    }
+
+    function renderCategories() {
+        const l = document.getElementById('langSelect').value;
+        const names = DICT[l].cats;
+        const keys = ['vehicle', 'asset', 'dashcam', 'obd', 'personal', 'acc'];
+        document.getElementById('cat-anchor').innerHTML = keys.map((k, i) => `
+            <div class="about-card" style="text-align:center; cursor:pointer;" onclick="renderList('${k}')">
+                <img src="IMAGES/categories/${k}.png" style="width:80px; margin-bottom:15px;" onerror="this.src='IMAGES/ui/coming-soon.png'">
+                <h3>${names[i]}</h3>
+            </div>
+        `).join('');
+    }
+
     async function sync() {
         try {
             const res = await client.getEntries({ content_type: 'device' });
             db = res.items.map(i => ({
                 id: i.fields.modelId,
                 name: i.fields.name,
-                cat: i.fields.category, // MUST BE "vehicle", "asset", etc.
+                cat: i.fields.category,
                 img: i.fields.deviceImage?.fields?.file?.url ? 'https:' + i.fields.deviceImage.fields.file.url : 'IMAGES/ui/coming-soon.png',
                 pdf: i.fields.specsPdf?.fields?.file?.url ? 'https:' + i.fields.specsPdf.fields.file.url : '#'
             }));
+            renderCategories();
         } catch (e) { console.error("Sync Failure", e); }
     }
 
@@ -138,33 +157,33 @@
         nav('list-view');
         const items = db.filter(d => d.cat === filter);
         const grid = document.getElementById('gridAnchor');
-        
-        if(items.length === 0) {
-            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:100px;"><h2>No devices found in ${filter.toUpperCase()}</h2><button onclick="nav('prod-menu')" class="btn-v btn-navy">BACK</button></div>`;
-            return;
-        }
-
         grid.innerHTML = items.map(d => `
-            <div class="card-v" style="display:flex; text-align:left; gap:20px; align-items:center;">
-                <img src="${d.img}" style="width:100px; height:100px; object-fit:contain;">
+            <div class="about-card" style="display:flex; gap:20px; align-items:center;">
+                <img src="${d.img}" style="width:120px; height:120px; object-fit:contain;">
                 <div style="flex:1;">
                     <h3 style="margin:0; color:#3b82f6;">${d.name}</h3>
-                    <p style="font-size:0.7rem; color:#64748b; margin:5px 0;">MODEL: ${d.id}</p>
-                    <div style="display:flex; gap:10px; margin-top:10px;">
-                        <a href="${d.pdf}" target="_blank" class="btn-v" style="background:#f1f5f9; color:#0f172a!important; flex:1; text-align:center; font-size:0.7rem;">SPECS</a>
-                        <button onclick="openForm('${d.id}')" class="btn-v btn-blue" style="flex:1; font-size:0.7rem;">INQUIRY</button>
+                    <p style="font-size:0.75rem; margin:10px 0;">MODEL: ${d.id}</p>
+                    <div style="display:flex; gap:10px;">
+                        <a href="${d.pdf}" target="_blank" class="btn-v btn-gray" style="flex:1; text-align:center;">SPECS</a>
+                        <button onclick="openForm('${d.id}')" class="btn-v btn-blue" style="flex:1;">INQUIRY</button>
                     </div>
                 </div>
             </div>
         `).join('');
     }
 
-    function openForm(title) { document.getElementById('f-title').innerText = title; nav('contact'); }
+    function openForm(type) {
+        const l = document.getElementById('langSelect').value;
+        const title = document.getElementById('f-title');
+        if(type === 'DEMO') title.innerText = DICT[l].demo_h;
+        else if(type === 'SALES') title.innerText = "SALES CONSULTATION";
+        else title.innerText = type;
+        nav('contact');
+    }
 
-    // CLOCK RECOVERY
-    setInterval(() => {
+    setInterval(() => { 
         const now = new Date();
-        document.getElementById('clock').innerText = now.toLocaleDateString('it-IT') + ' ' + now.toLocaleTimeString('it-IT');
+        document.getElementById('clock').innerText = now.toLocaleDateString('it-IT') + ' ' + now.toLocaleTimeString('it-IT'); 
     }, 1000);
 
     window.onload = sync;
