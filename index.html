@@ -67,5 +67,98 @@
     }
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
 </script>
+    <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
+<script>
+    // 1. KITCHEN CREDENTIALS
+    const client = contentful.createClient({
+        space: 'i5s6f0gd4tb8',
+        accessToken: 'swHDtaIfiaaF3J7XXWlKy7Ta0qjNIgPrpUT9SI4VXeI'
+    });
+
+    let devices = [];
+
+    // 2. FETCH THE "MENU" (DATA)
+    async function fetchInventory() {
+        try {
+            const response = await client.getEntries({ content_type: 'device' });
+            devices = response.items.map(item => ({
+                id: item.fields.modelId || 'N/A',
+                name: item.fields.name || 'Unnamed Device',
+                cat: (item.fields.category || 'unassigned').toLowerCase(),
+                img: item.fields.deviceImage?.fields?.file?.url ? 'https:' + item.fields.deviceImage.fields.file.url : 'IMAGES/ui/coming-soon.png',
+                pdf: item.fields.specsPdf?.fields?.file?.url ? 'https:' + item.fields.specsPdf.fields.file.url : '#'
+            }));
+            renderCategories();
+        } catch (error) {
+            console.error("Kitchen Error: Could not fetch products", error);
+        }
+    }
+
+    // 3. SERVE THE CATEGORIES
+    function renderCategories() {
+        const categories = [
+            { id: 'vehicle', name: 'Vehicle Trackers', icon: '🚗' },
+            { id: 'asset', name: 'Asset Security', icon: '📦' },
+            { id: 'dashcam', name: 'Video Telematics', icon: '📹' },
+            { id: 'obd', name: 'OBD Solutions', icon: '🔌' }
+        ];
+
+        const anchor = document.getElementById('cat-anchor');
+        if (!anchor) return;
+
+        anchor.innerHTML = categories.map(cat => `
+            <div class="about-card" style="text-align:center; cursor:pointer; transition:0.3s;" onclick="renderDeviceList('${cat.id}')">
+                <span style="font-size:3rem;">${cat.icon}</span>
+                <h3 style="margin-top:15px;">${cat.name}</h3>
+                <button class="btn-v btn-blue" style="width:100%;">View Collection</button>
+            </div>
+        `).join('');
+    }
+
+    // 4. SERVE THE DISHES (DEVICES)
+    function renderDeviceList(filter) {
+        nav('list-view'); // Move to the list display
+        const grid = document.getElementById('gridAnchor');
+        const filtered = devices.filter(d => d.cat === filter);
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:100px;">
+                <h2>No items currently available in this category.</h2>
+                <button onclick="nav('prod-menu')" class="btn-v btn-navy">Back to Menu</button>
+            </div>`;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(d => `
+            <div class="about-card" style="display:flex; gap:20px; align-items:center;">
+                <img src="${d.img}" style="width:120px; height:120px; object-fit:contain; background:#f8fafc; border-radius:10px;">
+                <div style="flex:1;">
+                    <h3 style="margin:0; color:#007bff;">${d.name}</h3>
+                    <p style="font-size:0.8rem; color:#64748b; margin:5px 0;">Model: ${d.id}</p>
+                    <div style="display:flex; gap:10px; margin-top:15px;">
+                        <a href="${d.pdf}" target="_blank" class="btn-v btn-gray" style="flex:1; text-align:center;">Specs</a>
+                        <button onclick="nav('contact')" class="btn-v btn-blue" style="flex:1;">Inquiry</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // 5. NAVIGATION SYSTEM
+    function nav(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) target.classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    // RUN ON LOAD
+    window.onload = fetchInventory;
+    setInterval(() => { 
+        const clock = document.getElementById('clock');
+        if(clock) clock.innerText = new Date().toLocaleString('it-IT'); 
+    }, 1000);
+</script>
 </body>
 </html>
+
