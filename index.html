@@ -138,8 +138,8 @@
 <footer>
     <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span></div>
     <div style="display:flex; gap:20px;">
-       <a href="DOCS/LEGAL/terms-of-service.pdf" target="_blank" style="color:white; text-decoration:none;">TERMS</a>
-       <a href="DOCS/LEGAL/privacy-policy.pdf" target="_blank" style="color:white; text-decoration:none;">PRIVACY</a>
+       <a href="terms.html" class="footer-link">TERMS</a>
+        <a href="privacy.html" class="footer-link">PRIVACY</a>
     </div>
 </footer>
 
@@ -245,25 +245,42 @@
         renderCats();
     }
 
-    document.getElementById('vanguardForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const l = document.getElementById('langSelect').value;
-        const btn = document.getElementById('btn-submit');
-        btn.disabled = true; btn.innerText = "...";
+   document.getElementById('vanguardForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const l = document.getElementById('langSelect').value;
+    const btn = document.getElementById('btn-submit');
+    
+    // 1. Permanent lock to prevent multiple emails
+    btn.disabled = true; 
+    btn.innerText = "TRANSMITTING...";
 
-        fetch('https://api.web3forms.com/submit', {
+    // 2. Determine subject based on where the user is
+    // This solves your filtering problem in your inbox
+    const currentSubject = document.querySelector('.view:not(.hidden) h1')?.innerText || "General Inquiry";
+    
+    const formData = new FormData(this);
+    formData.append("subject", `VANGUARD [${l.toUpperCase()}]: ${currentSubject}`);
+
+    try {
+        const res = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify(Object.fromEntries(new FormData(this)))
-        })
-        .then(res => {
-            if (res.status == 200) {
-                showToast(TXT[l].msg_success);
-                this.reset();
-                setTimeout(() => nav('home'), 2500);
-            }
-        })
-        .finally(() => { btn.disabled = false; btn.innerText = TXT[l].submit; });
+            body: formData // Sending as FormData is more reliable for Web3Forms hidden fields
+        });
+
+        if (res.ok) {
+            showToast("TRANSMISSION SUCCESSFUL"); // Direct string to ensure no translation gaps
+            this.reset();
+            // Redirect to home after 3 seconds so they can actually read the success message
+            setTimeout(() => nav('home'), 3000);
+        } else {
+            throw new Error('Server Error');
+        }
+    } catch (err) {
+        showToast("ERROR - PLEASE RETRY");
+        btn.disabled = false; // Only re-enable if it actually failed
+        btn.innerText = TXT[l].submit;
+    }
+});
     });
 
     setInterval(() => {
@@ -275,3 +292,4 @@
 </script>
 </body>
 </html>
+
