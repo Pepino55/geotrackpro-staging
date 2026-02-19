@@ -6,6 +6,13 @@
     <title>GeoTrackPro | Vanguard Enterprise</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* Essential UI patches to ensure the Language Button and Layout are locked */
+        .lang-wrapper { background: rgba(0,0,0,0.1); border-radius: 20px; padding: 2px 10px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.3); }
+        select#langSelect { background: transparent; color: white; border: none; font-weight: 800; font-size: 0.65rem; cursor: pointer; outline: none; text-transform: uppercase; }
+        select#langSelect option { color: black; }
+        .contact-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; background: white; padding: 50px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 1400px; margin: 0 auto; }
+    </style>
 </head>
 <body>
 
@@ -18,21 +25,24 @@
     <div class="nav-group">
         <button onclick="nav('prod-menu')" class="btn-v btn-blue">PRODUCTS</button>
         <button onclick="nav('contact')" class="btn-v btn-blue">CONTACT</button>
-        <button onclick="nav('contact')" class="btn-v btn-purple">DEMO REQUEST</button>
+        <button onclick="openForm('DEMO REQUEST')" class="btn-v" style="background:#6366f1;">DEMO REQUEST</button>
         <button onclick="window.open('https://tracksolidpro.com')" class="btn-v btn-green">PLATFORM</button>
-        <select style="background:var(--accent); color:white; border:none; border-radius:20px; padding:5px 10px; font-weight:800; font-size:0.6rem; cursor:pointer;">
-            <option>EN</option>
-            <option>IT</option>
-        </select>
+        
+        <div class="lang-wrapper">
+            <select id="langSelect">
+                <option value="en">EN</option>
+                <option value="it">IT</option>
+            </select>
+        </div>
     </div>
 </header>
 
 <div id="home" class="view active" style="padding:0;">
     <div class="hero">
         <h1>VANGUARD GLOBAL</h1>
-        <div style="display:flex; gap:15px;">
-            <button onclick="nav('prod-menu')" class="btn-v btn-blue" style="padding:15px 30px;">EXPLORE CATALOG</button>
-            <button onclick="nav('contact')" class="btn-v" style="padding:15px 30px; background:white; color:#0f172a!important;">SALES CONSULTATION</button>
+        <div style="display:flex; gap:15px; margin-top:30px;">
+            <button onclick="nav('prod-menu')" class="btn-v btn-blue" style="padding:15px 35px;">EXPLORE CATALOG</button>
+            <button onclick="openForm('SALES CONSULTATION')" class="btn-v" style="padding:15px 35px; background:white; color:#0f172a!important;">SALES CONSULTATION</button>
         </div>
     </div>
 </div>
@@ -41,14 +51,40 @@
     <h1 style="font-size: 3rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block;">THE VANGUARD STANDARD</h1>
     <p style="font-size: 1.2rem; color: #475569; margin: 20px 0 40px;">Global Asset Intelligence for the Modern Enterprise.</p>
     <div class="about-grid">
-        <div class="about-card"><h3>Our Mission</h3><p>To provide an unblinking eye over your most valuable assets.</p></div>
-        <div class="about-card"><h3>Global Reach</h3><p>Hardware engineered for international connectivity.</p></div>
-        <div class="about-card"><h3>Adaptive Security</h3><p>Custom-tailored configurations for your operations.</p></div>
+        <div class="about-card"><h3>Our Mission</h3><p>Providing unblinking oversight for global assets with military-grade precision.</p></div>
+        <div class="about-card"><h3>Global Reach</h3><p>Connectivity solutions engineered for international logistics and diverse operational landscapes.</p></div>
+        <div class="about-card"><h3>Adaptive Security</h3><p>Custom telemetry configurations developed specifically for your fleet requirements.</p></div>
     </div>
 </div>
 
-<div id="prod-menu" class="view"><h1>PRODUCTS</h1><div id="cat-anchor"></div></div>
-<div id="contact" class="view"><h1>CONTACT US</h1></div>
+<div id="prod-menu" class="view">
+    <h1 style="font-weight:800; margin-bottom:40px;">HARDWARE SHOWROOM</h1>
+    <div id="cat-anchor" class="about-grid">
+        </div>
+</div>
+
+<div id="list-view" class="view">
+    <button onclick="nav('prod-menu')" class="btn-v btn-navy" style="margin-bottom:30px;">← BACK TO CATEGORIES</button>
+    <div id="gridAnchor" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:25px;">
+        </div>
+</div>
+
+<div id="contact" class="view">
+    <div class="contact-container">
+        <div>
+            <h2 id="f-title" style="font-weight:800; font-size:2.5rem; margin-top:0;">CONNECT</h2>
+            <form action="https://formspree.io/f/mwvnvzee" method="POST">
+                <input type="text" name="name" placeholder="Full Name *" required>
+                <input type="email" name="email" placeholder="Business Email *" required>
+                <textarea name="message" rows="5" placeholder="Message *" required></textarea>
+                <button type="submit" class="btn-v btn-blue" style="width:100%; height:55px;">SEND INQUIRY</button>
+            </form>
+        </div>
+        <div style="background:#eee; border-radius:20px; overflow:hidden;">
+            <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0192!2d-122.4194!3d37.7749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ2JzI5LjYiTiAxMjLCsDI1JzEwLjEiVw!5e0!3m2!1sen!2sit!4v1634567890123!5m2!1sen!2sit"></iframe>
+        </div>
+    </div>
+</div>
 
 <footer>
     <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="status-led"></span></div>
@@ -58,107 +94,64 @@
     </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 <script>
-    function nav(id) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        const target = document.getElementById(id);
-        if(target) target.classList.add('active');
-        window.scrollTo(0,0);
-    }
-    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
-<script>
-    // 1. KITCHEN CREDENTIALS
-    const client = contentful.createClient({
-        space: 'i5s6f0gd4tb8',
-        accessToken: 'swHDtaIfiaaF3J7XXWlKy7Ta0qjNIgPrpUT9SI4VXeI'
+    const client = contentful.createClient({ 
+        space: 'i5s6f0gd4tb8', 
+        accessToken: 'swHDtaIfiaaF3J7XXWlKy7Ta0qjNIgPrpUT9SI4VXeI' 
     });
+    
+    let db = [];
 
-    let devices = [];
-
-    // 2. FETCH THE "MENU" (DATA)
-    async function fetchInventory() {
+    async function sync() {
         try {
-            const response = await client.getEntries({ content_type: 'device' });
-            devices = response.items.map(item => ({
-                id: item.fields.modelId || 'N/A',
-                name: item.fields.name || 'Unnamed Device',
-                cat: (item.fields.category || 'unassigned').toLowerCase(),
-                img: item.fields.deviceImage?.fields?.file?.url ? 'https:' + item.fields.deviceImage.fields.file.url : 'IMAGES/ui/coming-soon.png',
-                pdf: item.fields.specsPdf?.fields?.file?.url ? 'https:' + item.fields.specsPdf.fields.file.url : '#'
+            const res = await client.getEntries({ content_type: 'device' });
+            db = res.items.map(i => ({
+                id: i.fields.modelId || 'N/A',
+                name: i.fields.name || 'Device',
+                // EXACT SYNC with Contentful
+                cat: i.fields.category || '', 
+                img: i.fields.deviceImage?.fields?.file?.url ? 'https:' + i.fields.deviceImage.fields.file.url : 'IMAGES/ui/coming-soon.png',
+                pdf: i.fields.specsPdf?.fields?.file?.url ? 'https:' + i.fields.specsPdf.fields.file.url : '#'
             }));
-            renderCategories();
-        } catch (error) {
-            console.error("Kitchen Error: Could not fetch products", error);
+            renderCats();
+        } catch (e) { 
+            console.error("Sync Failed", e); 
         }
     }
 
-    // 3. SERVE THE CATEGORIES
-    function renderCategories() {
-        const categories = [
-            { id: 'vehicle', name: 'Vehicle Trackers', icon: '🚗' },
-            { id: 'asset', name: 'Asset Security', icon: '📦' },
-            { id: 'dashcam', name: 'Video Telematics', icon: '📹' },
-            { id: 'obd', name: 'OBD Solutions', icon: '🔌' }
+    function renderCats() {
+        // LOCKED TO CONTENTFUL STRINGS
+        const cats = [
+            { id: 'VEHICLE TRACKERS', icon: '🚗' },
+            { id: 'ASSETS TRACKERS', icon: '📦' },
+            { id: 'DASHCAM', icon: '📹' },
+            { id: 'OBD', icon: '🔌' }
         ];
-
+        
         const anchor = document.getElementById('cat-anchor');
-        if (!anchor) return;
+        if(!anchor) return;
 
-        anchor.innerHTML = categories.map(cat => `
-            <div class="about-card" style="text-align:center; cursor:pointer; transition:0.3s;" onclick="renderDeviceList('${cat.id}')">
-                <span style="font-size:3rem;">${cat.icon}</span>
-                <h3 style="margin-top:15px;">${cat.name}</h3>
-                <button class="btn-v btn-blue" style="width:100%;">View Collection</button>
+        anchor.innerHTML = cats.map(c => `
+            <div class="about-card" style="text-align:center; cursor:pointer;" onclick="renderList('${c.id}')">
+                <div style="font-size:3rem;">${c.icon}</div>
+                <h3 style="font-size:0.8rem; letter-spacing:1px; margin-top:15px;">${c.id}</h3>
             </div>
         `).join('');
     }
 
-    // 4. SERVE THE DISHES (DEVICES)
-    function renderDeviceList(filter) {
-        nav('list-view'); // Move to the list display
+    function renderList(filter) {
+        nav('list-view');
+        const items = db.filter(d => d.cat === filter);
         const grid = document.getElementById('gridAnchor');
-        const filtered = devices.filter(d => d.cat === filter);
-
-        if (filtered.length === 0) {
+        
+        if (items.length === 0) {
             grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:100px;">
-                <h2>No items currently available in this category.</h2>
-                <button onclick="nav('prod-menu')" class="btn-v btn-navy">Back to Menu</button>
+                <h2>No devices found in ${filter}</h2>
+                <button onclick="nav('prod-menu')" class="btn-v btn-navy">Back to Categories</button>
             </div>`;
             return;
         }
 
-        grid.innerHTML = filtered.map(d => `
-            <div class="about-card" style="display:flex; gap:20px; align-items:center;">
-                <img src="${d.img}" style="width:120px; height:120px; object-fit:contain; background:#f8fafc; border-radius:10px;">
-                <div style="flex:1;">
-                    <h3 style="margin:0; color:#007bff;">${d.name}</h3>
-                    <p style="font-size:0.8rem; color:#64748b; margin:5px 0;">Model: ${d.id}</p>
-                    <div style="display:flex; gap:10px; margin-top:15px;">
-                        <a href="${d.pdf}" target="_blank" class="btn-v btn-gray" style="flex:1; text-align:center;">Specs</a>
-                        <button onclick="nav('contact')" class="btn-v btn-blue" style="flex:1;">Inquiry</button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    // 5. NAVIGATION SYSTEM
-    function nav(id) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        const target = document.getElementById(id);
-        if (target) target.classList.add('active');
-        window.scrollTo(0, 0);
-    }
-
-    // RUN ON LOAD
-    window.onload = fetchInventory;
-    setInterval(() => { 
-        const clock = document.getElementById('clock');
-        if(clock) clock.innerText = new Date().toLocaleString('it-IT'); 
-    }, 1000);
-</script>
-</body>
-</html>
-
+        grid.innerHTML = items.map(d => `
+            <div class="about-card" style="display
