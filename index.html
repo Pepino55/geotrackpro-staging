@@ -152,4 +152,22 @@
                     <p style="font-size:0.7rem; color:#64748b; margin:5px 0;">MODEL: ${d.id}</p>
                     <div style="display:flex; gap:10px; margin-top:10px;">
                         <a href="${d.pdf}" target="_blank" class="btn-v" style="background:#f1f5f9; color:#0f172a!important; flex:1; text-align:center; font-size:0.7rem;">SPECS</a>
-                        <button onclick="openForm('${d.id}')" class
+                        <button onclick="openForm('${d.id}')" class="btn-v btn-blue" style="flex:1; font-size:0.7rem;">INQUIRY</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function openForm(title) { document.getElementById('f-title').innerText = title; nav('contact'); }
+
+    // CLOCK RECOVERY
+    setInterval(() => {
+        const now = new Date();
+        document.getElementById('clock').innerText = now.toLocaleDateString('it-IT') + ' ' + now.toLocaleTimeString('it-IT');
+    }, 1000);
+
+    window.onload = sync;
+</script>
+</body>
+</html>
