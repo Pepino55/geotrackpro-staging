@@ -3,339 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Sovereign v42.0</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --whatsapp: #25D366; --header-h: 75px; }
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 60px; }
-        
-        /* HEADER */
-        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s; }
-        .btn-v:hover { filter: brightness(1.1); transform: translateY(-1px); }
-        
-        /* HERO */
-        .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; min-height: 70vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
-        
-        /* VIEWS */
-        .view { display: none; padding: calc(var(--header-h) + 20px) 5%; min-height: 100vh; }
-        .view.active { display: block; }
-        
-        /* CATEGORIES & CARDS */
-        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 50px; }
-        .cat-card { background: white; padding: 25px; border-radius: 20px; text-align: center; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.3s; }
-        .cat-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .cat-card span { font-size: 2rem; display: block; margin-bottom: 8px; }
-        
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 450px)); gap: 25px; margin-top: 30px; justify-content: center; }
-        .card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; padding: 25px; display: flex; gap: 20px; align-items: stretch; height: 320px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .card-img { flex: 0 0 130px; background: #fcfcfc; border-radius: 15px; display: flex; align-items: center; justify-content: center; padding: 10px; border: 1px solid #f1f5f9; }
-        .card-img img { width: 100%; max-height: 140px; object-fit: contain; }
-        .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
-        
-        /* TOAST NOTIFICATION */
-        #toast {
-            visibility: hidden; min-width: 280px; background-color: var(--navy); color: #fff; text-align: center;
-            border-radius: 12px; padding: 16px; position: fixed; z-index: 10001; left: 50%; bottom: 80px;
-            transform: translateX(-50%); border: 1px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            font-weight: 800; font-size: 0.8rem;
-        }
-        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 80px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 80px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-
-        /* FOOTER */
-        footer { background: var(--navy); color: white; height: 50px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
-        .led-dot { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; display: inline-block; margin-left: 5px; }
-    </style>
+    <title>GeoTrackPro | Vanguard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="toast">TRANSMISSION SUCCESSFUL</div>
-
-<header>
-    <div style="display:flex; align-items:center; gap:15px;">
-        <img src="IMAGES/ui/logo.png" height="30" onclick="nav('home')" style="cursor:pointer" alt="Logo">
-        <button onclick="nav('about-us')" class="btn-v" id="nav-about" style="background:#475569;">About Us</button>
-        <button onclick="nav('home')" class="btn-v" id="nav-home" style="background:#1e293b;">Home</button>
-    </div>
-    <div style="display:flex; gap:8px;">
-        <button onclick="nav('prod-menu')" class="btn-v" id="nav-prod">PRODUCTS</button>
-        <button onclick="openForm('CONTACT')" class="btn-v" id="nav-cont">Contact</button>
-        <button onclick="openForm('DEMO REQUEST')" class="btn-v" id="nav-demo" style="background:#6366f1;">Demo Request</button>
-        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" id="nav-plat" style="background:#059669;">PLATFORM</button>
-    </div>
-    <div>
-        <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none; width: auto;">
-            <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option><option value="fr">FR</option>
-        </select>
-    </div>
-</header>
-
-<div id="home" class="view active" style="padding:0;">
-    <section class="hero">
-        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
-        <div style="display:flex; gap:15px; margin-top:20px;">
-            <button onclick="nav('prod-menu')" class="btn-v" id="hero-btn-1" style="padding:15px 40px;">Explore Catalog</button>
-            <button onclick="openForm('SALES CONSULTATION')" class="btn-v" id="hero-btn-2" style="background:white; color:black!important; padding:15px 40px;">Sales Consultation</button>
-        </div>
-    </section>
-</div>
-
-<div id="about-us" class="view">
-    <div style="max-width: 1100px; margin: 0 auto; line-height: 1.8; color: #1e293b;">
-        <h2 id="ab-title" style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 30px;">THE VANGUARD STANDARD</h2>
-        <p id="ab-subtitle" style="font-size: 1.1rem; font-weight: 600;"></p>
-        <p id="ab-p1"></p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;">
-            <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
-                <h3 id="ab-m-title" style="margin-top:0; color: var(--accent);">Our Mission</h3>
-                <p id="ab-m-p" style="font-size: 0.9rem; margin-bottom:0;"></p>
-            </div>
-            <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
-                <h3 id="ab-g-title" style="margin-top:0; color: var(--accent);">Global Reach</h3>
-                <p id="ab-g-p" style="font-size: 0.9rem; margin-bottom:0;"></p>
-            </div>
-            <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
-                <h3 id="ab-s-title" style="margin-top:0; color: var(--accent);">Adaptive Security</h3>
-                <p id="ab-s-p" style="font-size: 0.9rem; margin-bottom:0;"></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="prod-menu" class="view"><div class="cat-grid" id="cat-anchor"></div></div>
-<div id="list-view" class="view">
-    <button onclick="nav('prod-menu')" id="btn-back" class="btn-v" style="background:#64748b; margin-bottom:20px;">← Back</button>
-    <div class="product-grid" id="gridAnchor"></div>
-</div>
-
-<div id="contact" class="view">
-    <div class="contact-stack">
-        <form id="vanguardForm">
-            <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
-            <h2 id="f-title" style="margin:0 0 20px 0;">CONTACT</h2>
-            <input type="text" name="name" id="in-name" placeholder="Full Name *" required>
-            <input type="text" name="company" id="in-comp" placeholder="Company *" required>
-            <input type="email" name="email" id="in-email" placeholder="Email *" required>
-            <input type="tel" name="phone" id="in-tel" placeholder="Phone *" required>
-            <select name="country" id="in-country" required>
-                <option value="">Select Country *</option>
-                <option value="US">United States</option><option value="IT">Italy</option>
-                <option value="ES">Spain</option><option value="FR">France</option>
-                <option value="GLOBAL">Other</option>
+    <nav>
+        <div class="logo">GeoTrackPro®</div>
+        <div class="nav-links">
+            <button onclick="nav('home')">HOME</button>
+            <button onclick="nav('contact')">CONTACT</button>
+            <select id="langSelect" onchange="updateLang(this.value)">
+                <option value="en">EN</option>
+                <option value="it">IT</option>
+                <option value="fr">FR</option>
+                <option value="es">ES</option>
             </select>
-            <textarea name="message" id="in-msg" rows="4" placeholder="Message *" required></textarea>
-            <button type="submit" id="btn-submit" class="btn-v" style="width:100%; height:45px;">SEND INQUIRY</button>
-        </form>
-        <div style="border-radius:20px; overflow:hidden; background:#eee; min-height: 300px;">
-             <iframe src="http://googleusercontent.com/maps.google.com/9" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
-    </div>
-</div>
+    </nav>
 
-<footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span></div>
-    <div style="display:flex; gap:20px;">
-       <a href="terms.html" class="footer-link">TERMS</a>
-        <a href="privacy.html" class="footer-link">PRIVACY</a>
-    </div>
-</footer>
+    <main>
+        <section id="view-home" class="view">
+            <h1>VANGUARD GLOBAL</h1>
+        </section>
 
-<script>
-    // 1. DATA WAREHOUSE (Clean & Minimal for now)
-const WAREHOUSE = [
-    { id: 'VL103', cat: 'vehicle', name: 'VL103', specs: 'vl103.pdf' },
-    { id: 'LL301', cat: 'asset', name: 'LL301', specs: 'll301.pdf' }
-];
-
-const TXT = {
-    en: { submit: "SEND INQUIRY", success: "TRANSMISSION SUCCESSFUL" },
-    it: { submit: "INVIA", success: "TRASMISSIONE COMPLETATA" },
-    fr: { submit: "ENVOYER", success: "TRANSMISSION RÉUSSIE" },
-    es: { submit: "ENVIAR", success: "TRANSMISIÓN EXITOSA" }
-};
-
-// 2. CORE ENGINE
-function init() {
-    updateClock();
-    setInterval(updateClock, 1000);
-    renderCats();
-    // Re-bind the form listener every time we init to ensure it's active
-    const form = document.getElementById('vanguardForm');
-    if (form) {
-        form.onsubmit = handleSubmission;
-    }
-}
-
-function updateClock() {
-    const el = document.getElementById('footer-clock');
-    if (el) {
-        const now = new Date();
-        const ts = now.toLocaleString('en-GB', { hour12: false }).replace(',', ' |');
-        el.innerText = `© 2026 GEOTRACKPRO | ${ts}`;
-    }
-}
-
-// 3. THE FORM HANDLER (Fixed & Protected)
-async function handleSubmission(e) {
-    e.preventDefault();
-    const l = document.getElementById('langSelect').value;
-    const btn = document.getElementById('btn-submit');
-    
-    btn.disabled = true;
-    btn.innerText = "TRANSMITTING...";
-
-    const formData = new FormData(e.target);
-    formData.append("subject", `VANGUARD [${l.toUpperCase()}] Inquiry`);
-
-    try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            body: formData
-        });
-        if (res.ok) {
-            showToast(TXT[l].success);
-            e.target.reset();
-            setTimeout(() => nav('home'), 3000);
-        }
-    } catch (err) {
-        showToast("CONNECTION ERROR");
-    } finally {
-        btn.disabled = false;
-        btn.innerText = TXT[l].submit;
-    }
-}
-
-// 4. NAVIGATION & RENDERING
-function nav(viewId) {
-    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
-    document.getElementById('view-' + viewId).classList.remove('hidden');
-    window.scrollTo(0,0);
-}
-
-function renderCats() {
-    // Your category rendering logic here...
-}
-
-function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.innerText = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-// START
-window.onload = init;
-
-    function nav(id) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        if(id === 'prod-menu') renderCats();
-        window.scrollTo(0,0);
-    }
-
-    function renderCats() {
-        const lang = document.getElementById('langSelect').value;
-        const t = TXT[lang] || TXT.en;
-        const cats = [
-            { id: 'vehicle', n: t.v, i: '🚗' }, { id: 'asset', n: t.a, i: '📦' },
-            { id: 'dashcam', n: t.dc, i: '📹' }, { id: 'obd', n: t.o, i: '🔌' },
-            { id: 'personal', n: t.s, i: '👤' }, { id: 'tags', n: t.tg, i: '🏷️' }, { id: 'acc', n: t.ac, i: '⚙️' }
-        ];
-        document.getElementById('cat-anchor').innerHTML = cats.map(c => 
-            `<div class="cat-card" onclick="renderList('${c.id}')"><span>${c.i}</span>${c.n}</div>`
-        ).join('');
-    }
-
-    function renderList(cat) {
-        nav('list-view');
-        const items = WAREHOUSE.filter(d => d.cat.includes(cat));
-        document.getElementById('gridAnchor').innerHTML = items.map(d => `
-            <div class="card">
-                <div class="card-img"><img src="IMAGES/${cat}/${d.id.toLowerCase()}.png" onerror="this.src='IMAGES/ui/coming-soon.png';"></div>
-                <div class="card-info">
-                    <div><h4 style="margin:0; font-weight:800;">${d.name}</h4><p style="font-size:0.75rem;">${d.desc}</p></div>
-                    <div style="display:flex; gap:10px;"><a href="DOCS/SPECS/${d.id.toLowerCase()}.pdf" target="_blank" class="btn-v" style="flex:1; background:#64748b;">SPECS</a>
-                    <button onclick="openForm('${d.id}')" class="btn-v" style="flex:1;">INQUIRY</button></div>
+        <section id="view-contact" class="view hidden">
+            <h1>CONNECT</h1>
+            <form id="vanguardForm">
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                <div class="form-grid">
+                    <input type="text" name="name" placeholder="Full Name *" required>
+                    <input type="email" name="email" placeholder="Business Email *" required>
+                    <textarea name="message" placeholder="Message *" required></textarea>
                 </div>
-            </div>`).join('');
-    }
+                <button type="submit" id="btn-submit">SEND INQUIRY</button>
+            </form>
+        </section>
+    </main>
 
-    function openForm(t) {
-        document.getElementById('f-title').innerText = t;
-        nav('contact');
-    }
+    <div id="toast" style="display:none; position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:black; color:white; padding:15px; border-radius:5px;"></div>
 
-    function updateLang(l) {
-        const t = TXT[l] || TXT.en;
-        document.getElementById('nav-about').innerText = t.ab;
-        document.getElementById('nav-home').innerText = t.home;
-        document.getElementById('nav-prod').innerText = t.p;
-        document.getElementById('nav-cont').innerText = t.cont;
-        document.getElementById('nav-demo').innerText = t.demo;
-        document.getElementById('nav-plat').innerText = t.plat;
-        document.getElementById('h-title').innerText = t.h;
-        document.getElementById('hero-btn-1').innerText = t.hero_b1;
-        document.getElementById('hero-btn-2').innerText = t.hero_b2;
-        document.getElementById('ab-title').innerText = t.abT;
-        document.getElementById('ab-subtitle').innerText = t.abS;
-        document.getElementById('ab-p1').innerText = t.abP1;
-        document.getElementById('ab-m-p').innerText = t.abMP;
-        document.getElementById('ab-g-p').innerText = t.abGP;
-        document.getElementById('ab-s-p').innerText = t.abSP;
-        document.getElementById('btn-submit').innerText = t.submit;
-        document.getElementById('btn-back').innerText = t.back;
-        renderCats();
-    }
+    <footer class="vanguard-footer">
+        <div class="footer-left">
+            <span id="footer-clock"></span>
+            <span class="status-dot"></span>
+        </div>
+        <div class="footer-right">
+            <a href="terms.pdf" target="_blank" class="footer-link">TERMS</a>
+            <a href="privacy.pdf" target="_blank" class="footer-link">PRIVACY</a>
+        </div>
+    </footer>
 
-   document.getElementById('vanguardForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const l = document.getElementById('langSelect').value;
-    const btn = document.getElementById('btn-submit');
-    
-    // 1. Permanent lock to prevent multiple emails
-    btn.disabled = true; 
-    btn.innerText = "TRANSMITTING...";
-
-    // 2. Determine subject based on where the user is
-    // This solves your filtering problem in your inbox
-    const currentSubject = document.querySelector('.view:not(.hidden) h1')?.innerText || "General Inquiry";
-    
-    const formData = new FormData(this);
-    formData.append("subject", `VANGUARD [${l.toUpperCase()}]: ${currentSubject}`);
-
-    try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            body: formData // Sending as FormData is more reliable for Web3Forms hidden fields
-        });
-
-        if (res.ok) {
-            showToast("TRANSMISSION SUCCESSFUL"); // Direct string to ensure no translation gaps
-            this.reset();
-            // Redirect to home after 3 seconds so they can actually read the success message
-            setTimeout(() => nav('home'), 3000);
-        } else {
-            throw new Error('Server Error');
-        }
-    } catch (err) {
-        showToast("ERROR - PLEASE RETRY");
-        btn.disabled = false; // Only re-enable if it actually failed
-        btn.innerText = TXT[l].submit;
-    }
-});
-    });
-
-    setInterval(() => {
-        const now = new Date();
-        document.getElementById('clock').innerText = now.toLocaleDateString('it-IT') + ' ' + now.toLocaleTimeString('it-IT');
-    }, 1000);
-
-    window.onload = () => { updateLang('en'); };
-</script>
+    <script src="Main.js"></script>
 </body>
 </html>
-
-
