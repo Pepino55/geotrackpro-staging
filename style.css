@@ -11,6 +11,17 @@ header { background: var(--gold); height: var(--header-h); position: fixed; top:
 .btn-purple { background: #6366f1; }
 .btn-green { background: #10b981; }
 .btn-v:hover { filter: brightness(1.2); transform: translateY(-1px); }
+/* Add this after .btn-v:hover */
+#btn-submit {
+    max-width: 400px; 
+    margin: 20px auto; 
+    display: block;
+    width: 100%; /* Ensures it's responsive but capped by max-width */
+    padding: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
 .view { display: none; padding: calc(var(--header-h) + 40px) 7%; min-height: 100vh; }
 .view.active { display: block; }
@@ -25,3 +36,4 @@ header { background: var(--gold); height: var(--header-h); position: fixed; top:
 
 footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.7rem; z-index: 10000; }
 .status-led { height: 10px; width: 10px; background: #00FF00; border-radius: 50%; display: inline-block; margin-left: 10px; box-shadow: 0 0 10px #00FF00; }
+
