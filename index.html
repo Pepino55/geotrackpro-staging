@@ -154,4 +154,38 @@
         }
 
         grid.innerHTML = items.map(d => `
-            <div class="about-card" style="display
+            <div class="about-card" style="display:flex; gap:20px; align-items:center;">
+                <div style="flex:0 0 120px; height:120px; display:flex; align-items:center; justify-content:center; background:#f8fafc; border-radius:10px;">
+                    <img src="${d.img}" style="max-width:100%; max-height:100%; object-fit:contain;">
+                </div>
+                <div style="flex:1;">
+                    <h3 style="margin:0; font-size:1.1rem; color:#007bff;">${d.name}</h3>
+                    <p style="font-size:0.75rem; color:#64748b; margin:8px 0;">MODEL: ${d.id}</p>
+                    <div style="display:flex; gap:10px; margin-top:15px;">
+                        <a href="${d.pdf}" target="_blank" class="btn-v btn-gray" style="flex:1; text-align:center;">SPECS SHEET</a>
+                        <button onclick="openForm('${d.id}')" class="btn-v btn-blue" style="flex:1;">INQUIRY</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function nav(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        const target = document.getElementById(id);
+        if(target) target.classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function openForm(title) {
+        document.getElementById('f-title').innerText = title;
+        nav('contact');
+    }
+
+    window.onload = sync;
+    setInterval(() => { 
+        document.getElementById('clock').innerText = new Date().toLocaleString('it-IT'); 
+    }, 1000);
+</script>
+</body>
+</html>
