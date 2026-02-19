@@ -144,45 +144,90 @@
 </footer>
 
 <script>
-    const WAREHOUSE = [
-        { id: "VL103", cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
-        { id: "VL111", cat: ["vehicle"], name: "VL111", desc: "High-IO LTE terminal.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
-        { id: "LL301", cat: ["asset"], name: "LL301", desc: "Powerful wireless tracker.", features:[{icon:"🔋",label:"Battery"}] },
-        { id: "JC400", cat: ["dashcam"], name: "JC400", desc: "Pro AI dashcam.", features:[{icon:"🤖",label:"AI"}] },
-        { id: "VL505", cat: ["obd"], name: "VL505", desc: "Plug & Play OBDII.", features:[{icon:"🔌",label:"OBD"}] }
-    ];
+    // 1. DATA WAREHOUSE (Clean & Minimal for now)
+const WAREHOUSE = [
+    { id: 'VL103', cat: 'vehicle', name: 'VL103', specs: 'vl103.pdf' },
+    { id: 'LL301', cat: 'asset', name: 'LL301', specs: 'll301.pdf' }
+];
 
-    const TXT = {
-        en: { 
-            h: "VANGUARD GLOBAL", p: "PRODUCTS", ab: "ABOUT US", home: "HOME", cont: "CONTACT", demo: "DEMO REQUEST", plat: "PLATFORM",
-            v: "Vehicle", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags",
-            abT: "THE VANGUARD STANDARD", abS: "Global Asset Intelligence for the Modern Enterprise.",
-            abP1: "Vanguard Global provides hardware and telemetry to secure assets and eliminate variables.",
-            abMT: "Our Mission", abMP: "To provide an unblinking eye over your most valuable assets.",
-            abGT: "Global Reach", abGP: "Hardware engineered for international connectivity.",
-            abST: "Adaptive Security", abSP: "Custom-tailored configurations for your operations.",
-            fName: "Full Name *", cName: "Company *", email: "Email *", phone: "Phone *", help: "Message *", selectC: "Select Country *", submit: "SEND INQUIRY",
-            msg_success: "TRANSMISSION SUCCESSFUL", hero_b1: "Explore Catalog", hero_b2: "Sales Consultation", back: "← Back"
-        },
-        it: { 
-            h: "VANGUARD GLOBALE", p: "PRODOTTI", ab: "CHI SIAMO", home: "HOME", cont: "CONTATTI", demo: "DEMO", plat: "PIATTAFORMA",
-            v: "Veicoli", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personale", ac: "Acc.", tg: "Tags",
-            abT: "LO STANDARD VANGUARD", abS: "Intelligenza globale per l'impresa moderna.",
-            abP1: "Vanguard Global fornisce strumenti di precisione per proteggere i vostri asset strategici.",
-            abMT: "Missione", abMP: "Eliminare i punti ciechi con l'innovazione tecnologica.",
-            abGT: "Portata Globale", abGP: "Hardware progettato per la connettività internazionale.",
-            abST: "Sicurezza Adattiva", abSP: "Configurazioni su misura per le vostre esigenze.",
-            fName: "Nome *", cName: "Azienda *", email: "Email *", phone: "Tel *", help: "Messaggio *", selectC: "Paese *", submit: "INVIA",
-            msg_success: "TRASMISSIONE COMPLETATA", hero_b1: "Esplora Catalogo", hero_b2: "Consulenza Vendite", back: "← Indietro"
-        }
-    };
+const TXT = {
+    en: { submit: "SEND INQUIRY", success: "TRANSMISSION SUCCESSFUL" },
+    it: { submit: "INVIA", success: "TRASMISSIONE COMPLETATA" },
+    fr: { submit: "ENVOYER", success: "TRANSMISSION RÉUSSIE" },
+    es: { submit: "ENVIAR", success: "TRANSMISIÓN EXITOSA" }
+};
 
-    function showToast(msg) {
-        const t = document.getElementById("toast");
-        t.innerText = msg;
-        t.className = "show";
-        setTimeout(() => { t.className = ""; }, 3000);
+// 2. CORE ENGINE
+function init() {
+    updateClock();
+    setInterval(updateClock, 1000);
+    renderCats();
+    // Re-bind the form listener every time we init to ensure it's active
+    const form = document.getElementById('vanguardForm');
+    if (form) {
+        form.onsubmit = handleSubmission;
     }
+}
+
+function updateClock() {
+    const el = document.getElementById('footer-clock');
+    if (el) {
+        const now = new Date();
+        const ts = now.toLocaleString('en-GB', { hour12: false }).replace(',', ' |');
+        el.innerText = `© 2026 GEOTRACKPRO | ${ts}`;
+    }
+}
+
+// 3. THE FORM HANDLER (Fixed & Protected)
+async function handleSubmission(e) {
+    e.preventDefault();
+    const l = document.getElementById('langSelect').value;
+    const btn = document.getElementById('btn-submit');
+    
+    btn.disabled = true;
+    btn.innerText = "TRANSMITTING...";
+
+    const formData = new FormData(e.target);
+    formData.append("subject", `VANGUARD [${l.toUpperCase()}] Inquiry`);
+
+    try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: formData
+        });
+        if (res.ok) {
+            showToast(TXT[l].success);
+            e.target.reset();
+            setTimeout(() => nav('home'), 3000);
+        }
+    } catch (err) {
+        showToast("CONNECTION ERROR");
+    } finally {
+        btn.disabled = false;
+        btn.innerText = TXT[l].submit;
+    }
+}
+
+// 4. NAVIGATION & RENDERING
+function nav(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    document.getElementById('view-' + viewId).classList.remove('hidden');
+    window.scrollTo(0,0);
+}
+
+function renderCats() {
+    // Your category rendering logic here...
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.innerText = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// START
+window.onload = init;
 
     function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -292,4 +337,5 @@
 </script>
 </body>
 </html>
+
 
