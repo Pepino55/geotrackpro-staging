@@ -6,61 +6,54 @@
     <title>GeoTrackPro | Vanguard Operations</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #3E63DD; --navy: #1a202c; --gold-bg: #e8ddc7; --footer-bg: #0a0f1d; }
+        :root { --accent: #3E63DD; --navy: #0a0f1d; --gold-bg: #e8ddc7; --footer-bg: #05070a; }
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { margin: 0; background: #fff; color: var(--navy); min-height: 100vh; display: flex; flex-direction: column; }
+        body { margin: 0; background: #fff; color: #1a202c; min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* HEADER & NAVIGATION */
-        header { background: var(--gold-bg); padding: 12px 4%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        /* HEADER */
+        header { background: var(--gold-bg); padding: 12px 4%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; }
         .logo { height: 38px; cursor: pointer; }
-        .nav-links { display: flex; gap: 8px; align-items: center; }
+        .nav-links { display: flex; gap: 8px; }
         
-        .btn-v { padding: 10px 20px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; transition: 0.2s; color: white; text-decoration: none; }
+        .btn-v { padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; transition: 0.2s; color: white; }
         .btn-gray { background: #4a5568; }
         .btn-blue { background: #3182ce; }
         .btn-purple { background: #805ad5; }
         .btn-green { background: #38a169; }
         .btn-v:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
-        /* HERO */
-        .hero { flex: 1; min-height: 500px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('IMAGES/ui/hero-bg.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 20px; }
-        .hero h1 { font-size: 4rem; font-weight: 800; margin: 0; text-transform: uppercase; }
-        .hero p { font-size: 1.25rem; margin: 15px 0 35px; font-weight: 400; }
-        .hero-btns { display: flex; gap: 15px; }
-
-        /* VIEWS */
-        .view { display: none; flex: 1; padding: 60px 5%; animation: fadeIn 0.4s ease; }
+        /* VIEWS & LAYOUT */
+        .view { display: none; flex: 1; padding: 60px 5%; min-height: 70vh; animation: fadeIn 0.3s ease; }
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* CATALOG */
-        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; max-width: 1200px; margin: 40px auto; }
-        .cat-card { background: white; border: 1px solid #edf2f7; border-radius: 20px; padding: 40px 20px; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .cat-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
-        .cat-card span { font-size: 2.5rem; display: block; margin-bottom: 15px; }
-        .cat-card strong { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        /* HERO */
+        .hero { min-height: 500px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('IMAGES/ui/hero-bg.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; margin-top: -60px; }
+        
+        /* CATALOG GRID */
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; max-width: 1100px; margin: 0 auto; }
+        .cat-card { background: white; border: 1px solid #edf2f7; border-radius: 15px; padding: 30px 15px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .cat-card:hover { border-color: var(--accent); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .cat-card img { height: 40px; margin-bottom: 10px; }
 
         /* FOOTER */
-        footer { background: var(--footer-bg); color: white; padding: 20px 4%; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-weight: 600; }
-        .led { height: 9px; width: 9px; background: #00FF00; border-radius: 50%; display: inline-block; margin-left: 10px; box-shadow: 0 0 10px #00FF00; }
-        footer a { color: white; text-decoration: none; margin-left: 25px; opacity: 0.8; }
-        footer a:hover { opacity: 1; }
+        footer { background: var(--footer-bg); color: white; padding: 25px 4%; display: flex; align-items: center; justify-content: space-between; font-size: 0.7rem; }
+        .led { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; display: inline-block; margin-left: 8px; box-shadow: 0 0 8px #00FF00; }
+        footer a { color: white; text-decoration: none; margin-left: 20px; opacity: 0.7; }
 
-        .lang-select { background: #3182ce; color: white; border: none; padding: 10px 15px; border-radius: 50px; font-weight: 800; cursor: pointer; font-size: 0.75rem; }
-
-        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .nav-links { display: none; } }
+        .lang-select { background: #3182ce; color: white; border: none; padding: 8px 12px; border-radius: 50px; font-weight: 800; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="IMAGES/ui/logo.png" class="logo" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/180x40?text=GeoTrackPro'">
+    <img src="IMAGES/ui/logo.png" class="logo" onclick="nav('home')">
     <div class="nav-links">
         <button class="btn-v btn-gray" onclick="nav('about')" data-t="n_about">About Us</button>
         <button class="btn-v btn-gray" onclick="nav('home')" data-t="n_home">Home</button>
         <button class="btn-v btn-blue" onclick="nav('catalog')" data-t="n_prod">Products</button>
         <button class="btn-v btn-blue" onclick="nav('contact')" data-t="n_cont">Contact</button>
-        <button class="btn-v btn-purple" onclick="nav('contact')" data-t="n_demo">Demo Request</button>
+        <button class="btn-v btn-purple" onclick="setContactMode('demo')" data-t="n_demo">Demo Request</button>
         <button class="btn-v btn-green" onclick="window.open('https://geotrackpro.com','_blank')" data-t="n_plat">Platform</button>
         <select class="lang-select" id="langPicker" onchange="applyLang(this.value)">
             <option value="en">EN</option>
@@ -73,31 +66,41 @@
 
 <main id="view-home" class="view active" style="padding:0;">
     <section class="hero">
-        <h1 id="h-title">VANGUARD GLOBAL</h1>
-        <p id="h-sub">Sovereign Telemetry & Professional Asset Intelligence</p>
-        <div class="hero-btns">
-            <button class="btn-v btn-blue" style="padding:15px 35px; font-size:0.8rem;" onclick="nav('catalog')" data-t="h_explore">Explore Catalog</button>
-            <button class="btn-v" style="padding:15px 35px; font-size:0.8rem; background:white; color:var(--navy);" onclick="nav('contact')" data-t="h_sales">Sales Consultation</button>
-        </div>
+        <h1 style="font-size:3.5rem; font-weight:800; margin:0;" data-t="h_title">VANGUARD GLOBAL</h1>
+        <p style="font-size:1.2rem; margin:20px 0 40px;" data-t="h_sub">Sovereign Telemetry & Professional Asset Intelligence</p>
+        <button class="btn-v btn-blue" style="padding:15px 40px; font-size:0.8rem;" onclick="nav('catalog')" data-t="h_explore">Explore Catalog</button>
     </section>
 </main>
 
 <div id="view-catalog" class="view">
-    <h2 style="text-align:center; font-size:2.2rem; font-weight:800;" data-t="c_title">Product Categories</h2>
+    <h2 style="text-align:center; margin-bottom:40px;" data-t="c_title">Product Categories</h2>
     <div class="cat-grid">
-        <div class="cat-card" onclick="alert('Filtered: Vehicle')"><span>🚗</span><strong data-t="c_v">Vehicle</strong></div>
-        <div class="cat-card" onclick="alert('Filtered: Asset')"><span>📦</span><strong data-t="c_as">Asset</strong></div>
-        <div class="cat-card" onclick="alert('Filtered: Dashcam')"><span>📹</span><strong data-t="c_d">Dashcam</strong></div>
-        <div class="cat-card" onclick="alert('Filtered: OBD')"><span>🔌</span><strong data-t="c_o">OBD</strong></div>
-        <div class="cat-card" onclick="alert('Filtered: Personal')"><span>🏃</span><strong data-t="c_p">Personal</strong></div>
-        <div class="cat-card" onclick="alert('Filtered: Tags')"><span>🏷️</span><strong data-t="c_t">Tags</strong></div>
-        <div class="cat-card" onclick="alert('Filtered: Acc')"><span>⚙️</span><strong data-t="c_ac">Acc.</strong></div>
+        <div class="cat-card" onclick="nav('contact')"><img src="IMAGES/ui/icon-vehicle.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/744/744465.png'"><br><strong data-t="c_v">Vehicle</strong></div>
+        <div class="cat-card" onclick="nav('contact')"><img src="IMAGES/ui/icon-asset.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/679/679821.png'"><br><strong data-t="c_as">Asset</strong></div>
+        <div class="cat-card" onclick="nav('contact')"><img src="IMAGES/ui/icon-dashcam.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3066/3066444.png'"><br><strong data-t="c_d">Dashcam</strong></div>
+        <div class="cat-card" onclick="nav('contact')"><img src="IMAGES/ui/icon-obd.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2061/2061956.png'"><br><strong data-t="c_o">OBD</strong></div>
+        <div class="cat-card" onclick="nav('contact')"><img src="IMAGES/ui/icon-personal.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2813/2813033.png'"><br><strong data-t="c_p">Personal</strong></div>
+        <div class="cat-card" onclick="nav('contact')"><img src="IMAGES/ui/icon-tags.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/483/483504.png'"><br><strong data-t="c_t">Tags</strong></div>
+        <div class="cat-card" onclick="nav('contact')"><img src="IMAGES/ui/icon-acc.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3524/3524659.png'"><br><strong data-t="c_ac">Acc.</strong></div>
+    </div>
+</div>
+
+<div id="view-about" class="view">
+    <div style="max-width:800px; margin:0 auto; line-height:1.6;">
+        <h2 data-t="n_about">About Us</h2>
+        <p>GeoTrackPro is the vanguard of professional telematics. We deliver sovereign data control and high-precision tracking for global operations.</p>
     </div>
 </div>
 
 <div id="view-contact" class="view">
-    <h2 style="text-align:center;" data-t="n_cont">Contact</h2>
-    <p style="text-align:center;">Form integration active.</p>
+    <div style="max-width:500px; margin:0 auto; background:#f7fafc; padding:40px; border-radius:20px;">
+        <h2 id="contact-head" data-t="n_cont">Contact</h2>
+        <p id="contact-sub">Inquiry for Vanguard Systems</p>
+        <input type="text" placeholder="Full Name" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px;">
+        <input type="email" placeholder="Email Address" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px;">
+        <textarea placeholder="How can we help?" style="width:100%; padding:12px; height:100px; border:1px solid #ddd; border-radius:8px;"></textarea>
+        <button class="btn-v btn-blue" style="width:100%; margin-top:10px;" onclick="alert('Message Sent')">SEND REQUEST</button>
+    </div>
 </div>
 
 <footer>
@@ -110,53 +113,40 @@
 
 <script>
     const DICT = {
-        en: {
-            n_about: "About Us", n_home: "Home", n_prod: "Products", n_cont: "Contact", n_demo: "Demo Request", n_plat: "Platform",
-            h_title: "VANGUARD GLOBAL", h_sub: "Sovereign Telemetry & Professional Asset Intelligence", h_explore: "Explore Catalog", h_sales: "Sales Consultation",
-            c_title: "Product Categories", c_v: "Vehicle", c_as: "Asset", c_d: "Dashcam", c_o: "OBD", c_p: "Personal", c_t: "Tags", c_ac: "Acc."
-        },
-        it: {
-            n_about: "Chi Siamo", n_home: "Home", n_prod: "Prodotti", n_cont: "Contatti", n_demo: "Richiedi Demo", n_plat: "Piattaforma",
-            h_title: "VANGUARDIA GLOBALE", h_sub: "Intelligenza Strategica degli Asset e Telemetria", h_explore: "Esplora Catalogo", h_sales: "Consulenza Vendite",
-            c_title: "Categorie Prodotti", c_v: "Veicoli", c_as: "Asset", c_d: "Dashcam", c_o: "OBD", c_p: "Personale", c_t: "Tag", c_ac: "Acc."
-        },
-        es: {
-            n_about: "Nosotros", n_home: "Inicio", n_prod: "Productos", n_cont: "Contacto", n_demo: "Solicitar Demo", n_plat: "Plataforma",
-            h_title: "VANGUARDIA GLOBAL", h_sub: "Inteligencia Estratégica de Activos y Telemetría", h_explore: "Explorar Catálogo", h_sales: "Consultoría",
-            c_title: "Categorías", c_v: "Vehículos", c_as: "Activos", c_d: "Dashcam", c_o: "OBD", c_p: "Personal", c_t: "Etiquetas", c_ac: "Acc."
-        },
-        fr: {
-            n_about: "À Propos", n_home: "Accueil", n_prod: "Produits", n_cont: "Contact", n_demo: "Demande Démo", n_plat: "Plateforme",
-            h_title: "VANGUARD GLOBAL", h_sub: "Intelligence Stratégique et Télémétrie", h_explore: "Explorer", h_sales: "Consultation",
-            c_title: "Catégories", c_v: "Véhicules", c_as: "Actifs", c_d: "Dashcam", c_o: "OBD", c_p: "Personnel", c_t: "Tags", c_ac: "Acc."
-        }
+        en: { n_about: "About Us", n_home: "Home", n_prod: "Products", n_cont: "Contact", n_demo: "Demo Request", n_plat: "Platform", h_title: "VANGUARD GLOBAL", h_sub: "Sovereign Telemetry & Professional Asset Intelligence", h_explore: "Explore Catalog", c_title: "Product Categories", c_v: "Vehicle", c_as: "Asset", c_d: "Dashcam", c_o: "OBD", c_p: "Personal", c_t: "Tags", c_ac: "Acc." },
+        it: { n_about: "Chi Siamo", n_home: "Home", n_prod: "Prodotti", n_cont: "Contatti", n_demo: "Richiedi Demo", n_plat: "Piattaforma", h_title: "VANGUARDIA GLOBALE", h_sub: "Intelligenza Asset e Telemetria", h_explore: "Esplora Catalogo", c_title: "Categorie Prodotti", c_v: "Veicoli", c_as: "Asset", c_d: "Dashcam", c_o: "OBD", c_p: "Personale", c_t: "Tag", c_ac: "Acc." }
+        // Add ES/FR as needed...
     };
+
+    function nav(viewId) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('view-' + viewId).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function setContactMode(mode) {
+        const head = document.getElementById('contact-head');
+        const sub = document.getElementById('contact-sub');
+        if(mode === 'demo') {
+            head.innerText = "Request a Demo";
+            sub.innerText = "Schedule a technical walk-through of the Vanguard Platform.";
+        } else {
+            head.innerText = "Contact Us";
+            sub.innerText = "General inquiries for our operations team.";
+        }
+        nav('contact');
+    }
 
     function applyLang(lang) {
         document.querySelectorAll('[data-t]').forEach(el => {
             const key = el.getAttribute('data-t');
             if (DICT[lang][key]) el.innerText = DICT[lang][key];
         });
-        // Specific ID translations
-        document.getElementById('h-title').innerText = DICT[lang].h_title;
-        document.getElementById('h-sub').innerText = DICT[lang].h_sub;
     }
 
-    function nav(viewId) {
-        console.log("Navigating to:", viewId);
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        const target = document.getElementById('view-' + viewId);
-        if(target) target.classList.add('active');
-        window.scrollTo(0,0);
-    }
-
-    // Initialize
     window.onload = () => {
         applyLang('en');
-        setInterval(() => {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleString();
-        }, 1000);
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
     };
 </script>
 </body>
