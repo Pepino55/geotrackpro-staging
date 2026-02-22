@@ -3,181 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Sovereign System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>GeoTrackPro | Sovereign Build</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #3E63DD; --navy: #0a0f1d; --gold: #e8ddc7; --footer-bg: #05070a; --btn-h: 44px; }
+        :root { --accent: #3E63DD; --navy: #0a0f1d; --gold: #e8ddc7; --footer-bg: #05070a; }
         
-        /* ARCHITECTURAL ANCHORS */
-        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        body { margin: 0; display: flex; flex-direction: column; min-height: 100vh; font-family: 'Plus Jakarta Sans', sans-serif; background: #fff; }
-        main { flex: 1; }
+        /* 1. THE "ROCK" FOUNDATION */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+        main { flex: 1; position: relative; }
 
-        /* HEADER - LOCKED & VISIBLE */
+        /* 2. ANCHORED HEADER [cite: 1159] */
         header { 
             background: var(--gold); height: 80px; display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 4%; position: sticky; top: 0; z-index: 10000; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 0 4%; position: sticky; top: 0; z-index: 9999; box-shadow: 0 2px 15px rgba(0,0,0,0.1);
         }
-        .logo { height: 35px; cursor: pointer; }
-        
-        .nav-links { display: flex; gap: 8px; align-items: center; }
-        .btn-header { 
-            height: var(--btn-h); padding: 0 15px; border-radius: 4px; border: none; background: #2d3748; 
-            color: white; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; cursor: pointer;
-            display: flex; align-items: center; transition: 0.2s;
-        }
-        .btn-header:hover { filter: brightness(1.2); }
+        .logo { height: 32px; cursor: pointer; }
 
-        /* FOOTER - ANCHORED */
+        .nav-zone { display: flex; gap: 5px; align-items: center; }
+        .drop-btn { 
+            position: relative; height: 45px; padding: 0 12px; background: #2d3748; color: white; 
+            border: none; border-radius: 4px; font-weight: 800; font-size: 0.65rem; text-transform: uppercase; cursor: pointer;
+        }
+        .drop-content { 
+            display: none; position: absolute; top: 100%; left: 0; background: white; 
+            min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 4px; z-index: 10001;
+        }
+        .drop-btn:hover .drop-content { display: block; }
+        .drop-content a { color: var(--navy); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.7rem; border-bottom: 1px solid #eee; }
+        .drop-content a:hover { background: #f1f1f1; }
+
+        /* 3. ANCHORED FOOTER  */
         footer { 
-            background: var(--footer-bg); color: white; padding: 40px 4%; display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; border-top: 3px solid var(--accent);
+            background: var(--footer-bg); color: white; padding: 20px 4%; display: flex; 
+            justify-content: space-between; align-items: center; font-size: 0.7rem; border-top: 2px solid var(--accent);
         }
-        .led { height: 10px; width: 10px; background: #00ff00; border-radius: 50%; display: inline-block; 
-               box-shadow: 0 0 10px #00ff00; animation: blink 1.5s infinite; margin-right: 8px; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .led { height: 8px; width: 8px; background: #00ff00; border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #00ff00; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* VIEW ENGINE */
-        .view { display: none; padding: 60px 8%; animation: fadeIn 0.4s ease; }
+        /* 4. VIEW LOGIC */
+        .view { display: none; padding: 40px 6%; animation: fadeIn 0.3s ease; }
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* HERO AREA */
-        .hero-box { 
-            background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover;
-            border-radius: 20px; padding: 100px 40px; text-align: center; color: white; margin-bottom: 50px;
-        }
-
-        /* CATALOG CARDS */
-        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .device-card { border: 1px solid #eee; border-radius: 12px; padding: 25px; text-align: center; background: #fafafa; }
-        .device-card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 20px; }
-
-        /* MAP PLACEHOLDER */
-        #map { height: 400px; background: #e2e8f0; border-radius: 12px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; }
-
-        @media (max-width: 1024px) {
-            .nav-links { display: none; } /* Mobile Menu would be added here */
-        }
+        /* 5. FORMS & CATALOG [cite: 1242, 1307] */
+        .grid-cat { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; }
+        .card img { max-width: 100%; height: 180px; object-fit: contain; }
+        
+        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="IMAGES/ui/logo.png" class="logo" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/200x40?text=GEOTRACKPRO'">
-    <div class="nav-links">
-        <button class="btn-header" onclick="nav('home')" data-t="h_home">Home</button>
-        <button class="btn-header" onclick="nav('about')" data-t="h_about">Company</button>
-        <button class="btn-header" onclick="nav('catalog')" data-t="h_prod">Products</button>
-        <button class="btn-header" onclick="nav('contact')" data-t="h_cont">Contact US</button>
-        <button class="btn-header" onclick="nav('platform')" style="background:var(--accent)" data-t="h_plat">Platform</button>
-        <button class="btn-header" onclick="toggleLang()" title="Language Selection">🌐 <span id="cur-lang">EN</span></button>
+    <img src="IMAGES/ui/logo.png" class="logo" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/150x40?text=LOGO'">
+    <div class="nav-zone">
+        <button class="drop-btn" onclick="nav('home')" data-t="h_home">Home</button>
+        <div class="drop-btn"><span data-t="h_comp">Company</span>
+            <div class="drop-content">
+                <a href="#" onclick="nav('about')" data-t="h_about">About Us</a>
+                <a href="#" onclick="nav('partners')" data-t="h_part">Partners</a>
+            </div>
+        </div>
+        <div class="drop-btn"><span data-t="h_sol">Solutions</span>
+            <div class="drop-content">
+                <a href="#" onclick="filterCat('asset')" data-t="s_asset">Asset Management</a>
+                <a href="#" onclick="filterCat('fleet')" data-t="s_fleet">Fleet Telematics</a>
+            </div>
+        </div>
+        <div class="drop-btn"><span data-t="h_prod">Products</span>
+            <div class="drop-content">
+                <a href="#" onclick="renderCatalog('all')" data-t="p_all">View All</a>
+                <a href="#" onclick="renderCatalog('vehicle')">Vehicle</a>
+                <a href="#" onclick="renderCatalog('asset')">Asset</a>
+                <a href="#" onclick="renderCatalog('dashcam')">DashCam</a>
+            </div>
+        </div>
+        <button class="drop-btn" onclick="nav('contact')" data-t="h_cont">Contact</button>
+        <button class="drop-btn" style="background:var(--accent)" onclick="window.open('https://www.tracksolidpro.com')">Platform</button>
+        <div class="drop-btn">🌐 <span id="cur-l">EN</span>
+            <div class="drop-content">
+                <a href="#" onclick="setL('en')">EN</a>
+                <a href="#" onclick="setL('fr')">FR</a>
+                <a href="#" onclick="setL('it')">IT</a>
+                <a href="#" onclick="setL('es')">ES</a>
+            </div>
+        </div>
     </div>
 </header>
 
 <main>
     <div id="v-home" class="view active">
-        <div class="hero-box">
-            <h1 style="font-size:3.5rem; margin:0;" data-t="slogan">Innovative Solutions, Built Your Way</h1>
-            <p style="font-size:1.2rem; margin:20px 0 40px;" data-t="sub_slogan">Manage your fleet & assets in real time from anywhere.</p>
-            <button class="btn-header" style="margin:0 auto; padding:0 40px; background:var(--accent)" onclick="nav('catalog')">Explore Catalog</button>
-        </div>
+        <h1 data-t="slogan">Innovative Solutions, Built Your Way</h1>
     </div>
 
     <div id="v-catalog" class="view">
-        <h2 style="text-align:center; font-size:2.5rem;" data-t="c_title">Operations Catalog</h2>
-        <div class="cat-grid" id="catalog-anchor">
-            </div>
+        <h2 id="cat-title" data-t="p_all">View All</h2>
+        <div class="grid-cat" id="cat-anchor"></div>
     </div>
 
     <div id="v-contact" class="view">
-        <div id="map">GOOGLE MAPS ZONE (Default: New York)</div>
-        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <h2 data-t="con_title">Get In Touch With Us</h2>
+        <form action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
-            <h2 data-t="con_title">Get In Touch With Us</h2>
             <input type="text" name="name" placeholder="Your Name*" required>
             <input type="email" name="email" placeholder="E-mail*" required>
             <input type="text" name="phone" placeholder="Phone*" required>
-            <select name="subject">
-                <option value="General">General Query</option>
-                <option value="Demo">Demo Request</option>
-                <option value="Sales">Sales Query</option>
+            <input type="text" name="country" placeholder="Country*" required>
+            <select name="product_interest">
+                <option value="Vehicle">Vehicle</option>
+                <option value="Asset">Asset</option>
+                <option value="DashCam">DashCam</option>
             </select>
-            <textarea name="message" placeholder="Your message*" style="width:100%; height:150px; margin-top:15px;" required></textarea>
-            <button type="submit" class="btn-header" style="width:100%; background:var(--accent); margin-top:20px; justify-content:center;">SUBMIT</button>
+            <textarea name="message" placeholder="Your Message*" required></textarea>
+            <button type="submit" class="drop-btn" style="width:100%; background:var(--accent)">SUBMIT</button>
         </form>
     </div>
 </main>
 
 <footer>
+    <div><span class="led"></span> <span data-t="f_alive">SYSTEM ALIVE</span> | v1.0.4</div>
+    <div id="clock"></div>
     <div>
-        <h3 data-t="h_about">About Us</h3>
-        <p style="opacity:0.7">Vanguard Sovereign Telemetry Systems.</p>
-        <div style="margin-top:20px;">
-            <span class="led"></span> <span data-t="f_alive">ALIVE & KICKING</span>
-        </div>
-    </div>
-    <div>
-        <h3>Services</h3>
-        <a href="#" style="color:#fff; display:block; margin-bottom:10px;" onclick="nav('bko')">Back-Office (BKO)</a>
-        <p>© 2026 GEOTRACKPRO | <span id="clock"></span></p>
-    </div>
-    <div>
-        <h3>Legal</h3>
-        <a href="DOCS/LEGAL/terms.pdf" style="color:#fff; display:block; margin-bottom:10px;">Terms of Service</a>
-        <a href="DOCS/LEGAL/privacy.pdf" style="color:#fff; display:block; margin-bottom:10px;">Privacy Policy</a>
+        <a href="#" style="color:white; margin-right:10px;" data-t="f_terms">Terms</a>
+        <a href="#" style="color:white;" data-t="f_priv">Privacy</a>
     </div>
 </footer>
 
 <script>
     const DICT = {
-        en: { h_home: "Home", h_about: "Company", h_prod: "Products", h_cont: "Contact US", h_plat: "Platform", slogan: "Innovative Solutions, Built Your Way", c_title: "Operations Catalog", con_title: "Get In Touch", f_alive: "SYSTEM ACTIVE" },
-        it: { h_home: "Home", h_about: "Azienda", h_prod: "Prodotti", h_cont: "Contatti", h_plat: "Piattaforma", slogan: "Soluzioni Innovative, Costruite per Te", c_title: "Catalogo Operativo", con_title: "Contattaci", f_alive: "SISTEMA ATTIVO" }
-        // FR and ES to be expanded in DICT
+        en: { h_home: "Home", h_comp: "Company", h_about: "About Us", h_part: "Partners", h_sol: "Solutions", s_asset: "Asset Management", s_fleet: "Fleet Telematics", h_prod: "Products", p_all: "View All", h_cont: "Contact", slogan: "Innovative Solutions, Built Your Way", con_title: "Get In Touch", f_alive: "SYSTEM ACTIVE", f_terms: "Terms", f_priv: "Privacy" },
+        fr: { h_home: "Accueil", h_comp: "Entreprise", h_about: "À Propos", h_part: "Partenaires", h_sol: "Solutions", s_asset: "Gestion d'Actifs", s_fleet: "Télématique de Flotte", h_prod: "Produits", p_all: "Voir Tout", h_cont: "Contact", slogan: "Solutions Innovantes, À Votre Façon", con_title: "Contactez-nous", f_alive: "SYSTÈME ACTIF", f_terms: "Conditions", f_priv: "Confidentialité" },
+        it: { h_home: "Home", h_comp: "Azienda", h_about: "Chi Siamo", h_part: "Partner", h_sol: "Soluzioni", s_asset: "Gestione Asset", s_fleet: "Telematica Flotta", h_prod: "Prodotti", p_all: "Vedi Tutto", h_cont: "Contatti", slogan: "Soluzioni Innovative, Costruite per Te", con_title: "Contattaci", f_alive: "SISTEMA ATTIVO", f_terms: "Termini", f_priv: "Privacy" }
     };
 
-    let currentLang = 'en';
+    let activeL = 'en';
 
     function nav(id) {
-        if(id === 'platform') { window.open('https://www.tracksolidpro.com', '_blank'); return; }
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById('v-' + id).classList.add('active');
         window.scrollTo(0,0);
     }
 
-    function toggleLang() {
-        const langs = ['en', 'it', 'fr', 'es'];
-        let idx = langs.indexOf(currentLang);
-        currentLang = langs[(idx + 1) % langs.length];
-        document.getElementById('cur-lang').innerText = currentLang.toUpperCase();
-        applyLang(currentLang);
-    }
-
-    function applyLang(l) {
+    function setL(l) {
+        activeL = l;
+        document.getElementById('cur-l').innerText = l.toUpperCase();
         document.querySelectorAll('[data-t]').forEach(el => {
             const key = el.getAttribute('data-t');
-            if(DICT[l] && DICT[l][key]) el.innerText = DICT[l][key];
+            if(DICT[l][key]) el.innerText = DICT[l][key];
         });
     }
 
-    setInterval(() => {
-        document.getElementById('clock').innerText = new Date().toLocaleString();
-    }, 1000);
-
-    window.onload = () => { applyLang('en'); renderCatalog(); };
-
-    function renderCatalog() {
-        // Implementation of your root/IMAGES/category/file tree logic
-        const cats = ['vehicle', 'asset', 'dashcam', 'obd'];
-        const anchor = document.getElementById('catalog-anchor');
-        anchor.innerHTML = cats.map(c => `
-            <div class="device-card">
-                <img src="IMAGES/${c.toUpperCase()}/sample.png" onerror="this.src='https://via.placeholder.com/300x200?text=${c.toUpperCase()}'">
-                <h3>${c.toUpperCase()} SERIES</h3>
-                <button class="btn-header" style="width:100%; justify-content:center;" onclick="nav('contact')">QUERY SPECS</button>
+    function renderCatalog(cat) {
+        nav('catalog');
+        const anchor = document.getElementById('cat-anchor');
+        const list = (cat === 'all') ? ['vehicle', 'asset', 'dashcam'] : [cat];
+        anchor.innerHTML = list.map(c => `
+            <div class="card">
+                <img src="IMAGES/${c.toUpperCase()}/sample.png" onerror="this.src='https://via.placeholder.com/200x150?text=${c}'">
+                <h3>${c.toUpperCase()} Device</h3>
+                <button class="drop-btn" style="width:100%; margin-top:10px;" onclick="nav('contact')">Specs / Query</button>
             </div>
         `).join('');
     }
+
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
+    window.onload = () => setL('en');
 </script>
 </body>
 </html>
