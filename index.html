@@ -3,88 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Sovereign Build</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>GeoTrackPro | Sovereign Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #3E63DD; --navy: #0a0f1d; --gold: #e8ddc7; --btn-bg: #1a202c; }
-        
+        :root { --accent: #3E63DD; --navy: #0a0f1d; --gold: #e8ddc7; --btn-h: 48px; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; display: flex; flex-direction: column; min-height: 100vh; background: #fff; color: var(--navy); overflow-x: hidden; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fff; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
-        /* HEADER - MATCHING YOUR ILLUSTRATION */
+        /* HEADER - MATCHING YOUR ILLUSTRATION [cite: 35, 49] */
         header { 
             background: var(--gold); height: 90px; display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 5%; position: fixed; top: 0; width: 100%; z-index: 10000; border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 0 5%; position: fixed; top: 0; width: 100%; z-index: 10000; box-shadow: 0 2px 15px rgba(0,0,0,0.1);
         }
-        .logo-box img { height: 40px; cursor: pointer; }
-
-        .nav-zone { display: flex; gap: 8px; align-items: center; }
-        .nav-item { 
-            height: 48px; min-width: 110px; background: var(--btn-bg); color: white; border: none; border-radius: 4px; 
-            font-weight: 800; font-size: 0.65rem; text-transform: uppercase; cursor: pointer; position: relative;
-            display: flex; align-items: center; justify-content: center;
+        .logo-box img { height: 45px; cursor: pointer; }
+        .nav-zone { display: flex; gap: 6px; align-items: center; }
+        
+        .nav-btn { 
+            height: var(--btn-h); min-width: 110px; padding: 0 12px; background: var(--navy); color: white; border: none; 
+            border-radius: 4px; font-weight: 800; font-size: 0.65rem; text-transform: uppercase; cursor: pointer;
+            position: relative; display: flex; align-items: center; justify-content: center;
         }
 
-        /* STABLE DROPDOWNS */
-        .drop-menu { 
+        /* DROPDOWN STABILITY [cite: 43-45, 145] */
+        .drop-content { 
             display: none; position: absolute; top: 100%; left: 0; background: white; 
-            min-width: 200px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 0 0 4px 4px; 
+            min-width: 200px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-radius: 0 0 4px 4px; 
         }
-        .nav-item:hover .drop-menu { display: block; }
-        .drop-menu a { color: var(--navy); padding: 12px 20px; text-decoration: none; display: block; font-size: 0.75rem; border-bottom: 1px solid #f1f5f9; }
-        .lang-drop { right: 0; left: auto; } /* Fix for the "shifting" issue */
+        .lang-drop { right: 0; left: auto; } /* Prevents page shift */
+        .nav-btn:hover .drop-content { display: block; }
+        .drop-content a { color: var(--navy); padding: 12px 20px; text-decoration: none; display: block; font-size: 0.75rem; border-bottom: 1px solid #eee; text-align: left; }
 
-        /* MAIN CONTENT & HERO LOGIC */
+        /* VIEW ENGINE  */
         main { flex: 1; padding-top: 90px; }
-        .hero-section { 
-            height: 60vh; background: #2d3748; color: white; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; text-align: center;
+        .view { display: none; padding: 60px 10%; }
+        .view.active { display: block; animation: fadeIn 0.4s ease; }
+        
+        /* DYNAMIC HERO: ONLY ON HOME [cite: 77-85] */
+        .hero { 
+            height: 60vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('IMAGES/UI/home-bg.jpg') center/cover;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;
         }
-        .view { display: none; padding: 50px 10%; animation: fadeIn 0.3s ease-in; }
-        .view.active { display: block; }
 
-        /* CONTACT FORM */
-        .form-wrap { max-width: 650px; margin: 0 auto; background: #fdfdfd; padding: 40px; border: 1px solid #eee; border-radius: 8px; }
+        /* FORM CONSTRAINTS [cite: 118-129] */
+        .form-card { max-width: 700px; margin: 0 auto; background: #fcfcfc; padding: 40px; border: 1px solid #eee; border-radius: 8px; }
         input, select, textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
 
-        /* FOOTER - FIXED ANCHOR */
+        /* FOOTER - THE ANCHOR [cite: 52-61] */
         footer { 
             background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; 
-            display: flex; align-items: center; justify-content: space-between; padding: 0 5%; font-size: 0.75rem; z-index: 10000;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 5%; z-index: 10000; font-size: 0.7rem; border-top: 2px solid var(--accent);
         }
-        .led { height: 8px; width: 8px; background: #00ff00; border-radius: 50%; box-shadow: 0 0 8px #00ff00; animation: pulse 2s infinite; margin-right: 8px; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .led { height: 8px; width: 8px; background: #00ff00; border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #00ff00; animation: blink 1.5s infinite; margin-right: 8px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-box"><img src="IMAGES/UI/logo.png" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/180x40?text=GeoTrackPro'"></div>
+    <div class="logo-box"><img src="IMAGES/UI/logo.png" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/180x45?text=GEOTRACKPRO'"></div>
     <div class="nav-zone">
-        <button class="nav-item" onclick="nav('home')" data-t="h_home">Home</button>
-        <div class="nav-item"><span data-t="h_comp">Company</span>
-            <div class="drop-menu">
+        <button class="nav-btn" onclick="nav('home')" data-t="h_home">Home</button>
+        <div class="nav-btn"><span data-t="h_comp">Company</span>
+            <div class="drop-content">
                 <a href="#" onclick="nav('about')" data-t="h_about">About Us</a>
                 <a href="#" onclick="nav('partners')" data-t="h_part">Partners</a>
             </div>
         </div>
-        <div class="nav-item"><span data-t="h_prod">Products</span>
-            <div class="drop-menu">
+        <div class="nav-btn"><span data-t="h_prod">Products</span>
+            <div class="drop-content">
                 <a href="#" onclick="nav('catalog')" data-t="p_all">View All</a>
-                <a href="#" onclick="nav('catalog')">Vehicle</a>
-                <a href="#" onclick="nav('catalog')">Asset</a>
-                <a href="#" onclick="nav('catalog')">Motorcycle</a>
-                <a href="#" onclick="nav('catalog')">OBD</a>
-                <a href="#" onclick="nav('catalog')">TAG</a>
-                <a href="#" onclick="nav('catalog')">DashCam</a>
+                <a href="#" onclick="nav('catalog')">Vehicle</a><a href="#" onclick="nav('catalog')">Asset</a>
+                <a href="#" onclick="nav('catalog')">Motorcycle</a><a href="#" onclick="nav('catalog')">OBD</a>
+                <a href="#" onclick="nav('catalog')">TAG</a><a href="#" onclick="nav('catalog')">DashCam</a>
             </div>
         </div>
-        <button class="nav-item" onclick="nav('contact')" data-t="h_cont">Contact</button>
-        <button class="nav-item" onclick="nav('demo')" data-t="h_demo">Demo Request</button>
-        <button class="nav-item" style="background:var(--accent)" onclick="window.open('https://www.tracksolidpro.com')">Platform</button>
-        <div class="nav-item">🌐 <span id="cur-l">EN</span>
-            <div class="drop-menu lang-drop">
+        <button class="nav-btn" onclick="nav('contact')" data-t="h_cont">Contact</button>
+        <button class="nav-btn" onclick="nav('demo')" data-t="h_demo">Demo Request</button>
+        <button class="nav-btn" style="background:var(--accent)" onclick="window.open('https://www.tracksolidpro.com')">Platform</button>
+        <div class="nav-btn">🌐 <span id="cur-l">EN</span>
+            <div class="drop-content lang-drop">
                 <a href="#" onclick="setL('en')">EN - English</a>
                 <a href="#" onclick="setL('fr')">FR - Français</a>
                 <a href="#" onclick="setL('es')">ES - Español</a>
@@ -96,34 +94,35 @@
 
 <main>
     <div id="v-home" class="view active">
-        <div class="hero-section">
-            <h1 style="font-size: 3rem;" data-t="slogan">Innovative Solutions, Built Your Way</h1>
+        <div class="hero">
+            <h1 style="font-size: 3.5rem;" data-t="slogan">Innovative Solutions, Built Your Way</h1>
+            <p data-t="sub_slogan" style="margin-top:15px; opacity:0.8;">Manage your fleet & assets in real time.</p>
         </div>
     </div>
 
     <div id="v-contact" class="view">
-        <div class="form-wrap">
-            <h2 data-t="con_title">Contact Our Experts</h2>
+        <div class="form-card">
+            <h2 data-t="con_title">Get In Touch With Us</h2>
             <form action="https://api.web3forms.com/submit" method="POST" onsubmit="this.reset()">
                 <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
-                <input type="hidden" name="_subject" value="New Geotrackpro Contact">
+                <input type="hidden" name="_subject" value="New Geotrackpro Contact Submission">
                 <input type="text" name="name" placeholder="Name*" required>
                 <input type="email" name="email" placeholder="Email*" required>
                 <select name="country" required>
                     <option value="" disabled selected>Select Country*</option>
-                    <option value="US">USA (+1)</option><option value="FR">France (+33)</option><option value="IT">Italy (+39)</option><option value="ES">Spain (+34)</option>
+                    <option value="US">United States (+1)</option><option value="FR">France (+33)</option><option value="ES">Spain (+34)</option><option value="IT">Italy (+39)</option>
                 </select>
-                <input type="text" name="phone" placeholder="Phone Number*" required>
-                <textarea name="message" placeholder="Message*" style="height:120px;" required></textarea>
-                <button type="submit" class="nav-item" style="width:100%; background:var(--accent)">Send Message</button>
+                <input type="text" name="phone" placeholder="Phone*" required>
+                <textarea name="message" placeholder="Message*" style="height: 120px;" required></textarea>
+                <button type="submit" class="nav-btn" style="width:100%; background:var(--accent)">Submit</button>
             </form>
         </div>
     </div>
 
     <div id="v-demo" class="view">
-        <div class="form-wrap">
-            <h2 data-t="h_demo">Request a Demo</h2>
-            <p style="margin-bottom:20px; font-size:0.8rem;">Please provide your business details for a tailored platform walkthrough.</p>
+        <div class="form-card">
+            <h2 data-t="h_demo">Demo Request</h2>
+            <p style="margin-bottom:20px; font-size:0.85rem; opacity:0.7;">Submit your details for a live platform demonstration.</p>
             </div>
     </div>
 </main>
@@ -138,8 +137,10 @@
 
 <script>
     const DICT = {
-        en: { h_home: "Home", h_comp: "Company", h_cont: "Contact", h_demo: "Demo Request", h_prod: "Products", p_all: "View All", slogan: "Innovative Solutions, Built Your Way", f_alive: "SYSTEM ACTIVE", f_terms: "Terms" },
-        fr: { h_home: "Accueil", h_comp: "Entreprise", h_cont: "Contact", h_demo: "Demande Démo", h_prod: "Produits", p_all: "Voir Tout", slogan: "Solutions Innovantes, à votre façon", f_alive: "SYSTÈME ACTIF", f_terms: "Conditions" }
+        en: { h_home: "Home", h_comp: "Company", h_prod: "Products", h_cont: "Contact", h_demo: "Demo Request", p_all: "View All", slogan: "Innovative Solutions, Built Your Way", con_title: "Get In Touch With Us", f_alive: "SYSTEM ACTIVE", f_terms: "Terms" },
+        fr: { h_home: "Accueil", h_comp: "Entreprise", h_prod: "Produits", h_cont: "Contact", h_demo: "Demande Démo", p_all: "Voir Tout", slogan: "Solutions Innovantes, à votre façon", con_title: "Contactez-nous", f_alive: "SYSTÈME ACTIF", f_terms: "Conditions" },
+        es: { h_home: "Inicio", h_comp: "Empresa", h_prod: "Productos", h_cont: "Contacto", h_demo: "Solicitar Demo", p_all: "Ver Todo", slogan: "Soluciones Innovadoras, a su manera", con_title: "Contáctenos", f_alive: "SISTEMA ACTIVO", f_terms: "Términos" },
+        it: { h_home: "Home", h_comp: "Azienda", h_prod: "Prodotti", h_cont: "Contatto", h_demo: "Richiedi Demo", p_all: "Vedi Tutto", slogan: "Soluzioni Innovative, fatte a modo tuo", con_title: "Contattaci", f_alive: "SISTEMA ATTIVO", f_terms: "Termini" }
     };
 
     function nav(id) {
