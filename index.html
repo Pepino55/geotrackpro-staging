@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise v21.8.1</title>
+    <title>GeoTrackPro | Vanguard Enterprise v21.8.2</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --whatsapp: #25D366; --header-h: 75px; }
+        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 75px; }
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 60px; }
         header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -14,7 +14,7 @@
         .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s; white-space: nowrap; }
         .btn-v:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
-        /* DROPDOWN LOGIC */
+        /* DROPDOWN */
         .dropdown { position: relative; display: inline-block; }
         .dropdown-content { display: none; position: absolute; background-color: white; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.1); border-radius: 12px; z-index: 10001; top: 100%; left: 0; overflow: hidden; }
         .dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; }
@@ -22,25 +22,25 @@
         .dropdown-content button { color: var(--navy); padding: 12px 16px; width: 100%; border: none; background: none; text-align: left; font-weight: 600; font-size: 0.75rem; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
         .dropdown-content button:hover { background-color: #f1f5f9; color: var(--accent); }
 
-        .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; min-height: 70vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
-        .view { display: none; padding: calc(var(--header-h) + 20px) 5%; min-height: 100vh; }
+        .view { display: none; padding: calc(var(--header-h) + 40px) 5%; min-height: 100vh; }
         .view.active { display: block; }
         
-        /* Layout Grids */
+        .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; min-height: 70vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; margin-top: var(--header-h); }
+        
         .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 50px; }
         .cat-card { background: white; padding: 25px; border-radius: 20px; text-align: center; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.3s; }
         .cat-card:hover { border-color: var(--accent); transform: translateY(-5px); }
         .cat-card span { font-size: 2rem; display: block; margin-bottom: 8px; }
-        
+
         footer { background: var(--navy); color: white; height: 50px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
-        .led-dot { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; display: inline-block; margin-left: 5px; }
+        .led-dot { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; display: inline-block; margin-left: 5px; }
     </style>
 </head>
 <body>
 
 <header>
     <div style="display:flex; align-items:center; gap:15px;">
-        <img src="IMAGES/ui/logo.png" height="30" onclick="nav('home')" style="cursor:pointer" alt="Logo">
+        <img src="IMAGES/ui/logo.png" height="30" onclick="nav('home')" style="cursor:pointer">
         <div class="dropdown">
             <button class="btn-v" style="background:#475569;">Company</button>
             <div class="dropdown-content">
@@ -60,41 +60,69 @@
     </div>
 
     <div>
-        <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none; cursor:pointer;">
-            <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option><option value="fr">FR</option>
+        <select id="langSelect" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none;">
+            <option value="en">EN</option>
         </select>
     </div>
 </header>
 
 <div id="home" class="view active" style="padding:0;">
     <section class="hero">
-        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
-        <div style="display:flex; gap:15px; margin-top:20px;">
-            <button onclick="nav('prod-menu')" class="btn-v" style="padding:15px 40px;">Explore Catalog</button>
-        </div>
+        <h1 style="font-size: 3.5rem; font-weight: 800;">VANGUARD GLOBAL</h1>
+        <button onclick="nav('prod-menu')" class="btn-v" style="padding:15px 40px;">Explore Catalog</button>
     </section>
+</div>
+
+<div id="about-us" class="view">
+    <h2 style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block;">THE VANGUARD STANDARD</h2>
+    <p>Global Asset Intelligence for the Modern Enterprise.</p>
+</div>
+
+<div id="partners" class="view">
+    <h2 style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block;">OUR PARTNERS</h2>
+    <p>Strategic network details coming soon.</p>
+</div>
+
+<div id="prod-menu" class="view">
+    <h2 style="text-align:center;">Product Categories</h2>
+    <div class="cat-grid" id="cat-anchor">
+        <div class="cat-card" onclick="alert('Category Logic Active')"><span>🚗</span>VEHICLE</div>
+        <div class="cat-card" onclick="alert('Category Logic Active')"><span>📦</span>ASSET</div>
+    </div>
+</div>
+
+<div id="contact" class="view">
+    <h2 id="f-title">CONTACT</h2>
+    <p>Form integration active.</p>
 </div>
 
 <footer>
     <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span></div>
     <div style="display:flex; gap:20px;">
-       <a href="DOCS/LEGAL/terms.pdf" target="_blank" style="color:white; text-decoration:none;">TERMS</a>
-       <a href="DOCS/LEGAL/privacy.pdf" target="_blank" style="color:white; text-decoration:none;">PRIVACY</a>
+       <a href="#" style="color:white; text-decoration:none;">TERMS</a>
+       <a href="#" style="color:white; text-decoration:none;">PRIVACY</a>
     </div>
 </footer>
 
 <script>
-    // Logic remains unchanged from your working file
     function nav(id) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        console.log("Navigating to:", id);
+        // Hide all views
+        const views = document.querySelectorAll('.view');
+        views.forEach(v => v.classList.remove('active'));
+        
+        // Show target view
         const target = document.getElementById(id);
-        if(target) target.classList.add('active');
+        if(target) {
+            target.classList.add('active');
+        } else {
+            console.error("View not found:", id);
+        }
         window.scrollTo(0,0);
     }
 
     function openForm(t) {
-        const title = document.getElementById('f-title');
-        if(title) title.innerText = t;
+        document.getElementById('f-title').innerText = t;
         nav('contact');
     }
 
