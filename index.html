@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise v21.6.1</title>
+    <title>GeoTrackPro | Vanguard Enterprise v21.6.2</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --whatsapp: #25D366; --header-h: 75px; }
@@ -12,6 +12,14 @@
         header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-v:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        
+        /* DROPDOWN STYLES FOR STEP 2 */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: white; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.1); border-radius: 12px; z-index: 1; top: 100%; left: 0; margin-top: 5px; overflow: hidden; }
+        .dropdown-content button { color: var(--navy); padding: 12px 16px; text-decoration: none; display: block; width: 100%; border: none; background: none; text-align: left; font-weight: 600; font-size: 0.75rem; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
+        .dropdown-content button:hover { background-color: #f1f5f9; color: var(--accent); }
+        .dropdown:hover .dropdown-content { display: block; }
+
         .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; min-height: 70vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
         .view { display: none; padding: calc(var(--header-h) + 20px) 5%; min-height: 100vh; }
         .view.active { display: block; }
@@ -38,7 +46,13 @@
 <header>
     <div style="display:flex; align-items:center; gap:15px;">
         <img src="IMAGES/ui/logo.png" height="30" onclick="nav('home')" style="cursor:pointer" alt="Logo">
-        <button onclick="nav('about-us')" class="btn-v" style="background:#475569;">About Us</button>
+        <div class="dropdown">
+            <button class="btn-v" style="background:#475569;">Company</button>
+            <div class="dropdown-content">
+                <button onclick="nav('about-us')">ABOUT US</button>
+                <button onclick="nav('partners')">OUR PARTNERS</button>
+            </div>
+        </div>
         <button onclick="nav('home')" class="btn-v" style="background:#1e293b;">Home</button>
     </div>
     <div style="display:flex; gap:8px;">
@@ -82,6 +96,17 @@
                 <h3 id="ab-s-title" style="margin-top:0; color: var(--accent);">Adaptive Security</h3>
                 <p id="ab-s-p" style="font-size: 0.9rem; margin-bottom:0;"></p>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="partners" class="view">
+    <div style="max-width: 1100px; margin: 0 auto;">
+        <h2 style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 30px;">OUR PARTNERS</h2>
+        <p style="font-size: 1.1rem; font-weight: 600;">Global Collaboration Network</p>
+        <p>Vanguard Enterprise collaborates with world-class technology providers to deliver seamless integration across the tracking ecosystem.</p>
+        <div style="padding: 50px; text-align: center; background: white; border-radius: 20px; border: 1px dashed #cbd5e1; margin-top: 30px;">
+            <p>Partner list and integration profiles coming soon.</p>
         </div>
     </div>
 </div>
@@ -140,7 +165,7 @@
 </footer>
 
 <script>
-    /* WAREHOUSE, TXT, nav, renderCats, renderList, openForm, updateLang functions exactly as in your original file */
+    /* JavaScript remains exactly as before, with no logic changes */
     const WAREHOUSE = [
         { id: "VL103", cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
         { id: "VL106", cat: ["vehicle"], name: "VL106", desc: "LTE vehicle tracker.", features:[{icon:"🛰️",label:"GNSS"}] },
@@ -175,7 +200,7 @@
     const TXT = {
         en: { h: "VANGUARD GLOBAL", p: "PRODUCTS", ab: "ABOUT US", v: "Vehicle", m: "Moto", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", abT: "THE VANGUARD STANDARD", abS: "Global Asset Intelligence for the Modern Enterprise.", abP1: "Vanguard Global provides the hardware and telemetry needed to secure assets and eliminate the variables that cost you revenue.", abMT: "Our Mission", abMP: "To provide an unblinking eye over your most valuable assets, bridging the gap between physical logistics and digital oversight.", abGT: "Global Reach", abGP: "Hardware engineered for international connectivity, backed by a support network that understands local enterprise needs.", abST: "Adaptive Security", abSP: "Custom-tailored configurations developed by our technical team to meet the specific demands of your operational landscape.", fName: "Full Name *", cName: "Company *", email: "Email *", phone: "Phone *", help: "Message *", selectC: "Select Country *", submit: "SEND INQUIRY", sTitle: "Message Sent", sMsg: "A Vanguard specialist will review your request and contact you shortly.", sBtn: "Send Another" },
         it: { h: "VANGUARD GLOBALE", p: "PRODOTTI", ab: "CHI SIAMO", v: "Veicoli", m: "Moto", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personale", ac: "Acc.", tg: "Tags", abT: "LO STANDARD VANGUARD", abS: "Intelligenza globale per l'impresa moderna.", abP1: "Vanguard Global fornisce strumenti di precisione per proteggere i vostri asset strategici.", abMT: "Missione", abMP: "Eliminare i punti ciechi con l'innovazione tecnologica e la supervisione digitale.", abGT: "Portata Globale", abGP: "Hardware progettato per la connettività internazionale e il supporto locale dedicato.", abST: "Sicurezza Adattiva", abSP: "Configurazioni su misura sviluppate dal nostro team tecnico per le vostre esigenze operative.", fName: "Nome Completo *", cName: "Azienda *", email: "Email *", phone: "Telefono *", help: "Messaggio *", selectC: "Seleziona Paese *", submit: "INVIA RICHIESTA", sTitle: "Messaggio Inviato", sMsg: "Un esperto Vanguard esaminerà la tua richiesta e ti contatterà al più presto.", sBtn: "Invia un altro" },
-        es: { h: "VANGUARDIA GLOBAL", p: "PRODUCTOS", ab: "NOSOTROS", v: "Vehículo", m: "Moto", a: "Activos", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", abT: "EL ESTÁNDAR VANGUARD", abS: "Inteligencia de activos para la empresa moderna.", abP1: "Vanguard Global entrega herramientas de precisión para asegurar y optimizar sus activos.", abMT: "Nuestra Misión", abMP: "Proporcionar una visión constante de sus activos más valiosos mediante innovación.", abGT: "Alcance Global", abGP: "Hardware diseñado para conectividad internacional con soporte local experto.", abST: "Seguridad Adaptativa", abSP: "Configuraciones personalizadas desarrolladas para cumplir con las demandas de su flujo de travail.", fName: "Nombre *", cName: "Empresa *", email: "Email *", phone: "Teléfono *", help: "Mensaje *", selectC: "País *", submit: "ENVIAR", sTitle: "Mensaje Enviado", sMsg: "Un especialista de Vanguard revisará su solicitud y se pondrá en contacto en breve.", sBtn: "Enviar otro" },
+        es: { h: "VANGUARDIA GLOBAL", p: "PRODUCTOS", ab: "NOSOTROS", v: "Vehículo", m: "Moto", a: "Activos", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", abT: "EL ESTÁNDAR VANGUARD", abS: "Inteligencia de activos para la empresa moderna.", abP1: "Vanguard Global entrega herramientas de precisión para asegurar y optimizar sus activos.", abMT: "Nuestra Misión", abMP: "Proporcionar una visión constante de sus activos más valiosos mediante innovación.", abGT: "Alcance Global", abGP: "Hardware diseñado para conectividad internacional con soporte local experto.", abST: "Seguridad Adaptativa", abSP: "Configuraciones personalizadas desarrolladas para cumplir con las demandas de su flujo de travail.", fName: "Nombre *", cName: "Empresa *", email: "Email *", phone: "Teléfono *", help: "Mensaje *", selectC: "País *", submit: "ENVIAR", sTitle: "Messaggio Inviato", sMsg: "Un especialista de Vanguard revisará su solicitud y se pondrá en contacto en breve.", sBtn: "Enviar otro" },
         fr: { h: "VANGUARD GLOBAL", p: "PRODUITS", ab: "À PROPOS", v: "Véhicule", m: "Moto", a: "Actif", dc: "Dashcam", o: "OBD", s: "Personnel", ac: "Acc.", tg: "Tags", abT: "LE STANDARD VANGUARD", abS: "Intelligence globale des actifs pour l'entreprise moderne.", abP1: "Vanguard Global livre les outils de précision pour sécuriser et optimiser vos actifs.", abMT: "Notre Mission", abMP: "Fournir un œil vigilant sur vos actifs les plus précieux grâce à l'innovation.", abGT: "Portée Mondiale", abGP: "Matériel conçu pour la connettivité internationale avec un support local dédié.", abST: "Adaptive Security", abSP: "Configurations sur mesure développées pour répondre aux exigences spécifiques de vos opérations.", fName: "Nom *", cName: "Entreprise *", email: "Email *", phone: "Tel *", help: "Message *", selectC: "Pays *", submit: "ENVOYER", sTitle: "Message Envoyé", sMsg: "Un spécialiste Vanguard examinera votre demande et vous contactera sous peu.", sBtn: "Envoyer un autre" }
     };
 
