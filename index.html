@@ -3,93 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise v21.6.8</title>
+    <title>GeoTrackPro | Vanguard Enterprise v21.6.9</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --whatsapp: #25D366; --header-h: 75px; }
+        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 75px; }
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 60px; }
+        body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 60px; overflow-x: hidden; }
         
-        /* HEADER & NAVIGATION */
+        /* HEADER */
         header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s; }
-        .btn-v:hover { filter: brightness(1.1); transform: translateY(-1px); }
-        
-        /* DROPDOWN SYSTEM */
-        .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { 
-            display: none; 
-            position: absolute; 
-            background-color: white; 
-            min-width: 160px; 
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.1); 
-            border-radius: 12px; 
-            z-index: 10001; 
-            top: 100%; 
-            left: 0; 
-            overflow: hidden;
-        }
-        .dropdown-content.lang-menu { left: auto; right: 0; } /* Prevents overflow on the right */
-        .dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; }
-        .dropdown-content button { 
-            color: var(--navy); padding: 12px 16px; text-decoration: none; display: block; width: 100%; 
-            border: none; background: none; text-align: left; font-weight: 600; font-size: 0.75rem; 
-            cursor: pointer; border-bottom: 1px solid #f1f5f9; 
-        }
-        .dropdown-content button:hover { background-color: #f1f5f9; color: var(--accent); }
-        .dropdown:hover .dropdown-content { display: block; }
+        .logo { height: 35px; cursor: pointer; }
 
-        /* VIEWS & LAYOUT */
-        .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; min-height: 70vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
-        .view { display: none; padding: calc(var(--header-h) + 20px) 5%; min-height: 100vh; }
+        /* BUTTONS */
+        .nav-group { display: flex; gap: 8px; align-items: center; }
+        .btn-v { background: var(--navy); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; transition: 0.2s; white-space: nowrap; }
+        .btn-v:hover { transform: translateY(-1px); filter: brightness(1.2); }
+        .btn-accent { background: var(--accent); }
+        .btn-platform { background: #059669; }
+
+        /* DROPDOWNS */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background: white; min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 12px; z-index: 10001; top: 100%; left: 0; overflow: hidden; margin-top: 5px; }
+        .dropdown-content.right-align { left: auto; right: 0; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content button { color: var(--navy); padding: 12px 16px; width: 100%; border: none; background: none; text-align: left; font-weight: 600; font-size: 0.75rem; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
+        .dropdown-content button:hover { background: #f1f5f9; color: var(--accent); }
+
+        /* VIEWS */
+        .view { display: none; padding-top: var(--header-h); min-height: 100vh; width: 100%; }
         .view.active { display: block; }
         
-        /* CATALOG STYLES */
-        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 50px; }
-        .cat-card { background: white; padding: 25px; border-radius: 20px; text-align: center; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.3s; }
+        /* HERO SECTION */
+        .hero { background: linear-gradient(rgba(10,15,29,0.6), rgba(10,15,29,0.6)), url('IMAGES/ui/hero-bg.jpg') center/cover; height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 0 10%; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+
+        /* PRODUCT GRID */
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; padding: 50px 5%; }
+        .cat-card { background: white; padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.3s; }
         .cat-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .cat-card span { font-size: 2rem; display: block; margin-bottom: 8px; }
-        
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 450px)); gap: 25px; margin-top: 30px; justify-content: center; }
-        .card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; padding: 25px; display: flex; gap: 20px; align-items: stretch; height: 320px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .card-img { flex: 0 0 130px; background: #fcfcfc; border-radius: 15px; display: flex; align-items: center; justify-content: center; padding: 10px; border: 1px solid #f1f5f9; }
-        .card-img img { width: 100%; max-height: 140px; object-fit: contain; }
-        .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
-        
-        /* FORM STYLES */
-        .contact-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; background: white; padding: 40px; border-radius: 30px; border: 1px solid #e2e8f0; }
-        input, textarea, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 10px; font-size: 0.9rem; }
-        
+        .cat-card span { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+
         /* FOOTER */
-        footer { background: var(--navy); color: white; height: 50px; position: fixed; bottom: 0; left: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
+        footer { background: var(--navy); color: white; height: 50px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
         .led-dot { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; display: inline-block; margin-left: 5px; }
+        footer a { color: white; text-decoration: none; font-weight: 600; }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="display:flex; align-items:center; gap:15px;">
-        <img src="IMAGES/ui/logo.png" height="30" onclick="nav('home')" style="cursor:pointer" alt="Logo">
+    <div class="nav-group">
+        <img src="IMAGES/ui/logo.png" class="logo" onclick="nav('home')" alt="GeoTrackPro">
         <div class="dropdown">
-            <button class="btn-v" id="nav-comp" style="background:#475569;">Company</button>
+            <button class="btn-v" id="nav-comp">COMPANY</button>
             <div class="dropdown-content">
                 <button onclick="nav('about-us')" id="sub-about">ABOUT US</button>
                 <button onclick="nav('partners')" id="sub-partners">OUR PARTNERS</button>
             </div>
         </div>
-        <button onclick="nav('home')" class="btn-v" id="nav-home" style="background:#1e293b;">Home</button>
+        <button onclick="nav('home')" class="btn-v" id="nav-home">HOME</button>
     </div>
-    <div style="display:flex; gap:8px;">
+
+    <div class="nav-group">
         <button onclick="nav('prod-menu')" class="btn-v" id="nav-prod">PRODUCTS</button>
-        <button onclick="openForm('CONTACT US')" class="btn-v" id="nav-cont">Contact</button>
-        <button onclick="openForm('DEMO REQUEST')" class="btn-v" id="nav-demo" style="background:#6366f1;">Demo Request</button>
-        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" style="background:#059669;">PLATFORM</button>
-    </div>
-    <div class="dropdown">
-        <button class="btn-v" id="lang-display" style="background: var(--accent);">🌐 EN</button>
-        <div class="dropdown-content lang-menu">
-            <button onclick="updateLang('en')">English</button>
-            <button onclick="updateLang('it')">Italiano</button>
-            <button onclick="updateLang('es')">Español</button>
-            <button onclick="updateLang('fr')">Français</button>
+        <button onclick="openForm('CONTACT')" class="btn-v" id="nav-cont">CONTACT</button>
+        <button onclick="openForm('DEMO')" class="btn-v btn-accent" id="nav-demo">DEMO REQUEST</button>
+        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v btn-platform">PLATFORM</button>
+        
+        <div class="dropdown">
+            <button class="btn-v" id="lang-display" style="background: var(--accent);">🌐 EN</button>
+            <div class="dropdown-content right-align">
+                <button onclick="updateLang('en')">ENGLISH</button>
+                <button onclick="updateLang('fr')">FRANÇAIS</button>
+                <button onclick="updateLang('it')">ITALIANO</button>
+                <button onclick="updateLang('es')">ESPAÑOL</button>
+            </div>
         </div>
+    </div>
+</header>
+
+<div id="home" class="view active" style="padding-top:0;">
+    <section class="hero">
+        <h1 id="h-title">Innovative Solutions, Built Your Way</h1>
+        <p id="h-sub" style="font-size: 1.2rem; max-width: 600px; margin-bottom: 2rem;">Manage your fleet & assets in real time from anywhere.</p>
+        <div style="display:flex; gap:15px;">
+            <button onclick="nav('prod-menu')" class="btn-v" id="h-btn-1" style="padding:15px 40px;">EXPLORE PRODUCTS</button>
+            <button onclick="openForm('INQUIRY')" class="btn-v" id="h-btn-2" style="background:white; color:black!important; padding:15px 40px;">GET IN TOUCH</button>
+        </div>
+    </section>
+</div>
+
+<div id="about-us" class="view">
+    <div style="padding: 50px 10%;">
+        <h2 id="ab-title">ABOUT VANGUARD</h2>
+        <p id="ab-p1">Providing global telemetry solutions for high-stakes asset management.</p>
+    </div>
+</div>
+
+<div id="partners" class="view">
+    <div style="padding: 50px 10%;">
+        <h2 id="pt-title">OUR PARTNERS</h2>
+        <p id="pt-p">Global integration network profiles coming soon.</p>
+    </div>
+</div>
+
+<div id="prod-menu" class="view">
+    <div class="cat-grid" id="cat-anchor"></div>
+</div>
+
+<footer>
+    <div><span class="led-dot"></span> SYSTEM ALIVE | v1.0.7</div>
+    <div id="clock"></div>
+    <div style="display:flex; gap:20px;">
+        <a href="DOCS/LEGAL/terms.pdf" target="_blank" id="f-term">TERMS</a>
+        <a href="DOCS/LEGAL/privacy.pdf" target="_blank" id="f-priv">PRIVACY</a>
+        <span>BKO LOGIN</span>
+    </div>
+</footer>
+
+<script>
+    const TXT = {
+        en: { h: "Innovative Solutions, Built Your Way", sub: "Manage your fleet & assets in real time from anywhere.", home: "HOME", comp: "COMPANY", prod: "PRODUCTS", cont: "CONTACT", demo: "DEMO REQUEST", ab: "ABOUT US", pt: "OUR PARTNERS", tL: "TERMS", pL: "PRIVACY" },
+        fr: { h: "Solutions Innovantes, à Votre Façon", sub: "Gérez votre flotte et vos actifs en temps réel.", home: "ACCUEIL", comp: "ENTREPRISE", prod: "PRODUITS", cont: "CONTACT", demo: "DEMANDE DÉMO", ab: "À PROPOS", pt: "PARTENAIRES", tL: "CONDITIONS", pL: "CONFIDENTIALITÉ" },
+        it: { h: "Soluzioni Innovative, Costruite per Te", sub: "Gestisci la tua flotta e i tuoi asset in tempo reale.", home: "HOME", comp: "AZIENDA", prod: "PRODOTTI", cont: "CONTATTO", demo: "RICHIESTA DEMO", ab: "CHI SIAMO", pt: "PARTNER", tL: "TERMINI", pL: "PRIVACY" },
+        es: { h: "Soluciones Innovadoras, a su Medida", sub: "Gestione su flota y activos en tiempo real.", home: "INICIO", comp: "EMPRESA", prod: "PRODUCTOS", cont: "CONTACTO", demo: "DEMOSTRACIÓN", ab: "NOSOTROS", pt: "SOCIOS", tL: "CONDICIONES", pL: "PRIVACIDAD" }
+    };
+
+    function nav(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        const target = document.getElementById(id);
+        if(target) target.classList.add('active');
+        if(id === 'prod-menu') renderCats();
+        window.scrollTo(0,0);
+    }
+
+    function renderCats() {
+        const lang = document.getElementById('lang-display').innerText.split(' ')[1].toLowerCase();
+        const cats = [
+            { id: 'vehicle', n: 'VEHICLE', i: '🚗' },
+            { id: 'asset', n: 'ASSET', i: '📦' },
+            { id: 'dashcam', n: 'DASHCAM', i: '📹' }
+        ];
+        document.getElementById('cat-anchor').innerHTML =
