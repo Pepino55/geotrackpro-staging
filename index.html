@@ -3,92 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Sovereign Operations</title>
+    <title>GeoTrackPro | Sovereign Engineering</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #3E63DD; --navy: #0a0f1d; --gold: #e8ddc7; --footer-bg: #05070a; --btn-bg: #1a202c; }
+        :root { --accent: #3E63DD; --navy: #0a0f1d; --gold: #e8ddc7; --footer-bg: #1a202c; --btn-h: 48px; }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; color: var(--navy); min-height: 100vh; display: flex; flex-direction: column; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; background: #fff; }
         
-        /* HEADER: ANCHORED & UNIFORM [cite: 259, 273] */
+        /* HEADER - ANCHORED & UNIFORM [cite: 259, 273] */
         header { 
             background: var(--gold); height: 80px; display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 4%; position: fixed; top: 0; width: 100%; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0 4%; position: sticky; top: 0; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .nav-zone { display: flex; gap: 4px; align-items: center; }
+        .logo { height: 35px; cursor: pointer; }
+        .nav-zone { display: flex; gap: 4px; }
         .nav-btn { 
-            height: 48px; min-width: 100px; padding: 0 15px; background: var(--btn-bg); color: white; border: none; 
+            height: var(--btn-h); min-width: 100px; padding: 0 12px; background: var(--navy); color: white; border: none; 
             border-radius: 4px; font-weight: 800; font-size: 0.65rem; text-transform: uppercase; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; position: relative;
+            position: relative; display: flex; align-items: center; justify-content: center;
         }
         .nav-btn:hover { background: #2d3748; }
-        .platform-btn { background: var(--accent) !important; }
-
-        /* DROPDOWN LOGIC [cite: 268-270] */
-        .dropdown { position: absolute; top: 100%; left: 0; background: white; min-width: 180px; 
-                    box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 0 0 4px 4px; display: none; }
-        .nav-btn:hover .dropdown { display: block; }
-        .dropdown a { color: var(--navy); padding: 12px 16px; text-decoration: none; display: block; 
-                      font-size: 0.7rem; border-bottom: 1px solid #f1f5f9; text-align: left; }
-        .dropdown a:hover { background: #f8fafc; color: var(--accent); }
-
-        /* MAIN CONTENT AREA */
-        main { flex: 1; padding-top: 100px; padding-bottom: 80px; }
-        .hero-container { 
-            max-width: 1200px; margin: 0 auto; background: white; border-radius: 16px; 
-            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); display: flex; align-items: center; padding: 60px;
+        
+        /* DROPDOWN MENU [cite: 390-391] */
+        .drop-content { 
+            display: none; position: absolute; top: 100%; left: 0; background: white; 
+            min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; 
         }
-        .view { display: none; padding: 0 6%; }
-        .view.active { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-btn:hover .drop-content { display: block; }
+        .drop-content a { color: var(--navy); padding: 12px 16px; text-decoration: none; display: block; font-size: 0.7rem; border-bottom: 1px solid #eee; text-align: left; }
+        .drop-content a:hover { background: #f8fafc; color: var(--accent); }
 
-        /* FOOTER: ANCHORED  */
+        /* HOME BACKGROUND [cite: 312] */
+        #v-home { 
+            flex: 1; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('IMAGES/UI/home-bg.jpg') center/cover;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;
+        }
+
+        /* CONTACT FORM [cite: 342-354] */
+        .view { display: none; padding: 60px 8%; }
+        .view.active { display: block; }
+        .contact-box { max-width: 700px; margin: 0 auto; background: #fdfdfd; padding: 40px; border: 1px solid #eee; border-radius: 12px; }
+        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+        .sub-btn { width: 100%; height: 55px; background: #0891b2; color: white; border: none; border-radius: 4px; font-weight: 800; cursor: pointer; }
+
+        /* FOOTER [cite: 277-287] */
         footer { 
-            background: var(--footer-bg); color: white; height: 60px; width: 100%; 
-            position: fixed; bottom: 0; display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 4%; font-size: 0.7rem; z-index: 10000; border-top: 2px solid var(--accent);
+            background: var(--navy); color: white; padding: 20px 4%; display: flex; justify-content: space-between; align-items: center; 
+            position: sticky; bottom: 0; border-top: 3px solid var(--accent); font-size: 0.7rem; 
         }
-        .led { height: 10px; width: 10px; background: #00ff00; border-radius: 50%; display: inline-block; 
-               box-shadow: 0 0 8px #00ff00; animation: blink 1.5s infinite; margin-right: 8px; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-
-        /* CONTACT FORM [cite: 343-352] */
-        .contact-form { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; }
-        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #e2e8f0; border-radius: 6px; font-family: inherit; }
-        .submit-btn { width: 100%; height: 55px; background: #0891b2; color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+        .led { height: 10px; width: 10px; background: #00ff00; border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #00ff00; animation: blink 1.5s infinite; margin-right: 8px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="IMAGES/UI/logo.png" class="logo" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/180x40?text=GeoTrackPro'">
+    <img src="IMAGES/UI/logo.png" class="logo" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/180x40?text=GEOTRACKPRO'">
     <div class="nav-zone">
         <button class="nav-btn" onclick="nav('home')" data-t="h_home">Home</button>
         <div class="nav-btn"><span data-t="h_comp">Company</span>
-            <div class="dropdown">
+            <div class="drop-content">
                 <a href="#" onclick="nav('about')" data-t="h_about">About Us</a>
                 <a href="#" onclick="nav('partners')" data-t="h_part">Partners</a>
             </div>
         </div>
         <div class="nav-btn"><span data-t="h_sol">Solutions</span>
-            <div class="dropdown">
-                <a href="#" onclick="renderCatalog('asset')" data-t="s_asset">Asset Management</a>
-                <a href="#" onclick="renderCatalog('fleet')" data-t="s_fleet">Fleet Telematics</a>
+            <div class="drop-content">
+                <a href="#" onclick="nav('catalog')" data-t="s_asset">Asset Management</a>
+                <a href="#" onclick="nav('catalog')" data-t="s_fleet">Fleet Telematics</a>
             </div>
         </div>
         <div class="nav-btn"><span data-t="h_prod">Products</span>
-            <div class="dropdown">
-                <a href="#" onclick="renderCatalog('all')" data-t="p_all">View All</a>
-                <a href="#" onclick="renderCatalog('vehicle')">Vehicle</a>
-                <a href="#" onclick="renderCatalog('asset')">Asset</a>
-                <a href="#" onclick="renderCatalog('dashcam')">DashCam</a>
+            <div class="drop-content">
+                <a href="#" onclick="nav('catalog')" data-t="p_all">View All</a>
+                <a href="#" onclick="nav('catalog')">Vehicle</a>
+                <a href="#" onclick="nav('catalog')">Asset</a>
+                <a href="#" onclick="nav('catalog')">Motorcycle</a>
+                <a href="#" onclick="nav('catalog')">OBD</a>
+                <a href="#" onclick="nav('catalog')">TAG</a>
+                <a href="#" onclick="nav('catalog')">DashCam</a>
+                <a href="#" onclick="nav('catalog')">Accessories</a>
+                <a href="#" onclick="nav('catalog')">Personal</a>
             </div>
         </div>
         <button class="nav-btn" onclick="nav('contact')" data-t="h_cont">Contact</button>
-        <button class="nav-btn platform-btn" onclick="window.open('https://www.tracksolidpro.com')" data-t="h_plat">Platform</button>
+        <button class="nav-btn" onclick="nav('demo')" data-t="h_demo">Demo</button>
+        <button class="nav-btn" style="background:var(--accent)" onclick="window.open('https://www.tracksolidpro.com')">Platform</button>
         <div class="nav-btn">🌐 <span id="cur-l">EN</span>
-            <div class="dropdown">
+            <div class="drop-content">
                 <a href="#" onclick="setL('en')">EN</a>
                 <a href="#" onclick="setL('fr')">FR</a>
                 <a href="#" onclick="setL('it')">IT</a>
@@ -98,56 +101,50 @@
     </div>
 </header>
 
-<main>
+<main id="content-body">
     <div id="v-home" class="view active">
-        <div class="hero-container">
-            <div>
-                <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px;" data-t="slogan">Innovative Solutions, Built Your Way</h1>
-                <p style="font-size: 1.2rem; opacity: 0.7; margin-bottom: 30px;" data-t="sub_slogan">Manage your fleet & assets in real time from anywhere.</p>
-                <button class="submit-btn" style="width: 200px;" onclick="nav('catalog')">Explore Catalog</button>
-            </div>
-            <img src="IMAGES/UI/hero-device.png" style="width: 50%; margin-left: 40px;" onerror="this.style.display='none'">
-        </div>
+        <h1 style="font-size: 3.5rem;" data-t="slogan">Innovative Solutions, Built Your Way</h1>
+        <p style="font-size: 1.2rem; margin-top: 10px;" data-t="sub_slogan">Manage your fleet & assets in real time from anywhere.</p>
     </div>
 
     <div id="v-contact" class="view">
-        <div class="contact-form">
-            <h2 style="margin-bottom: 25px;" data-t="con_title">Get In Touch With Us</h2>
-            <form action="https://api.web3forms.com/submit" method="POST">
+        <div class="contact-box">
+            <h2 data-t="con_title">Get In Touch With Us</h2>
+            <form id="mainContactForm" action="https://api.web3forms.com/submit" method="POST">
                 <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
+                <input type="hidden" name="_subject" value="New Geotrackpro Contact Query">
                 <input type="text" name="name" placeholder="Your Name*" required>
                 <input type="email" name="email" placeholder="E-mail*" required>
                 <input type="text" name="phone" placeholder="Phone*" required>
                 <input type="text" name="country" placeholder="Country*" required>
-                <select name="product_interest">
+                <select name="products_of_interest">
                     <option value="" disabled selected>Products of Interest</option>
-                    <option value="Vehicle">Vehicle</option>
-                    <option value="Asset">Asset</option>
-                    <option value="DashCam">DashCam</option>
+                    <option>Vehicle</option><option>Asset</option><option>Motorcycle</option>
+                    <option>OBD</option><option>TAG</option><option>DashCam</option>
+                    <option>Accessories</option><option>Personal</option>
                 </select>
-                <textarea name="message" placeholder="Your Message*" style="height: 120px;" required></textarea>
-                <button type="submit" class="submit-btn">SUBMIT</button>
+                <textarea name="message" placeholder="Your message*" style="height: 150px;" required></textarea>
+                <button type="submit" class="sub-btn">SUBMIT</button>
             </form>
         </div>
     </div>
 </main>
 
 <footer>
-    <div><span class="led"></span> <span data-t="f_alive">SYSTEM ALIVE</span> | v1.0.5</div>
+    <div><img src="IMAGES/UI/logo-small.png" height="20" style="margin-right:15px;" onerror="this.style.display='none'"> <span class="led"></span> <span data-t="f_alive">SYSTEM ALIVE</span> | v1.0.6</div>
     <div id="clock"></div>
     <div>
-        <a href="#" style="color:white; margin-right:15px; text-decoration:none;" onclick="nav('bko')">BKO Login</a>
-        <a href="#" style="color:white; text-decoration:none;" data-t="f_priv">Privacy Policy</a>
+        <a href="#" style="color:white; margin-right:15px; text-decoration:none;" data-t="f_terms">Terms</a>
+        <a href="#" style="color:white; margin-right:15px; text-decoration:none;" data-t="f_priv">Privacy</a>
+        <a href="#" style="color:white; text-decoration:none;" onclick="nav('bko')">BKO Login</a>
     </div>
 </footer>
 
 <script>
     const DICT = {
-        en: { h_home: "Home", h_comp: "Company", h_about: "About Us", h_part: "Partners", h_sol: "Solutions", s_asset: "Asset Management", s_fleet: "Fleet Telematics", h_prod: "Products", p_all: "View All", h_cont: "Contact", h_plat: "Platform", slogan: "Innovative Solutions, Built Your Way", sub_slogan: "Manage your fleet & assets in real time from anywhere.", con_title: "Get In Touch With Us", f_alive: "SYSTEM ALIVE", f_priv: "Privacy Policy" },
-        fr: { h_home: "Accueil", h_comp: "Entreprise", h_about: "À propos", h_part: "Partenaires", h_sol: "Solutions", s_asset: "Gestion d'actifs", s_fleet: "Télématique de flotte", h_prod: "Produits", p_all: "Voir tout", h_cont: "Contact", h_plat: "Plateforme", slogan: "Solutions innovantes, conçues pour vous", sub_slogan: "Gérez votre flotte et vos actifs en temps réel.", con_title: "Contactez-nous", f_alive: "SYSTÈME ACTIF", f_priv: "Confidentialité" }
+        en: { h_home: "Home", h_comp: "Company", h_about: "About Us", h_part: "Partners", h_sol: "Solutions", h_prod: "Products", h_cont: "Contact", h_demo: "Demo Request", slogan: "Innovative Solutions, Built Your Way", con_title: "Get In Touch With Us", f_alive: "SYSTEM ACTIVE", f_terms: "Terms", f_priv: "Privacy" },
+        fr: { h_home: "Accueil", h_comp: "Entreprise", h_about: "À Propos", h_part: "Partenaires", h_sol: "Solutions", h_prod: "Produits", h_cont: "Contact", h_demo: "Démo", slogan: "Solutions Innovantes, à votre façon", con_title: "Contactez-nous", f_alive: "SYSTÈME ACTIF", f_terms: "Conditions", f_priv: "Confidentialité" }
     };
-
-    let activeL = 'en';
 
     function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -157,13 +154,17 @@
     }
 
     function setL(l) {
-        activeL = l;
         document.getElementById('cur-l').innerText = l.toUpperCase();
         document.querySelectorAll('[data-t]').forEach(el => {
             const key = el.getAttribute('data-t');
             if(DICT[l] && DICT[l][key]) el.innerText = DICT[l][key];
         });
     }
+
+    // Auto-Reset form after submission [cite: 403-404]
+    document.getElementById('mainContactForm').onsubmit = function() {
+        setTimeout(() => { this.reset(); }, 2000);
+    };
 
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
     window.onload = () => setL('en');
