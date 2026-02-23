@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise v21.8.2</title>
+    <title>GeoTrackPro | Vanguard Enterprise v21.8.3</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 75px; }
@@ -16,21 +16,26 @@
 
         /* DROPDOWN */
         .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { display: none; position: absolute; background-color: white; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.1); border-radius: 12px; z-index: 10001; top: 100%; left: 0; overflow: hidden; }
+        .dropdown-content { display: none; position: absolute; background: white; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.1); border-radius: 12px; z-index: 10001; top: 100%; left: 0; overflow: hidden; }
         .dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; }
         .dropdown:hover .dropdown-content { display: block; }
         .dropdown-content button { color: var(--navy); padding: 12px 16px; width: 100%; border: none; background: none; text-align: left; font-weight: 600; font-size: 0.75rem; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
-        .dropdown-content button:hover { background-color: #f1f5f9; color: var(--accent); }
+        .dropdown-content button:hover { background: #f1f5f9; color: var(--accent); }
 
+        /* VIEWS */
         .view { display: none; padding: calc(var(--header-h) + 40px) 5%; min-height: 100vh; }
         .view.active { display: block; }
         
-        .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; min-height: 70vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; margin-top: var(--header-h); }
+        .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; min-height: 70vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
         
+        /* FORM & GRID STYLES */
+        .contact-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; background: white; padding: 40px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 1000px; margin: 0 auto; }
+        input, textarea, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 10px; font-size: 0.9rem; }
         .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 50px; }
         .cat-card { background: white; padding: 25px; border-radius: 20px; text-align: center; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.3s; }
         .cat-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .cat-card span { font-size: 2rem; display: block; margin-bottom: 8px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
+        .card { background: white; border-radius: 20px; border: 1px solid #e2e8f0; padding: 20px; text-align: center; }
 
         footer { background: var(--navy); color: white; height: 50px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
         .led-dot { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; display: inline-block; margin-left: 5px; }
@@ -60,22 +65,22 @@
     </div>
 
     <div>
-        <select id="langSelect" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none;">
-            <option value="en">EN</option>
+        <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none; cursor:pointer;">
+            <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option><option value="fr">FR</option>
         </select>
     </div>
 </header>
 
 <div id="home" class="view active" style="padding:0;">
     <section class="hero">
-        <h1 style="font-size: 3.5rem; font-weight: 800;">VANGUARD GLOBAL</h1>
-        <button onclick="nav('prod-menu')" class="btn-v" style="padding:15px 40px;">Explore Catalog</button>
+        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
+        <button onclick="nav('prod-menu')" class="btn-v" style="padding:15px 40px; margin-top:20px;">Explore Catalog</button>
     </section>
 </div>
 
 <div id="about-us" class="view">
-    <h2 style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block;">THE VANGUARD STANDARD</h2>
-    <p>Global Asset Intelligence for the Modern Enterprise.</p>
+    <h2 id="ab-title" style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block;">THE VANGUARD STANDARD</h2>
+    <p id="ab-p1">Global Asset Intelligence for the Modern Enterprise.</p>
 </div>
 
 <div id="partners" class="view">
@@ -84,16 +89,41 @@
 </div>
 
 <div id="prod-menu" class="view">
-    <h2 style="text-align:center;">Product Categories</h2>
-    <div class="cat-grid" id="cat-anchor">
-        <div class="cat-card" onclick="alert('Category Logic Active')"><span>🚗</span>VEHICLE</div>
-        <div class="cat-card" onclick="alert('Category Logic Active')"><span>📦</span>ASSET</div>
-    </div>
+    <div class="cat-grid" id="cat-anchor"></div>
+</div>
+
+<div id="list-view" class="view">
+    <button onclick="nav('prod-menu')" class="btn-v" style="background:#64748b; margin-bottom:20px;">← Back</button>
+    <div class="product-grid" id="gridAnchor"></div>
 </div>
 
 <div id="contact" class="view">
-    <h2 id="f-title">CONTACT</h2>
-    <p>Form integration active.</p>
+    <div class="contact-stack">
+        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
+            <h2 id="f-title" style="margin:0 0 20px 0;">CONTACT US</h2>
+            <div id="form-content">
+                <input type="text" name="name" placeholder="Full Name *" required>
+                <input type="text" name="company" placeholder="Company *" required>
+                <input type="email" name="email" placeholder="Email *" required>
+                <input type="tel" name="phone" placeholder="Phone *" required>
+                <select name="country" required>
+                    <option value="">Select Country *</option>
+                    <option value="Global">International</option>
+                </select>
+                <input type="hidden" name="subject" id="email-subject">
+                <textarea name="message" rows="4" placeholder="How can we help? *" required></textarea>
+                <button type="submit" class="btn-v" style="width:100%; height:45px;">SEND INQUIRY</button>
+            </div>
+            <div id="form-status" style="display:none; text-align:center;">
+                <h3>✅ Message Sent</h3>
+                <button type="button" onclick="resetForm()" class="btn-v">Send Another</button>
+            </div>
+        </form>
+        <div style="background:#eee; border-radius:20px; display:flex; align-items:center; justify-content:center;">
+            <p>Map/Location Preview</p>
+        </div>
+    </div>
 </div>
 
 <footer>
@@ -105,25 +135,40 @@
 </footer>
 
 <script>
+    const WAREHOUSE = [
+        { id: "VL103", cat: ["vehicle"], name: "VL103", desc: "4G Hardwired Tracker" },
+        { id: "LL301", cat: ["asset"], name: "LL301", desc: "LTE Asset Tracker" }
+    ];
+
     function nav(id) {
-        console.log("Navigating to:", id);
-        // Hide all views
-        const views = document.querySelectorAll('.view');
-        views.forEach(v => v.classList.remove('active'));
-        
-        // Show target view
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         const target = document.getElementById(id);
-        if(target) {
-            target.classList.add('active');
-        } else {
-            console.error("View not found:", id);
-        }
+        if(target) target.classList.add('active');
+        if(id === 'prod-menu') renderCats();
         window.scrollTo(0,0);
+    }
+
+    function renderCats() {
+        const cats = [{id:'vehicle', n:'VEHICLE', i:'🚗'}, {id:'asset', n:'ASSET', i:'📦'}];
+        document.getElementById('cat-anchor').innerHTML = cats.map(c => `<div class="cat-card" onclick="renderList('${c.id}')"><span>${c.i}</span>${c.n}</div>`).join('');
+    }
+
+    function renderList(cat) {
+        nav('list-view');
+        const items = WAREHOUSE.filter(d => d.cat.includes(cat));
+        document.getElementById('gridAnchor').innerHTML = items.map(d => `<div class="card"><h3>${d.name}</h3><p>${d.desc}</p><button onclick="openForm('${d.name}')" class="btn-v">Inquiry</button></div>`).join('');
     }
 
     function openForm(t) {
         document.getElementById('f-title').innerText = t;
+        document.getElementById('email-subject').value = "Inquiry: " + t;
         nav('contact');
+    }
+
+    function resetForm() {
+        document.getElementById('contactForm').reset();
+        document.getElementById('form-content').style.display = 'block';
+        document.getElementById('form-status').style.display = 'none';
     }
 
     setInterval(() => {
