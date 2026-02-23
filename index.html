@@ -3,70 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Sovereign Build</title>
+    <title>GeoTrackPro | Sovereign Operations</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #3E63DD; --navy: #0f172a; --gold: #f8f1e5; --text: #334155; --btn-h: 46px; }
+        :root { --accent: #3E63DD; --navy: #0f172a; --gold: #f8f1e5; --soft-bg: #fcfcfc; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fdfcf9; color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--soft-bg); color: #334155; min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* HEADER - ANCHORED & BRANDED [cite: 34, 49] */
+        /* HEADER: NEAT & ANCHORED */
         header { 
             background: var(--gold); height: 95px; display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 5%; position: fixed; top: 0; width: 100%; z-index: 10000; border-bottom: 2px solid rgba(0,0,0,0.03);
+            padding: 0 5%; position: fixed; top: 0; width: 100%; z-index: 10000; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo-box img { height: 48px; cursor: pointer; }
-        .nav-zone { display: flex; gap: 8px; align-items: center; }
+        .logo-box img { height: 45px; cursor: pointer; }
+        .nav-zone { display: flex; gap: 8px; }
         
-        /* UNIFORM BUTTONS [cite: 48] */
         .nav-btn { 
-            height: var(--btn-h); padding: 0 18px; background: white; color: var(--navy); border: 1px solid #e2e8f0; 
+            height: 44px; padding: 0 15px; background: white; color: var(--navy); border: 1px solid #e2e8f0; 
             border-radius: 6px; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; cursor: pointer;
-            transition: all 0.2s ease; position: relative; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: 0.2s; display: flex; align-items: center;
         }
-        .nav-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+        .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-        /* DROPDOWNS [cite: 43-45] */
+        /* DROPDOWNS */
         .drop-menu { 
             display: none; position: absolute; top: 100%; left: 0; background: white; 
-            min-width: 220px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-radius: 0 0 8px 8px; border: 1px solid #e2e8f0;
+            min-width: 200px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 0 0 8px 8px;
         }
-        .lang-drop { right: 0; left: auto; }
         .nav-btn:hover .drop-menu { display: block; }
-        .drop-menu a { color: var(--text); padding: 14px 20px; text-decoration: none; display: block; font-size: 0.8rem; border-bottom: 1px solid #f8fafc; }
-        .drop-menu a:hover { background: #f1f5f9; color: var(--accent); }
+        .drop-menu a { color: #475569; padding: 12px 20px; text-decoration: none; display: block; font-size: 0.8rem; border-bottom: 1px solid #f8fafc; }
 
-        /* VIEW SYSTEM */
-        main { flex: 1; padding-top: 95px; margin-bottom: 70px; }
-        .view { display: none; padding: 50px 10%; }
-        .view.active { display: block; animation: slideUp 0.4s ease-out; }
+        /* MAIN CONTENT ENGINE */
+        main { flex: 1; padding-top: 110px; padding-bottom: 80px; }
+        .view { display: none; padding: 0 10%; animation: fadeIn 0.4s ease; }
+        .view.active { display: block; }
 
-        /* HERO - HOME ONLY [cite: 77-85] */
-        .hero { 
-            height: 60vh; background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://www.jimiiot.com/wp-content/uploads/2023/banner.jpg') center/cover;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 20px; margin: 20px;
-        }
+        /* CARDS & FORMS */
+        .card { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        h2 { font-weight: 800; color: var(--navy); margin-bottom: 25px; text-align: center; }
+        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; }
+        .submit-btn { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 6px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
 
-        /* COMPLETED FORMS [cite: 117-129, 133] */
-        .card { max-width: 750px; margin: 0 auto; background: white; padding: 50px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
-        .card h2 { margin-bottom: 30px; font-weight: 800; color: var(--navy); text-align: center; }
-        input, select, textarea { width: 100%; padding: 15px; margin-bottom: 18px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 0.9rem; }
-        .submit-btn { width: 100%; padding: 18px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; }
-
-        /* FOOTER - ANCHORED [cite: 52] */
+        /* FOOTER: FIXED BASELINE */
         footer { 
-            background: white; height: 70px; position: fixed; bottom: 0; width: 100%; 
+            background: white; height: 65px; position: fixed; bottom: 0; width: 100%; 
             display: flex; align-items: center; justify-content: space-between; padding: 0 5%; border-top: 1px solid #e2e8f0; z-index: 10000;
         }
-        .led { height: 10px; width: 10px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; animation: pulse 2s infinite; margin-right: 10px; }
+        .led { height: 10px; width: 10px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; animation: pulse 2s infinite; margin-right: 8px; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-box"><img src="IMAGES/UI/logo.png" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/200x50?text=GEOTRACKPRO'"></div>
+    <div class="logo-box"><img src="IMAGES/UI/logo.png" onclick="nav('home')" onerror="this.src='https://via.placeholder.com/180x45?text=GEOTRACKPRO'"></div>
     <div class="nav-zone">
         <button class="nav-btn" onclick="nav('home')" data-t="h_home">Home</button>
         <div class="nav-btn"><span data-t="h_comp">Company</span>
@@ -78,16 +69,15 @@
         <div class="nav-btn"><span data-t="h_prod">Products</span>
             <div class="drop-menu">
                 <a href="#" onclick="nav('catalog')" data-t="p_all">View All</a>
-                <a href="#" onclick="nav('catalog')">Vehicle</a><a href="#" onclick="nav('catalog')">Asset</a><a href="#" onclick="nav('catalog')">Motorcycle</a><a href="#" onclick="nav('catalog')">OBD</a><a href="#" onclick="nav('catalog')">TAG</a>
+                <a href="#" onclick="nav('catalog')">Vehicle</a><a href="#" onclick="nav('catalog')">Asset</a>
             </div>
         </div>
         <button class="nav-btn" onclick="nav('contact')" data-t="h_cont">Contact</button>
         <button class="nav-btn" onclick="nav('demo')" data-t="h_demo">Demo Request</button>
-        <button class="nav-btn" style="color: var(--accent)" onclick="window.open('https://www.tracksolidpro.com')">Platform</button>
-        <button class="nav-btn">🔍</button>
+        <button class="nav-btn" style="color:var(--accent)" onclick="window.open('https://www.tracksolidpro.com')">Platform</button>
         <div class="nav-btn">🌐 <span id="cur-l">EN</span>
-            <div class="drop-menu lang-drop">
-                <a href="#" onclick="setL('en')">English</a><a href="#" onclick="setL('fr')">Français</a><a href="#" onclick="setL('es')">Español</a><a href="#" onclick="setL('it')">Italiano</a>
+            <div class="drop-menu" style="right:0; left:auto;">
+                <a href="#" onclick="setL('en')">English</a><a href="#" onclick="setL('fr')">Français</a><a href="#" onclick="setL('es')">Español</a>
             </div>
         </div>
     </div>
@@ -95,66 +85,54 @@
 
 <main>
     <div id="v-home" class="view active">
-        <div class="hero">
-            <h1 style="font-size: 3.2rem; color: var(--navy);" data-t="slogan">Innovative Solutions, Built Your Way</h1>
-            <p data-t="sub_slogan" style="margin-top:20px; font-size: 1.1rem; opacity:0.8;">Professional Telemetry & Fleet Management Ecosystem.</p>
+        <div style="text-align:center; padding-top:100px;">
+            <h1 style="font-size: 3rem; font-weight:800; color:var(--navy);" data-t="slogan">Innovative Solutions, Built Your Way</h1>
+        </div>
+    </div>
+
+    <div id="v-about" class="view">
+        <div class="card">
+            <h2 data-t="h_about">About Us</h2>
+            <p style="line-height:1.8;">GeoTrackPro is a pioneer in sovereign telemetry solutions. We provide high-end tracking hardware and a robust cloud ecosystem designed for global fleet operations and high-value asset security.</p>
         </div>
     </div>
 
     <div id="v-contact" class="view">
         <div class="card">
-            <h2 data-t="con_title">Get In Touch With Us</h2>
-            <form action="https://api.web3forms.com/submit" method="POST" onsubmit="alert('Sent'); this.reset(); return false;">
+            <h2 data-t="con_title">Contact Us</h2>
+            <form action="https://api.web3forms.com/submit" method="POST" onsubmit="alert('Sent'); this.reset();">
                 <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
-                <input type="text" name="name" placeholder="Your Name*" required>
-                <input type="email" name="email" placeholder="E-mail*" required>
-                <select name="country" required>
-                    <option value="" disabled selected data-t="f_country">Select Country*</option>
-                    <option value="FR">France (+33)</option><option value="ES">Spain (+34)</option><option value="IT">Italy (+39)</option><option value="US">USA (+1)</option>
+                <input type="text" name="customer_name" id="f_name" placeholder="Full Name*" required>
+                <input type="email" name="customer_email" id="f_mail" placeholder="Email Address*" required>
+                <select name="customer_country" id="f_country" required>
+                    <option value="" disabled selected data-t="f_select">Select Country*</option>
+                    <option value="FR">France (+33)</option><option value="ES">Spain (+34)</option>
                 </select>
-                <input type="text" name="phone" placeholder="Phone*" required>
-                <textarea name="message" placeholder="Your message*" style="height:140px;" required></textarea>
-                <button type="submit" class="submit-btn" data-t="f_send">Submit</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="v-demo" class="view">
-        <div class="card">
-            <h2 data-t="h_demo">Demo Request</h2>
-            <form action="https://api.web3forms.com/submit" method="POST" onsubmit="alert('Demo Request Sent'); this.reset(); return false;">
-                <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
-                <input type="text" name="name" placeholder="Your Name*" required>
-                <input type="email" name="email" placeholder="E-mail*" required>
-                <select name="country" required>
-                    <option value="" disabled selected data-t="f_country">Select Country*</option>
-                    <option value="FR">France (+33)</option><option value="ES">Spain (+34)</option><option value="IT">Italy (+39)</option><option value="US">USA (+1)</option>
-                </select>
-                <textarea name="message" placeholder="Details of your operation*" style="height:140px;" required></textarea>
-                <button type="submit" class="submit-btn" data-t="f_send">Request Demo</button>
+                <input type="text" name="customer_phone" id="f_phone" placeholder="Phone Number*" required>
+                <textarea name="customer_message" id="f_msg" placeholder="Your Message*" style="height:120px;" required></textarea>
+                <button type="submit" class="submit-btn" data-t="f_send">Transmit Message</button>
             </form>
         </div>
     </div>
 </main>
 
 <footer>
-    <div><a href="#" onclick="nav('bko')" style="color:#94a3b8; text-decoration:none; font-size:0.65rem;">BKO Login</a></div>
+    <div><a href="#" onclick="nav('bko')" style="color:#94a3b8; text-decoration:none; font-size:0.6rem;">BKO ACCESS</a></div>
     <div style="display:flex; align-items:center;">
-        <span class="led"></span> <span data-t="f_alive" style="font-weight:800; font-size:0.7rem;">SYSTEM ALIVE</span> 
-        <span id="clock" style="margin-left:15px; font-family:monospace; color:#64748b;"></span>
+        <span class="led"></span> <span data-t="f_alive" style="font-weight:800; font-size:0.7rem;">SYSTEM ALIVE</span>
+        <span id="clock" style="margin-left:15px; font-family:monospace; color:#94a3b8;"></span>
     </div>
     <div>
-        <a href="#" style="color:var(--text); text-decoration:none; margin-right:25px;" data-t="f_terms">Terms of Service</a>
-        <a href="#" style="color:var(--text); text-decoration:none;" data-t="f_priv">Privacy Policy</a>
+        <a href="#" style="color:inherit; text-decoration:none; margin-right:20px;" data-t="f_terms">Terms</a>
+        <a href="#" style="color:inherit; text-decoration:none;" data-t="f_priv">Privacy</a>
     </div>
 </footer>
 
 <script>
     const DICT = {
-        en: { h_home: "Home", h_comp: "Company", h_about: "About Us", h_part: "Partners", h_prod: "Products", p_all: "View All", h_cont: "Contact", h_demo: "Demo Request", con_title: "Get In Touch With Us", f_alive: "SYSTEM ALIVE", f_terms: "Terms of Service", f_priv: "Privacy Policy", f_country: "Select Country*", f_send: "Submit", slogan: "Innovative Solutions, Built Your Way" },
-        fr: { h_home: "Accueil", h_comp: "Entreprise", h_about: "À Propos", h_part: "Partenaires", h_prod: "Produits", p_all: "Tout Voir", h_cont: "Contact", h_demo: "Demande de Démo", con_title: "Contactez-nous", f_alive: "SYSTÈME ACTIF", f_terms: "Conditions", f_priv: "Confidentialité", f_country: "Choisir Pays*", f_send: "Envoyer", slogan: "Solutions Innovantes, à votre façon" },
-        es: { h_home: "Inicio", h_comp: "Empresa", h_about: "Sobre Nosotros", h_part: "Socios", h_prod: "Productos", p_all: "Ver Todo", h_cont: "Contacto", h_demo: "Solicitar Demo", con_title: "Contáctenos", f_alive: "SISTEMA ACTIVO", f_terms: "Términos", f_priv: "Privacidad", f_country: "Seleccionar País*", f_send: "Enviar", slogan: "Soluciones Innovadoras, a su manera" },
-        it: { h_home: "Home", h_comp: "Azienda", h_about: "Chi Siamo", h_part: "Partner", h_prod: "Prodotti", p_all: "Vedi Tutto", h_cont: "Contatto", h_demo: "Richiedi Demo", con_title: "Contattaci", f_alive: "SISTEMA ATTIVO", f_terms: "Termini", f_priv: "Privacy", f_country: "Seleziona Paese*", f_send: "Invia", slogan: "Soluzioni Innovative, fatte a modo tuo" }
+        en: { h_home: "Home", h_comp: "Company", h_about: "About Us", h_part: "Partners", h_prod: "Products", h_cont: "Contact", h_demo: "Demo Request", con_title: "Contact Us", f_alive: "SYSTEM ACTIVE", f_terms: "Terms", f_priv: "Privacy", f_send: "Transmit Message", f_select: "Select Country*", p_all: "View All", slogan: "Innovative Solutions, Built Your Way", pl_name: "Full Name*", pl_mail: "Email Address*", pl_phone: "Phone Number*", pl_msg: "Your Message*" },
+        fr: { h_home: "Accueil", h_comp: "Entreprise", h_about: "À Propos", h_part: "Partenaires", h_prod: "Produits", h_cont: "Contact", h_demo: "Demande Démo", con_title: "Contactez-nous", f_alive: "SYSTÈME ACTIF", f_terms: "Conditions", f_priv: "Confidentialité", f_send: "Envoyer le Message", f_select: "Choisir Pays*", p_all: "Tout Voir", slogan: "Solutions Innovantes, à votre façon", pl_name: "Nom Complet*", pl_mail: "Adresse Email*", pl_phone: "Téléphone*", pl_msg: "Votre Message*" },
+        es: { h_home: "Inicio", h_comp: "Empresa", h_about: "Sobre Nosotros", h_part: "Socios", h_prod: "Productos", h_cont: "Contacto", h_demo: "Solicitar Demo", con_title: "Contáctenos", f_alive: "SISTEMA ACTIVO", f_terms: "Términos", f_priv: "Privacidad", f_send: "Enviar Mensaje", f_select: "Seleccionar País*", p_all: "Ver Todo", slogan: "Soluciones Innovadoras, a su manera", pl_name: "Nombre Completo*", pl_mail: "Correo Electrónico*", pl_phone: "Teléfono*", pl_msg: "Su Mensaje*" }
     };
 
     function nav(id) {
@@ -170,6 +148,11 @@
             const key = el.getAttribute('data-t');
             if(DICT[l] && DICT[l][key]) el.innerText = DICT[l][key];
         });
+        // Translate Placeholders
+        document.getElementById('f_name').placeholder = DICT[l].pl_name;
+        document.getElementById('f_mail').placeholder = DICT[l].pl_mail;
+        document.getElementById('f_phone').placeholder = DICT[l].pl_phone;
+        document.getElementById('f_msg').placeholder = DICT[l].pl_msg;
     }
 
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
