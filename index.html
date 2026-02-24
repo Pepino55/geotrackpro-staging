@@ -40,7 +40,7 @@
 
         /* CONTACT FORM */
         .contact-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 40px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 1100px; margin: 0 auto; }
-        input, textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 12px; font-size: 0.9rem; }
+        input, textarea, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 12px; font-size: 0.9rem; background: white; }
 
         /* FOOTER & LED */
         footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
@@ -140,6 +140,10 @@
                 <input type="text" name="company" id="in-comp" placeholder="Company Name *" required>
                 <input type="email" name="email" id="in-email" placeholder="Business Email *" required>
                 <input type="tel" name="phone" id="in-tel" placeholder="Phone Number *" required>
+                <select name="country" id="in-country" required>
+                    <option value="" disabled selected id="opt-country">Select Country *</option>
+                    <option value="Italy">Italy</option><option value="Spain">Spain</option><option value="France">France</option><option value="United Kingdom">United Kingdom</option><option value="USA">USA</option><option value="Other">Other</option>
+                </select>
                 <input type="hidden" name="subject" id="email-subject" value="New Website Submission">
                 <textarea name="message" id="in-msg" rows="4" placeholder="How can we help? *" required></textarea>
                 <button type="submit" id="btn-submit" class="btn-v" style="width:100%; height:50px;">SEND INQUIRY</button>
@@ -148,10 +152,10 @@
                 <span style="font-size:3rem;">✅</span>
                 <h3 id="st-title">Message Sent</h3>
                 <p id="st-p">A Vanguard specialist will review your request shortly.</p>
-                <button type="button" onclick="resetForm()" class="btn-v" style="background:#64748b;">Send Another</button>
+                <button type="button" onclick="resetForm()" class="btn-v" id="btn-reset" style="background:#64748b;">Send Another</button>
             </div>
         </form>
-        <div style="border-radius:20px; overflow:hidden; background:#eee;"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345093643!2d144.9537353153166!3d-37.816279742021234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d4c2b349649%3A0xb6899234e561db11!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sau!4v1614000000000!5m2!1sen!2sau" width="100%" height="100%" style="border:0;"></iframe></div>
+        <div style="border-radius:20px; overflow:hidden; background:#eee;"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509374!2d144.9537353153224!3d-37.81627977975171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d2254555e3a8!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sus!4v1633000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
     </div>
 </div>
 
@@ -164,7 +168,6 @@
 </footer>
 
 <script>
-    /* FULL 28-DEVICE WAREHOUSE RESTORED */
     const WAREHOUSE = [
         { id: "VL103", cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
         { id: "VL106", cat: ["vehicle"], name: "VL106", desc: "LTE vehicle tracker.", features:[{icon:"🛰️",label:"GNSS"}] },
@@ -196,12 +199,11 @@
         { id: "CI01", cat: ["acc"], name: "CI01", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] }
     ];
 
-    /* FULL TRANSLATIONS WITH FORM FIELDS */
     const TXT = {
-        en: { h: "VANGUARD GLOBAL", p: "PRODUCTS", v: "Vehicle", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", abT: "THE VANGUARD STANDARD", abS: "Global Asset Intelligence for the Modern Enterprise.", abP1: "Vanguard Global provides the hardware and telemetry needed to secure assets and eliminate variables.", abMT: "Our Mission", abMP: "To provide an unblinking eye over your most valuable assets.", abGT: "Global Reach", abGP: "Hardware engineered for international connectivity.", abST: "Adaptive Security", abSP: "Custom configurations for your operational landscape.", fName: "Full Name *", fComp: "Company Name *", fEmail: "Business Email *", fTel: "Phone Number *", fMsg: "How can we help? *", submit: "SEND INQUIRY", stTitle: "Message Sent", stP: "A Vanguard specialist will review your request shortly." },
-        it: { h: "VANGUARD GLOBALE", p: "PRODOTTI", v: "Veicoli", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personale", ac: "Acc.", tg: "Tags", abT: "LO STANDARD VANGUARD", abS: "Intelligenza globale per l'impresa moderna.", abP1: "Vanguard Global fornisce strumenti di precisione per proteggere i vostri asset strategici.", abMT: "Missione", abMP: "Eliminare i punti ciechi con l'innovazione tecnologica.", abGT: "Portata Globale", abGP: "Hardware progettato per la connettività internazionale.", abST: "Sicurezza Adattiva", abSP: "Configurazioni su misura per le vostre esigenze.", fName: "Nome Completo *", fComp: "Nome Azienda *", fEmail: "Email Aziendale *", fTel: "Telefono *", fMsg: "Come possiamo aiutarvi? *", submit: "INVIA RICHIESTA", stTitle: "Messaggio Inviato", stP: "Un esperto Vanguard esaminerà la vostra richiesta a breve." },
-        es: { h: "VANGUARDIA GLOBAL", p: "PRODUCTOS", v: "Vehículo", a: "Activos", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", abT: "EL ESTÁNDAR VANGUARD", abS: "Inteligencia para la empresa moderna.", abP1: "Vanguard Global entrega herramientas de precisión para asegurar activos.", abMT: "Misión", abMP: "Proporcionar visión constante mediante innovación.", abGT: "Alcance Global", abGP: "Hardware diseñado para conectividad internacional.", abST: "Seguridad Adattiva", abSP: "Configuraciones personalizadas.", fName: "Nombre Completo *", fComp: "Empresa *", fEmail: "Correo Electrónico *", fTel: "Teléfono *", fMsg: "¿Cómo podemos ayudarle? *", submit: "ENVIAR", stTitle: "Mensaje Enviado", stP: "Un especialista de Vanguard revisará su solicitud pronto." },
-        fr: { h: "VANGUARD GLOBAL", p: "PRODUITS", v: "Véhicule", a: "Actif", dc: "Dashcam", o: "OBD", s: "Personnel", ac: "Acc.", tg: "Tags", abT: "LE STANDARD VANGUARD", abS: "Intelligence globale des actifs.", abP1: "Vanguard Global livre les outils de précision.", abMT: "Notre Mission", abMP: "Fournir un œil vigilant grâce à l'innovation.", abGT: "Portée Mondiale", abGP: "Matériel conçu pour la connettivité internationale.", abST: "Adaptive Security", abSP: "Configurations sur mesure.", fName: "Nom Complet *", fComp: "Nom de l'entreprise *", fEmail: "Email Professionnel *", fTel: "Téléphone *", fMsg: "Comment pouvons-nous vous aider? *", submit: "ENVOYER", stTitle: "Message Envoyé", stP: "Un spécialiste Vanguard examinera votre demande sous peu." }
+        en: { h: "VANGUARD GLOBAL", p: "PRODUCTS", v: "Vehicle", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", abT: "THE VANGUARD STANDARD", abS: "Global Asset Intelligence for the Modern Enterprise.", abP1: "Vanguard Global provides the hardware and telemetry needed to secure assets and eliminate variables.", abMT: "Our Mission", abMP: "To provide an unblinking eye over your most valuable assets.", abGT: "Global Reach", abGP: "Hardware engineered for international connectivity.", abST: "Adaptive Security", abSP: "Custom configurations for your operational landscape.", fName: "Full Name *", fComp: "Company Name *", fEmail: "Business Email *", fTel: "Phone Number *", fMsg: "How can we help? *", submit: "SEND INQUIRY", stTitle: "Message Sent", stP: "A Vanguard specialist will review your request shortly.", reset: "Send Another", country: "Select Country *", c1: "CONTACT US", c2: "DEMO REQUEST", c3: "SALES CONSULTATION" },
+        it: { h: "VANGUARD GLOBALE", p: "PRODOTTI", v: "Veicoli", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personale", ac: "Acc.", tg: "Tags", abT: "LO STANDARD VANGUARD", abS: "Intelligenza globale per l'impresa moderna.", abP1: "Vanguard Global fornisce strumenti di precisione per proteggere i vostri asset strategici.", abMT: "Missione", abMP: "Eliminare i punti ciechi con l'innovazione tecnologica.", abGT: "Portata Globale", abGP: "Hardware progettato per la connettività internazionale.", abST: "Sicurezza Adattiva", abSP: "Configurazioni su misura per le vostre esigenze.", fName: "Nome Completo *", fComp: "Nome Azienda *", fEmail: "Email Aziendale *", fTel: "Telefono *", fMsg: "Come possiamo aiutarvi? *", submit: "INVIA RICHIESTA", stTitle: "Messaggio Inviato", stP: "Un esperto Vanguard esaminerà la vostra richiesta a breve.", reset: "Invia un altro", country: "Seleziona Paese *", c1: "CONTATTACI", c2: "RICHIESTA DEMO", c3: "CONSULENZA VENDITE" },
+        es: { h: "VANGUARDIA GLOBAL", p: "PRODUCTOS", v: "Vehículo", a: "Activos", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", abT: "EL ESTÁNDAR VANGUARD", abS: "Inteligencia para la empresa moderna.", abP1: "Vanguard Global entrega herramientas de precisión para asegurar activos.", abMT: "Misión", abMP: "Proporcionar visión constante mediante innovación.", abGT: "Alcance Global", abGP: "Hardware diseñado para conectividad internacional.", abST: "Seguridad Adattiva", abSP: "Configuraciones personalizadas.", fName: "Nombre Completo *", fComp: "Empresa *", fEmail: "Correo Electrónico *", fTel: "Teléfono *", fMsg: "¿Cómo podemos ayudarle? *", submit: "ENVIAR", stTitle: "Mensaje Enviado", stP: "Un especialista de Vanguard revisará su solicitud pronto.", reset: "Enviar otro", country: "Seleccionar País *", c1: "CONTÁCTENOS", c2: "SOLICITUD DE DEMO", c3: "CONSULTA DE VENTAS" },
+        fr: { h: "VANGUARD GLOBAL", p: "PRODUITS", v: "Véhicule", a: "Actif", dc: "Dashcam", o: "OBD", s: "Personnel", ac: "Acc.", tg: "Tags", abT: "LE STANDARD VANGUARD", abS: "Intelligence globale des actifs.", abP1: "Vanguard Global livre les outils de précision.", abMT: "Notre Mission", abMP: "Fournir un œil vigilant grâce à l'innovation.", abGT: "Portée Mondiale", abGP: "Matériel conçu pour la connettivité internationale.", abST: "Adaptive Security", abSP: "Configurations sur mesure.", fName: "Nom Complet *", fComp: "Nom de l'entreprise *", fEmail: "Email Professionnel *", fTel: "Téléphone *", fMsg: "Comment pouvons-nous vous aider? *", submit: "ENVOYER", stTitle: "Message Envoyé", stP: "Un spécialiste Vanguard examinera votre demande sous peu.", reset: "Envoyer un autre", country: "Choisir Pays *", c1: "CONTACTEZ-NOUS", c2: "DEMANDE DE DÉMO", c3: "CONSULTATION VENTES" }
     };
 
     function nav(id) {
@@ -237,7 +239,14 @@
     }
 
     function openForm(subject) {
-        document.getElementById('f-title').innerText = subject;
+        const lang = document.getElementById('langSelect').value;
+        const t = TXT[lang] || TXT.en;
+        let displaySubject = subject;
+        if(subject === 'CONTACT US') displaySubject = t.c1;
+        if(subject === 'DEMO REQUEST') displaySubject = t.c2;
+        if(subject === 'SALES CONSULTATION') displaySubject = t.c3;
+
+        document.getElementById('f-title').innerText = displaySubject;
         document.getElementById('email-subject').value = "Website Inquiry: " + subject;
         nav('contact');
     }
@@ -260,9 +269,11 @@
         document.getElementById('in-email').placeholder = t.fEmail;
         document.getElementById('in-tel').placeholder = t.fTel;
         document.getElementById('in-msg').placeholder = t.fMsg;
+        document.getElementById('opt-country').innerText = t.country;
         document.getElementById('btn-submit').innerText = t.submit;
         document.getElementById('st-title').innerText = t.stTitle;
         document.getElementById('st-p').innerText = t.stP;
+        document.getElementById('btn-reset').innerText = t.reset;
         renderCats();
     }
 
