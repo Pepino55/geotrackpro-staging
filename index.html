@@ -3,87 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard v22.1.9</title>
+    <title>GeoTrackPro | Vanguard v22.2.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 80px; }
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
-        body { background: #f8fafc; color: var(--navy); line-height: 1.6; }
-        
-        /* HEADER - FIXED NAVIGATION */
-        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo { height: 35px; cursor: pointer; }
-        .nav-links { display: flex; gap: 15px; align-items: center; }
-        
-        .btn-v { background: var(--accent); color: white; padding: 12px 20px; border-radius: 50px; font-weight: 800; font-size: 0.7rem; border: none; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .btn-v:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(62, 99, 221, 0.3); }
+        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #f8fafc; color: var(--navy); padding-bottom: 80px; }
 
-        /* HERO SECTION */
-        .view { display: none; padding-top: var(--header-h); min-height: 100vh; }
+        /* HEADER - HARD-CODED STABILITY */
+        header { background: var(--gold); height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; position: sticky; top: 0; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-links { display: flex; gap: 12px; }
+        .btn-v { background: var(--accent); color: white; padding: 12px 20px; border-radius: 50px; font-weight: 800; font-size: 0.7rem; border: none; cursor: pointer; text-decoration: none; text-transform: uppercase; }
+
+        /* HERO - NO DYNAMIC TEXT */
+        .hero { background: var(--navy); height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; border-bottom: 5px solid var(--accent); }
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; }
+
+        /* CONTENT AREAS */
+        .view { display: none; padding: 40px 5%; }
         .view.active { display: block; }
-        
-        .hero { height: 70vh; background: var(--navy); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 0 10%; }
-        .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 20px; letter-spacing: -1px; }
 
-        /* PRODUCT GRID */
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        .card { background: white; border-radius: 20px; padding: 25px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 15px; position: relative; }
-        .card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 10px; }
-        .card h3 { font-size: 1.2rem; font-weight: 800; }
-        .card p { font-size: 0.85rem; color: #64748b; flex-grow: 1; }
+        /* PRODUCT TILES - STATIC HTML FOR ZERO-FAIL */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: auto; }
+        .card { background: white; border-radius: 20px; padding: 25px; border: 1px solid #e2e8f0; text-align: center; }
+        .card img { height: 150px; margin-bottom: 15px; }
 
-        /* FOOTER - THE HEARTBEAT */
-        footer { background: var(--navy); color: white; height: 70px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; font-size: 0.7rem; z-index: 10000; border-top: 1px solid rgba(255,255,255,0.1); }
-        .status { display: flex; align-items: center; gap: 10px; }
-        .led { height: 10px; width: 10px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; }
+        /* FOOTER - THE UNBREAKABLE BASELINE */
+        footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.7rem; z-index: 10000; }
+        .led { height: 10px; width: 10px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; display: inline-block; margin: 0 8px; }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="IMAGES/ui/logo.png" class="logo" onclick="showView('home')" alt="GeoTrackPro">
+    <h2 style="color:var(--accent); font-weight:800; letter-spacing:-1px;">GEOTRACKPRO</h2>
     <div class="nav-links">
-        <button onclick="showView('home')" class="btn-v" style="background:#1e293b;">Home</button>
-        <button onclick="showView('catalog')" class="btn-v">Products</button>
-        <button onclick="showView('contact')" class="btn-v" style="background:#6366f1;">Contact</button>
+        <button onclick="nav('home')" class="btn-v">Home</button>
+        <button onclick="nav('products')" class="btn-v">Products</button>
+        <button onclick="nav('contact')" class="btn-v" style="background:#6366f1;">Inquiry</button>
     </div>
 </header>
 
-<div id="home" class="view active">
-    <section class="hero">
-        <h1>VANGUARD GLOBAL</h1>
-        <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 30px;">High-Performance Asset Telemetry & Hardware Security</p>
-        <button onclick="showView('catalog')" class="btn-v" style="padding: 18px 40px; font-size: 0.9rem;">Explore Full Catalog</button>
-    </section>
-</div>
+<main>
+    <div id="home" class="view active">
+        <section class="hero">
+            <h1>VANGUARD GLOBAL</h1>
+            <p style="opacity: 0.7;">HARDWARE STABILIZATION v22.2.0</p>
+            <button onclick="nav('products')" class="btn-v" style="margin-top:20px; padding: 15px 40px;">View Inventory</button>
+        </section>
+    </div>
 
-<div id="catalog" class="view">
-    <div class="container">
-        <h2 style="font-size: 2.5rem; margin-bottom: 40px; text-align: center;">Enterprise Hardware</h2>
-        <div class="grid" id="productGrid">
+    <div id="products" class="view">
+        <h2 style="text-align:center; margin-bottom:30px; font-size:2.5rem;">Enterprise Catalog</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="IMAGES/vehicle/vl103.png" onerror="this.src='https://via.placeholder.com/150'">
+                <h3>VL103</h3>
+                <p style="color:#64748b; font-size:0.8rem; margin:10px 0;">Hardwired 4G Vehicle Tracker</p>
+                <button class="btn-v" style="width:100%;">Specs</button>
             </div>
+            <div class="card">
+                <img src="IMAGES/dashcam/jc400.png" onerror="this.src='https://via.placeholder.com/150'">
+                <h3>JC400</h3>
+                <p style="color:#64748b; font-size:0.8rem; margin:10px 0;">AI Edge Dashcam</p>
+                <button class="btn-v" style="width:100%;">Specs</button>
+            </div>
+            <div class="card">
+                <img src="IMAGES/asset/ll301.png" onerror="this.src='https://via.placeholder.com/150'">
+                <h3>LL301</h3>
+                <p style="color:#64748b; font-size:0.8rem; margin:10px 0;">Solar Powered Asset Tracker</p>
+                <button class="btn-v" style="width:100%;">Specs</button>
+            </div>
+        </div>
     </div>
-</div>
 
-<div id="contact" class="view">
-    <div class="container" style="text-align: center; max-width: 600px;">
-        <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Contact Inquiry</h2>
-        <p>System stabilization in progress. Direct inquiries to sales@geotrackpro.com</p>
+    <div id="contact" class="view">
+        <div style="max-width:500px; margin:auto; text-align:center;">
+            <h2>Contact Vanguard</h2>
+            <p style="margin-top:20px;">Manual override active. System functions strictly limited to core navigation.</p>
+        </div>
     </div>
-</div>
+</main>
 
 <footer>
-    <div class="status">
-        <span>© 2026 GEOTRACKPRO</span>
-        <div class="led"></div>
-        <span id="timestamp">STABILIZING...</span>
-    </div>
-    <div>v22.1.9 | PRODUCTION SECURE</div>
+    <div>© 2026 GEOTRACKPRO | <span class="led"></span> <span id="clock">BOOTING...</span></div>
+    <div style="font-weight:800; color:var(--gold);">STABLE BRANCH v22.2.0</div>
 </footer>
 
 <script>
-    const WAREHOUSE = [
-        { id: "VL103", name: "VL103", cat: "Vehicle", desc: "4G Hardwired tracking unit with I/O." },
-        { id: "LL708", name: "LL708 Asset Tag", cat: "Tags", desc: "Precision Bluetooth asset beacon." },
-        { id: "VL505",
+    // PRIMARY NAVIGATION - NO COMPLEX LOGIC
+    function nav(targetId) {
+        console.log("Navigating to: " + targetId);
+        // Hide all
+        var views = document.getElementsByClassName('view');
+        for (var i = 0; i < views.length; i++) {
+            views[i].style.display = 'none';
+        }
+        // Show target
+        document.getElementById(targetId).style.display = 'block';
+        window.scrollTo(0,0);
+    }
+
+    // CLOCK - ISOLATED TO PREVENT STOPPING THE SCRIPT
+    setInterval(function() {
+        try {
+            document.getElementById('clock').innerHTML = new Date().toLocaleTimeString();
+        } catch(e) {}
+    }, 1000);
+
+    console.log("System v22.2.0 - Ironclad Baseline Active.");
+</script>
+
+</body>
+</html>
