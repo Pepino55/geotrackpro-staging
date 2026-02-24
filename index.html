@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise v22.1.5</title>
+    <title>GeoTrackPro | Vanguard Enterprise v22.1.6</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 75px; }
@@ -13,7 +13,7 @@
         header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .nav-group { display: flex; align-items: center; gap: 12px; }
         .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
-        
+
         .dropdown { position: relative; display: inline-block; }
         .drop-content { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 12px; top: 100%; left: 0; overflow: hidden; padding: 5px 0; border: 1px solid #e2e8f0; }
         .dropdown:hover .drop-content { display: block; }
@@ -23,14 +23,13 @@
         .view.active { display: block; }
         .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; height: 75vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
         
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 25px; margin-top: 30px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 450px)); gap: 25px; margin-top: 30px; justify-content: center; }
         .card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; padding: 25px; display: flex; gap: 20px; height: 320px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .card-img { flex: 0 0 130px; background: #fcfcfc; border-radius: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; overflow: hidden; }
-        .card-img img { width: 100%; height: 100%; object-fit: contain; }
+        .card-img { flex: 0 0 130px; background: #fcfcfc; border-radius: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; }
+        .card-img img { width: 100%; max-height: 140px; object-fit: contain; }
         .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
         .f-tag { font-size: 0.6rem; font-weight: 800; color: #475569; display: flex; align-items: center; gap: 4px; }
-        .f-icon { background: #f1f5f9; padding: 3px; border-radius: 4px; width: 20px; text-align: center; }
 
         .contact-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 40px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 1100px; margin: 0 auto; }
         input, textarea, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 12px; font-size: 0.9rem; }
@@ -47,8 +46,8 @@
         <div class="dropdown">
             <button class="btn-v" id="nav-company" style="background:#475569;">Company ▾</button>
             <div class="drop-content">
-                <button onclick="nav('about-us')" id="nav-about">About Us</button>
-                <button onclick="nav('partners')" id="nav-partners">Partners</button>
+                <button onclick="nav('about-us')" id="drop-about">About Us</button>
+                <button onclick="nav('partners')" id="drop-partners">Partners</button>
             </div>
         </div>
         <button onclick="nav('home')" class="btn-v" id="nav-home" style="background:#1e293b;">Home</button>
@@ -57,20 +56,20 @@
         <div class="dropdown">
             <button class="btn-v" id="nav-prod">PRODUCTS ▾</button>
             <div class="drop-content">
-                <button onclick="renderList('all')" id="nav-all" style="color:var(--accent); font-weight:800;">View All</button>
-                <button onclick="renderList('vehicle')" id="nav-v">Vehicle</button>
-                <button onclick="renderList('asset')" id="nav-a">Asset</button>
-                <button onclick="renderList('dashcam')" id="nav-dc">Dashcam</button>
-                <button onclick="renderList('obd')" id="nav-o">OBD</button>
-                <button onclick="renderList('personal')" id="nav-s">Personal</button>
-                <button onclick="renderList('tags')" id="nav-tg">Tags</button>
-                <button onclick="renderList('acc')" id="nav-acc">Accessories</button>
+                <button onclick="renderList('all')" id="drop-all" style="color:var(--accent); font-weight:800;">View All</button>
+                <button onclick="renderList('vehicle')">Vehicle</button>
+                <button onclick="renderList('asset')">Asset</button>
+                <button onclick="renderList('dashcam')">Dashcam</button>
+                <button onclick="renderList('obd')">OBD</button>
+                <button onclick="renderList('personal')">Personal</button>
+                <button onclick="renderList('tags')">Tags</button>
+                <button onclick="renderList('acc')">Accessories</button>
             </div>
         </div>
         <button onclick="openForm('CONTACT US')" class="btn-v" id="nav-contact">Contact</button>
         <button onclick="openForm('DEMO REQUEST')" class="btn-v" id="nav-demo" style="background:#6366f1;">Demo Request</button>
         <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" style="background:#059669;">PLATFORM</button>
-        <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none; cursor:pointer;">
+        <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none; width: auto; margin:0;">
             <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option><option value="fr">FR</option>
         </select>
     </div>
@@ -78,38 +77,4 @@
 
 <div id="home" class="view active" style="padding:0;">
     <section class="hero">
-        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
-        <div style="display:flex; gap:15px; margin-top:20px;">
-            <button onclick="nav('prod-menu')" id="btn-explore" class="btn-v" style="padding:15px 40px;">Explore Catalog</button>
-            <button onclick="openForm('SALES CONSULTATION')" id="btn-sales" class="btn-v" style="background:white; color:black!important; padding:15px 40px;">Sales Consultation</button>
-        </div>
-    </section>
-</div>
-
-<div id="about-us" class="view">
-    <div style="max-width: 1000px; margin: 0 auto;">
-        <h2 id="ab-title" style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 30px;">THE VANGUARD STANDARD</h2>
-        <p id="ab-subtitle" style="font-weight:800; color:var(--accent); font-size: 1.1rem;">Global Asset Intelligence for the Modern Enterprise.</p>
-        <p id="ab-p1">Vanguard Global provides the hardware and telemetry needed to secure assets and eliminate variables. We specialize in precision tracking and AI-driven video telematics.</p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;">
-            <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;"><h3 id="ab-m-title" style="margin-top:0; color:var(--accent);">Our Mission</h3><p id="ab-m-p">To provide an unblinking eye over your most valuable assets through innovation.</p></div>
-            <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;"><h3 id="ab-g-title" style="margin-top:0; color:var(--accent);">Global Reach</h3><p id="ab-g-p">Hardware engineered for international connectivity and cross-border operations.</p></div>
-            <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;"><h3 id="ab-s-title" style="margin-top:0; color:var(--accent);">Adaptive Security</h3><p id="ab-s-p">Custom configurations designed for your unique operational landscape.</p></div>
-        </div>
-    </div>
-</div>
-
-<div id="partners" class="view">
-    <div style="max-width: 1000px; margin: 0 auto;">
-        <h2 style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 30px;">GLOBAL PARTNERS</h2>
-        <p>Strategic ecosystem of hardware and software telemetry integration.</p>
-    </div>
-</div>
-
-<div id="prod-menu" class="view"><div class="product-grid" id="cat-anchor"></div></div>
-<div id="list-view" class="view"><button onclick="nav('prod-menu')" id="btn-back" class="btn-v" style="background:#64748b; margin-bottom:20px;">← Back</button><div class="product-grid" id="gridAnchor"></div></div>
-
-<div id="contact" class="view">
-    <div class="contact-stack">
-        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-            <input type="hidden" name
+        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">V
