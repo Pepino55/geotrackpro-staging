@@ -222,7 +222,7 @@
     function renderCats() {
         const lang = document.getElementById('langSelect').value;
         const t = TXT[lang] || TXT.en;
-        const cats = [{id:'vehicle',n:t.v,i:'🚗'}, {id:'asset',n:t.a,i:'📦'}, {id:'dashcam',n:t.dc,i:'📹'}, {id:'obd',n:t.o,i:'🔌'}, {id:'personal',n:t.s,i:'👤'}, {id:'tags',n:t.tg,i:'🏷️'}, {id:'acc',n:t.ac,i:'⚙️'}];
+        const cats = [{id:'vehicle',n:t.v,i:'🚗'}, {id:'asset',n:t.a,i:'📦'}, {id:'dashcam',n:t.dc,i:'📹'}, {id:'obd',n:t.o,i:'🔌'}, {id:'personal',n:t.s,i:'👤'}, {id:'tags',n:t.tg,i:'🏷️'}, { id: 'motorcycle', n: t.m, i: '🏍️' }, {id:'acc',n:t.ac,i:'⚙️'}];
         document.getElementById('cat-anchor').innerHTML = cats.map(c => `<div style="background:white; padding:30px; border-radius:20px; text-align:center; border:1px solid #eee; cursor:pointer;" onclick="renderList('${c.id}')"><span>${c.i}</span><h3>${c.n}</h3></div>`).join('');
     }
 
@@ -297,6 +297,7 @@
 </script>
 </body>
 </html>
+
 
 
 
