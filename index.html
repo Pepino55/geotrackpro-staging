@@ -172,8 +172,8 @@
         { id: "VL103", cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
         { id: "VL106", cat: ["vehicle"], name: "VL106", desc: "LTE vehicle tracker even in weak or lost GPS areas INS-aided GPS keeps tracking constant & in control.", features:[{icon:"🛰️",label:"GNSS"}] },
         { id: "VL111", cat: ["vehicle"], name: "VL111", desc: "Compact yet powerful Fits on motorcycles effortlessly Keeps your fleet running smoothly & connected.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
-        { id: "VL113", cat: ["vehicle"], name: "VL113", desc: "Smart waterproof tracker.", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
-        { id: "VL808", cat: ["vehicle"], name: "VL808", desc: "Entry-level tracker.", features:[{icon:"📍",label:"LBS"}] },
+        { id: "VL113", cat: ["vehicle"], name: "VL113", desc: "LTE smart waterproof tracker.", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
+        { id: "VL808", cat: ["vehicle"], name: "VL808", desc: "LTE Vehicle GNSS Terminal Intelligent Tracking Meets Expanded Fleet Control.", features:[{icon:"📍",label:"LBS"}] },
         { id: "LL701", cat: ["asset"], name: "LL701", desc: "Long standby tracker.", features:[{icon:"🔋",label:"Standby"}] },
         { id: "LL702", cat: ["asset"], name: "LL702", desc: "Wireless asset tracker.", features:[{icon:"📦",label:"Asset"}] },
         { id: "LL301", cat: ["asset"], name: "LL301", desc: "Powerful wireless tracker.", features:[{icon:"🔋",label:"Big Battery"}] },
@@ -190,13 +190,17 @@
         { id: "JC450", cat: ["dashcam"], name: "JC450", desc: "Multi-channel ADAS.", features:[{icon:"📹",label:"4-Ch"}] },
         { id: "JC170", cat: ["dashcam"], name: "JC170", desc: "DMS AI Camera Driver-Aware Safety Elevated.", features:[{icon:"📹",label:"1080p"}] },
         { id: "JC171", cat: ["dashcam"], name: "JC171", desc: "AI Camera Sharper Vision Smarter Safety.", features:[{icon:"📹",label:"HD+"}] },
-        { id: "CE02", cat: ["acc"], name: "CE02", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
-        { id: "CI06F", cat: ["acc"], name: "CI06F", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
-        { id: "CI05F", cat: ["acc"], name: "CI05F", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CE01", cat: ["acc"], name: "CE01", desc: "Rear-view waterproof camera.", features:[{icon:"⚙️",label:"Acc"}] },
+	    { id: "CE02", cat: ["acc"], name: "CE02", desc: "Side-view waterproof camera.", features:[{icon:"⚙️",label:"Acc"}] },
+	    { id: "CE04", cat: ["acc"], name: "CE04", desc: "Rear-view waterproof camera with Full light.", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CI06F", cat: ["acc"], name: "CI06F", desc: "Cabin-View Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CI05F", cat: ["acc"], name: "CI05F", desc: "Cabin-View Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
         { id: "CI04", cat: ["acc"], name: "CI04", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
         { id: "CI03", cat: ["acc"], name: "CI03", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
-        { id: "CI02", cat: ["acc"], name: "CI02", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
-        { id: "CI01", cat: ["acc"], name: "CI01", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] }
+        { id: "CI02", cat: ["acc"], name: "CI02", desc: "Cabin-View USB Camera.", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CI01", cat: ["acc"], name: "CI01", desc: "Cabin-View Infrared Camera.", features:[{icon:"⚙️",label:"Acc"}] }
+	    { id: "CF01F", cat: ["acc"], name: "CF01F", desc: "Road-facing Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] }
+	    { id: "CF02F", cat: ["acc"], name: "CF02F", desc: "Road-facing Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] }
     ];
 
     const TXT = {
@@ -205,7 +209,6 @@
         es: { h: "VANGUARDIA GLOBAL", p: "PRODUCTOS", v: "Vehículo", a: "Activos", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", abT: "EL ESTÁNDAR VANGUARD", abS: "Inteligencia para la empresa moderna.", abP1: "Vanguard Global entrega herramientas de precisión para asegurar activos.", abMT: "Misión", abMP: "Proporcionar visión constante mediante innovación.", abGT: "Alcance Global", abGP: "Hardware diseñado para conectividad internacional.", abST: "Seguridad Adattiva", abSP: "Configuraciones personalizadas.", fName: "Nombre Completo *", fComp: "Empresa *", fEmail: "Correo Electrónico *", fTel: "Teléfono *", fMsg: "¿Cómo podemos ayudarle? *", submit: "ENVIAR", stTitle: "Mensaje Enviado", stP: "Un especialista de Vanguard revisará su solicitud pronto.", reset: "Enviar otro", country: "Seleccionar País *", c1: "CONTÁCTENOS", c2: "SOLICITUD DE DEMO", c3: "CONSULTA DE VENTAS" },
         fr: { h: "VANGUARD GLOBAL", p: "PRODUITS", v: "Véhicule", a: "Actif", dc: "Dashcam", o: "OBD", s: "Personnel", ac: "Acc.", tg: "Tags", abT: "LE STANDARD VANGUARD", abS: "Intelligence globale des actifs.", abP1: "Vanguard Global livre les outils de précision.", abMT: "Notre Mission", abMP: "Fournir un œil vigilant grâce à l'innovation.", abGT: "Portée Mondiale", abGP: "Matériel conçu pour la connettivité internationale.", abST: "Adaptive Security", abSP: "Configurations sur mesure.", fName: "Nom Complet *", fComp: "Nom de l'entreprise *", fEmail: "Email Professionnel *", fTel: "Téléphone *", fMsg: "Comment pouvons-nous vous aider? *", submit: "ENVOYER", stTitle: "Message Envoyé", stP: "Un spécialiste Vanguard examinera votre demande sous peu.", reset: "Envoyer un autre", country: "Choisir Pays *", c1: "CONTACTEZ-NOUS", c2: "DEMANDE DE DÉMO", c3: "CONSULTATION VENTES" }
     };
-
     function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         const t = document.getElementById(id); if(t) t.classList.add('active');
@@ -291,6 +294,7 @@
 </script>
 </body>
 </html>
+
 
 
 
