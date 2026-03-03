@@ -192,7 +192,7 @@
 
     <section class="hero">
 
-        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
+       <h1 id="h-title" data-tn="h" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
 
         <div style="display:flex; gap:15px; margin-top:20px;">
 
@@ -633,54 +633,22 @@
 
 
     function updateLang(l) {
+    const t = TXT[l] || TXT.en;
+    
+    // 1. Automatic Text Update for all tagged elements
+    document.querySelectorAll('[data-tn]').forEach(el => {
+        const key = el.getAttribute('data-tn');
+        if (t[key]) el.innerText = t[key];
+    });
 
-        const t = TXT[l] || TXT.en;
+    // 2. Automatic Placeholder Update for inputs
+    document.querySelectorAll('[data-p]').forEach(el => {
+        const key = el.getAttribute('data-p');
+        if (t[key]) el.placeholder = t[key];
+    });
 
-        document.getElementById('h-title').innerText = t.h;
-
-        document.getElementById('nav-prod').innerText = t.p + " ▾";
-
-        document.getElementById('ab-title').innerText = t.abT;
-
-        document.getElementById('ab-subtitle').innerText = t.abS;
-
-        document.getElementById('ab-p1').innerText = t.abP1;
-
-        document.getElementById('ab-m-title').innerText = t.abMT;
-
-        document.getElementById('ab-m-p').innerText = t.abMP;
-
-        document.getElementById('ab-g-title').innerText = t.abGT;
-
-        document.getElementById('ab-g-p').innerText = t.abGP;
-
-        document.getElementById('ab-s-title').innerText = t.abST;
-
-        document.getElementById('ab-s-p').innerText = t.abSP;
-
-        document.getElementById('in-name').placeholder = t.fName;
-
-        document.getElementById('in-comp').placeholder = t.fComp;
-
-        document.getElementById('in-email').placeholder = t.fEmail;
-
-        document.getElementById('in-tel').placeholder = t.fTel;
-
-        document.getElementById('in-msg').placeholder = t.fMsg;
-
-        document.getElementById('opt-country').innerText = t.country;
-
-        document.getElementById('btn-submit').innerText = t.submit;
-
-        document.getElementById('st-title').innerText = t.stTitle;
-
-        document.getElementById('st-p').innerText = t.stP;
-
-        document.getElementById('btn-reset').innerText = t.reset;
-
-        renderCats();
-
-    }
+    renderCats();
+}
 
 
 
@@ -711,6 +679,7 @@
 </body>
 
 </html>
+
 
 
 
