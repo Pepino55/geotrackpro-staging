@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise v22.1.6</title>
+    <title>GeoTrackPro | Vanguard Enterprise v22.1.7</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --whatsapp: #25D366; --header-h: 75px; }
@@ -33,7 +33,7 @@
         .img-stack.active { opacity: 1; }
 
         .pips { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 10; }
-        .pip { width: 6px; height: 6px; background: rgba(0,0,0,0.15); border-radius: 50%; transition: all 0.3s ease; }
+        .pip { width: 6px; height: 6px; background: rgba(0,0,0,0.1); border-radius: 50%; transition: all 0.3s ease; }
         .pip.active { background: var(--accent); width: 14px; border-radius: 4px; }
 
         .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
@@ -43,7 +43,6 @@
 
         footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
         .led-dot { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; display: inline-block; margin-left: 5px; }
-        footer a { color: white; text-decoration: none; font-weight: 800; }
     </style>
 </head>
 <body>
@@ -75,7 +74,7 @@
                 <button onclick="renderList('acc')">Accessories</button>
             </div>
         </div>
-        <button onclick="openForm('CONTACT US')" class="btn-v">Contact</button>
+        <button onclick="nav('contact')" class="btn-v">Contact</button>
         <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" style="background:#059669;">PLATFORM</button>
         <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none; width: auto; cursor:pointer;">
             <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option><option value="fr">FR</option>
@@ -88,6 +87,7 @@
         <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
         <div style="display:flex; gap:15px; margin-top:20px;">
             <button onclick="nav('prod-menu')" class="btn-v" style="padding:15px 40px;">Explore Catalog</button>
+            <button onclick="nav('contact')" class="btn-v" style="background:white; color:black!important; padding:15px 40px;">Sales Consultation</button>
         </div>
     </section>
 </div>
@@ -95,23 +95,25 @@
 <div id="prod-menu" class="view"><div class="product-grid" id="cat-anchor"></div></div>
 <div id="list-view" class="view"><button onclick="nav('prod-menu')" class="btn-v" style="background:#64748b; margin-bottom:20px;">← Back</button><div class="product-grid" id="gridAnchor"></div></div>
 
+<div id="contact" class="view">
+    <h2 style="text-align:center;">Contact Vanguard</h2>
+</div>
+
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span> | v22.1.6</div>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span> | v22.1.7</div>
 </footer>
 
 <script>
+    // GLOBAL STANDARD: Every item has at least imgCount: 1. 
+    // All files must be named name_01.png
     const WAREHOUSE = [
-        { id: "VL103", cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS.", features:[{icon:"📡",label:"4G"}] },
-        
-        // ASSET & TAGS - FINAL CALIBRATION
-        { id: "LL701", imgCount: 2, cat: ["asset"], name: "LL701", desc: "Long-Standby Tracker (5 years standby).", features:[{icon:"🔋",label:"Standby"}] },
+        { id: "LL701", imgCount: 2, cat: ["asset"], name: "LL701", desc: "Long-Standby Tracker.", features:[{icon:"🔋",label:"5-Year"}] },
         { id: "LL702", imgCount: 6, cat: ["asset"], name: "LL702", desc: "Rugged 4G GPS Tracker.", features:[{icon:"📦",label:"Rugged"}] },
         { id: "LL309", imgCount: 5, cat: ["tags", "asset"], name: "LL309", desc: "Versatile precision tracking.", features:[{icon:"🏷️",label:"Dual-Mode"}] },
-        { id: "PB708", cat: ["tags", "asset"], name: "PB708", desc: "Slim autonomous tracking terminal.", features:[{icon:"📏",label:"Ultra-slim"}] },
-        { id: "PB708Pro", cat: ["tags"], name: "PB708Pro", desc: "BT long life asset tag.", features:[{icon:"🏷️",label:"BLE"}] },
-        { id: "VL505", imgCount: 3, cat: ["obd"], name: "VL505", desc: "Plug & Play OBDII LTE GNSS.", features:[{icon:"🔌",label:"OBDII"}] },
-        
-        // ... (Keep existing entries below this)
+        { id: "PB708", imgCount: 1, cat: ["tags", "asset"], name: "PB708", desc: "Slim autonomous terminal.", features:[{icon:"📏",label:"Ultra-slim"}] },
+        { id: "PB708Pro", imgCount: 1, cat: ["tags"], name: "PB708Pro", desc: "BT long life asset tag.", features:[{icon:"🏷️",label:"BLE"}] },
+        { id: "PB713", imgCount: 1, cat: ["tags"], name: "PB713", desc: "Smart Sticker Tag.", features:[{icon:"🏷️",label:"Tag"}] },
+        { id: "VL505", imgCount: 3, cat: ["obd"], name: "VL505", desc: "Plug & Play OBDII LTE.", features:[{icon:"🔌",label:"OBDII"}] }
     ];
 
     let carouselIntervals = {};
@@ -124,7 +126,7 @@
     }
 
     function renderCats() {
-        const cats = [{id:'vehicle',n:'Vehicle',i:'🚗'}, {id:'asset',n:'Asset',i:'📦'}, {id:'dashcam',n:'Dashcam',i:'📹'}, {id:'obd',n:'OBD',i:'🔌'}, {id:'personal',n:'Personal',i:'👤'}, {id:'tags',n:'Tags',i:'🏷️'}];
+        const cats = [{id:'vehicle',n:'Vehicle',i:'🚗'}, {id:'asset',n:'Asset',i:'📦'}, {id:'dashcam',n:'Dashcam',i:'📹'}, {id:'obd',n:'OBD',i:'🔌'}, {id:'personal',n:'Personal',i:'👤'}, {id:'tags',n:'Tags',i:'🏷️'}, {id:'acc',n:'Accessories',i:'⚙️'}];
         document.getElementById('cat-anchor').innerHTML = cats.map(c => `<div style="background:white; padding:30px; border-radius:20px; text-align:center; border:1px solid #eee; cursor:pointer;" onclick="renderList('${c.id}')"><span>${c.i}</span><h3>${c.n}</h3></div>`).join('');
     }
 
@@ -140,8 +142,9 @@
             const folder = d.cat[0].toLowerCase();
             
             for(let i=1; i<=count; i++){
-                const suffix = d.imgCount ? `_${String(i).padStart(2, '0')}` : '';
+                const suffix = `_${String(i).padStart(2, '0')}`;
                 const activeClass = i === 1 ? 'active' : '';
+                // Standardized Path: IMAGES/folder/id_01.png
                 imgHTML += `<img src="IMAGES/${folder}/${d.id.toLowerCase()}${suffix}.png" class="img-stack img-${d.id} ${activeClass}" onerror="this.src='IMAGES/ui/coming-soon.png'">`;
                 if(count > 1) pipHTML += `<div class="pip pip-${d.id} ${activeClass}"></div>`;
             }
@@ -182,6 +185,7 @@
 
     function stopCarousel(id) { clearInterval(carouselIntervals[id]); }
     function openFullImage(id) { const activeImg = document.querySelector(`.img-${id}.active`); if(activeImg) window.open(activeImg.src, '_blank'); }
+    function updateLang(l) { renderCats(); }
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
     window.onload = () => { renderCats(); };
 </script>
