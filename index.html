@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise v22.1.7</title>
+    <title>GeoTrackPro | Vanguard Enterprise v22.1.8</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --whatsapp: #25D366; --header-h: 75px; }
+        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 75px; }
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.2s ease; }
         body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 60px; overflow-x: hidden; }
         
@@ -19,10 +19,11 @@
         .drop-content { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 12px; top: 100%; left: 0; overflow: hidden; padding: 5px 0; border: 1px solid #e2e8f0; }
         .dropdown:hover .drop-content { display: block; }
         .drop-content button { width: 100%; padding: 12px 20px; border: none; background: none; text-align: left; cursor: pointer; font-weight: 600; font-size: 0.75rem; color: var(--navy); border-bottom: 1px solid #f1f5f9; }
-        .drop-content button:hover { background: #f8fafc; color: var(--accent); }
 
         .view { display: none; padding: calc(var(--header-h) + 40px) 5%; min-height: 100vh; }
         .view.active { display: block; }
+        
+        /* RESTORED HERO LAYOUT */
         .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; height: 75vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
         
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 450px)); gap: 25px; margin-top: 30px; justify-content: center; }
@@ -43,6 +44,7 @@
 
         footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
         .led-dot { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; display: inline-block; margin-left: 5px; }
+        footer a { color: white; text-decoration: none; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.2); }
     </style>
 </head>
 <body>
@@ -76,15 +78,15 @@
         </div>
         <button onclick="nav('contact')" class="btn-v">Contact</button>
         <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" style="background:#059669;">PLATFORM</button>
-        <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none; width: auto; cursor:pointer;">
-            <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option><option value="fr">FR</option>
+        <select id="langSelect" style="border-radius:20px; font-weight:800; font-size:0.6rem; padding: 8px 15px; background: var(--accent); color: white; border: none; width: auto;">
+            <option value="en">EN</option>
         </select>
     </div>
 </header>
 
 <div id="home" class="view active" style="padding:0;">
     <section class="hero">
-        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
+        <h1 style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
         <div style="display:flex; gap:15px; margin-top:20px;">
             <button onclick="nav('prod-menu')" class="btn-v" style="padding:15px 40px;">Explore Catalog</button>
             <button onclick="nav('contact')" class="btn-v" style="background:white; color:black!important; padding:15px 40px;">Sales Consultation</button>
@@ -96,18 +98,22 @@
 <div id="list-view" class="view"><button onclick="nav('prod-menu')" class="btn-v" style="background:#64748b; margin-bottom:20px;">← Back</button><div class="product-grid" id="gridAnchor"></div></div>
 
 <div id="contact" class="view">
-    <h2 style="text-align:center;">Contact Vanguard</h2>
+    <h2 style="text-align:center;">Contact Vanguard Support</h2>
 </div>
 
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span> | v22.1.7</div>
+    <div style="display:flex; align-items:center; gap:10px;">
+        © 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span> | v22.1.8
+    </div>
+    <div style="display:flex; gap:20px;">
+        <a href="DOCS/LEGAL/terms.pdf" target="_blank">TERMS</a>
+        <a href="DOCS/LEGAL/privacy.pdf" target="_blank">PRIVACY</a>
+    </div>
 </footer>
 
 <script>
-    // GLOBAL STANDARD: Every item has at least imgCount: 1. 
-    // All files must be named name_01.png
     const WAREHOUSE = [
-        { id: "LL701", imgCount: 2, cat: ["asset"], name: "LL701", desc: "Long-Standby Tracker.", features:[{icon:"🔋",label:"5-Year"}] },
+        { id: "LL701", imgCount: 2, cat: ["asset"], name: "LL701", desc: "Long-Standby Asset Tracker.", features:[{icon:"🔋",label:"5-Year"}] },
         { id: "LL702", imgCount: 6, cat: ["asset"], name: "LL702", desc: "Rugged 4G GPS Tracker.", features:[{icon:"📦",label:"Rugged"}] },
         { id: "LL309", imgCount: 5, cat: ["tags", "asset"], name: "LL309", desc: "Versatile precision tracking.", features:[{icon:"🏷️",label:"Dual-Mode"}] },
         { id: "PB708", imgCount: 1, cat: ["tags", "asset"], name: "PB708", desc: "Slim autonomous terminal.", features:[{icon:"📏",label:"Ultra-slim"}] },
@@ -144,7 +150,6 @@
             for(let i=1; i<=count; i++){
                 const suffix = `_${String(i).padStart(2, '0')}`;
                 const activeClass = i === 1 ? 'active' : '';
-                // Standardized Path: IMAGES/folder/id_01.png
                 imgHTML += `<img src="IMAGES/${folder}/${d.id.toLowerCase()}${suffix}.png" class="img-stack img-${d.id} ${activeClass}" onerror="this.src='IMAGES/ui/coming-soon.png'">`;
                 if(count > 1) pipHTML += `<div class="pip pip-${d.id} ${activeClass}"></div>`;
             }
@@ -159,7 +164,7 @@
                     <div><h4 style="margin:0; font-weight:800;">${d.name}</h4><div class="f-grid">${tags}</div><p style="font-size:0.75rem; color:#64748b;">${d.desc}</p></div>
                     <div style="display:flex; gap:10px; margin-top:auto;">
                         <a href="DOCS/SPECS/${d.id.toLowerCase()}.pdf" target="_blank" class="btn-v" style="flex:1; background:#64748b;">SPECS</a>
-                        <button class="btn-v" style="flex:1;">INQUIRY</button>
+                        <button onclick="nav('contact')" class="btn-v" style="flex:1;">INQUIRY</button>
                     </div>
                 </div>
             </div>`;
@@ -185,7 +190,6 @@
 
     function stopCarousel(id) { clearInterval(carouselIntervals[id]); }
     function openFullImage(id) { const activeImg = document.querySelector(`.img-${id}.active`); if(activeImg) window.open(activeImg.src, '_blank'); }
-    function updateLang(l) { renderCats(); }
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
     window.onload = () => { renderCats(); };
 </script>
