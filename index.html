@@ -3,159 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | v22.2.9 Carousel Test</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>GeoTrackPro | Vanguard Enterprise v22.3.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        .page-section { display: none; }
-        .page-section.active { display: block; }
-        .nav-btn { cursor: pointer; transition: 0.2s; }
-        .nav-btn:hover { opacity: 0.8; transform: translateY(-1px); }
-        .carousel-btn { background: rgba(0, 123, 255, 0.1); border-radius: 50%; width: 30px; height: 30px; display: flex; items-center: center; justify-content: center; transition: 0.3s; }
-        .carousel-btn:hover { background: rgba(0, 123, 255, 0.3); }
+        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --whatsapp: #25D366; --header-h: 75px; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.2s ease; }
+        body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 60px; overflow-x: hidden; }
+        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-group { display: flex; align-items: center; gap: 12px; }
+        .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+        .btn-v:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .dropdown { position: relative; display: inline-block; }
+        .drop-content { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 12px; top: 100%; left: 0; overflow: hidden; padding: 5px 0; border: 1px solid #e2e8f0; }
+        .dropdown:hover .drop-content { display: block; }
+        .drop-content button { width: 100%; padding: 12px 20px; border: none; background: none; text-align: left; cursor: pointer; font-weight: 600; font-size: 0.75rem; color: var(--navy); border-bottom: 1px solid #f1f5f9; }
+        .drop-content button:hover { background: #f8fafc; color: var(--accent); }
+        .view { display: none; padding: calc(var(--header-h) + 40px) 5%; min-height: 100vh; }
+        .view.active { display: block; }
+        .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; height: 75vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 450px)); gap: 25px; margin-top: 30px; justify-content: center; }
+        .card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; padding: 25px; display: flex; gap: 20px; height: 320px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .card-img { flex: 0 0 150px; background: #fcfcfc; border-radius: 15px; border: 1px solid #f1f5f9; position: relative; overflow: hidden; cursor: zoom-in; }
+        .img-stack { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; padding: 10px; opacity: 0; transition: opacity 0.6s ease-in-out; }
+        .img-stack.active { opacity: 1; }
+        .pips { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 10; }
+        .pip { width: 6px; height: 6px; background: rgba(0,0,0,0.15); border-radius: 50%; transition: all 0.3s ease; }
+        .pip.active { background: var(--accent); width: 14px; border-radius: 4px; }
+        .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+        .f-tag { font-size: 0.6rem; font-weight: 800; color: #475569; display: flex; align-items: center; gap: 4px; }
+        .f-icon { background: #f1f5f9; padding: 3px; border-radius: 4px; width: 20px; text-align: center; }
+        .contact-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 40px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 1100px; margin: 0 auto; }
+        input, textarea, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 12px; font-size: 0.9rem; background: white; }
+        footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
+        .led-dot { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; display: inline-block; margin-left: 5px; }
+        footer a { color: white; text-decoration: none; font-weight: 800; }
     </style>
 </head>
-<body class="bg-[#f2efe9] text-slate-800">
+<body>
 
-    <nav class="bg-[#e5ddd3] p-4 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <h1 class="text-2xl font-black text-[#007bff] mr-4 cursor-pointer" onclick="showPage('home')">GeoTrackPro<sup>®</sup></h1>
-                <button class="nav-btn bg-[#4a5568] text-white px-5 py-2 rounded-full uppercase text-[10px] font-bold" data-i18n="nav_company">Company</button>
-                <button class="nav-btn bg-[#1a202c] text-white px-5 py-2 rounded-full uppercase text-[10px] font-bold" onclick="showPage('home')" data-i18n="nav_home">Home</button>
-            </div>
-            <div class="flex gap-2 items-center">
-                <button class="nav-btn bg-[#007bff] text-white px-5 py-2 rounded-full uppercase text-[10px] font-bold" onclick="showPage('home')" data-i18n="nav_products">Products</button>
-                <button class="nav-btn bg-[#007bff] text-white px-5 py-2 rounded-full uppercase text-[10px] font-bold" onclick="showPage('contact')" data-i18n="nav_contact">Contact Us</button>
-                <button class="nav-btn bg-[#6366f1] text-white px-5 py-2 rounded-full uppercase text-[10px] font-bold" data-i18n="nav_demo">Demo Request</button>
-                <button class="nav-btn bg-[#10b981] text-white px-5 py-2 rounded-full uppercase text-[10px] font-bold">Platform</button>
-                <select id="langSelector" class="bg-[#007bff] text-white px-3 py-2 rounded-lg outline-none cursor-pointer font-bold text-xs">
-                    <option value="en">EN</option>
-                    <option value="fr">FR</option>
-                    <option value="it">IT</option>
-                    <option value="es">ES</option>
-                </select>
+<header>
+    <div class="nav-group">
+        <img src="IMAGES/ui/logo.png" height="30" onclick="nav('home')" style="cursor:pointer" alt="Logo" onerror="this.outerHTML='<b>GEOTRACKPRO</b>'">
+        <div class="dropdown">
+            <button class="btn-v" style="background:#475569;">Company ▾</button>
+            <div class="drop-content">
+                <button onclick="nav('about-us')">About Us</button>
+                <button onclick="nav('partners')">Partners</button>
             </div>
         </div>
-    </nav>
+        <button onclick="nav('home')" class="btn-v" style="background:#1e293b;">Home</button>
+    </div>
+    <div class="nav-group">
+        <div class="dropdown">
+            <button class="btn-v" id="nav-prod">PRODUCTS ▾</button>
+            <div class="drop-content">
+                <button onclick="renderList('all')" style="color:var(--accent); font-weight:800;">View All</button>
+                <button onclick="renderList('vehicle')">Vehicle</button>
+                <button onclick="renderList('asset')">Asset</button>
+                <button onclick="renderList('dashcam')">Dashcam</button>
+                <button onclick="renderList('obd')">OBD</button>
+                <button onclick="renderList('personal')">Personal</button>
+                <button onclick="renderList('tags')">Tags</button>
+                <button onclick="renderList('motorcycle')">Motorcycle</button>
+                <button onclick="renderList('acc')">Accessories</button>
+            </div>
+        </div>
+        <button onclick="openForm('CONTACT US')" class="btn-v">Contact</button>
+        <button onclick="openForm('DEMO REQUEST')" class="btn-v" style="background:#6366f1;">Demo Request</button>
+        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" style="background:#059669;">PLATFORM</button>
+        <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:50px; font-weight:800; font-size:0.65rem; padding: 0 10px; background: var(--accent); color: white; border: none; width: auto; cursor:pointer; height: 30px; margin-bottom: 4px; outline: none; text-align: center; vertical-align: middle;">
+            <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option><option value="fr">FR</option>
+        </select>
+    </div>
+</header>
 
-    <main class="max-w-7xl mx-auto py-10 px-4">
+<div id="home" class="view active" style="padding:0;">
+    <section class="hero">
+        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
+        <div style="display:flex; gap:15px; margin-top:20px;">
+            <button onclick="nav('prod-menu')" class="btn-v" style="padding:15px 40px;">Explore Catalog</button>
+            <button onclick="openForm('SALES CONSULTATION')" class="btn-v" style="background:white; color:black!important; padding:15px 40px;">Sales Consultation</button>
+        </div>
+    </section>
+</div>
+
+<div id="about-us" class="view"><div style="max-width: 1000px; margin: 0 auto;"><h2 id="ab-title" style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 30px;">THE VANGUARD STANDARD</h2><p id="ab-subtitle" style="font-weight:800; color:var(--accent); font-size: 1.1rem;"></p><p id="ab-p1"></p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;"><div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;"><h3 id="ab-m-title" style="margin-top:0; color: var(--accent);">Our Mission</h3><p id="ab-m-p" style="font-size: 0.9rem; margin-bottom:0;"></p></div><div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;"><h3 id="ab-g-title" style="margin-top:0; color: var(--accent);">Global Reach</h3><p id="ab-g-p" style="font-size: 0.9rem; margin-bottom:0;"></p></div><div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;"><h3 id="ab-s-title" style="margin-top:0; color: var(--accent);">Adaptive Security</h3><p id="ab-s-p" style="font-size: 0.9rem; margin-bottom:0;"></p></div></div></div></div>
+<div id="partners" class="view"><div style="max-width: 1000px; margin: 0 auto;"><h2 style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 30px;">GLOBAL PARTNERS</h2><p>Ecosystem of excellence in hardware and software telemetry integration.</p><div style="background:white; padding:40px; border-radius:24px; border:1px solid #e2e8f0; margin-top:20px;">Partner directory is currently being synchronized.</div></div></div>
+<div id="prod-menu" class="view"><div class="product-grid" id="cat-anchor"></div></div>
+<div id="list-view" class="view"><button onclick="nav('prod-menu')" class="btn-v" style="background:#64748b; margin-bottom:20px;">← Back</button><div class="product-grid" id="gridAnchor"></div></div>
+<div id="contact" class="view"><div class="contact-stack"><form id="contactForm" action="https://api.web3forms.com/submit" method="POST"><input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c"><h2 id="f-title">CONTACT</h2><div id="form-content"><input type="text" name="name" id="in-name" placeholder="Full Name *" required><input type="text" name="company" id="in-comp" placeholder="Company Name *" required><input type="email" name="email" id="in-email" placeholder="Business Email *" required><input type="tel" name="phone" id="in-tel" placeholder="Phone Number *" required><select name="country" id="in-country" required><option value="" disabled selected id="opt-country">Select Country *</option><option value="Italy">Italy</option><option value="Spain">Spain</option><option value="France">France</option><option value="United Kingdom">United Kingdom</option><option value="USA">USA</option><option value="Other">Other</option></select><input type="hidden" name="subject" id="email-subject" value="New Website Submission"><textarea name="message" id="in-msg" rows="4" placeholder="How can we help? *" required></textarea><button type="submit" id="btn-submit" class="btn-v" style="width:100%; height:50px;">SEND INQUIRY</button></div><div id="form-status" style="display:none; text-align:center; padding:40px 0;"><span style="font-size:3rem;">✅</span><h3 id="st-title">Message Sent</h3><p id="st-p">A Vanguard specialist will review your request shortly.</p><button type="button" onclick="resetForm()" class="btn-v" id="btn-reset" style="background:#64748b;">Send Another</button></div></form><div style="border-radius:20px; overflow:hidden; background:#eee;"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509374!2d144.9537353153224!3d-37.81627977975171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d2254555e3a8!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sus!4v1633000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div></div></div>
+
+<footer>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span> | v22.3.0</div>
+    <div style="display:flex; gap:20px;"><a href="DOCS/LEGAL/terms.pdf" target="_blank">TERMS</a><a href="DOCS/LEGAL/privacy.pdf" target="_blank">PRIVACY</a></div>
+</footer>
+
+<script>
+    // CORE WAREHOUSE (Sync'd with your folders)
+      const WAREHOUSE = [
+
+        { id: "VL103", imgCount: 1, cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
+
+        { id: "VL106", imgCount: 1, cat: ["vehicle"], name: "VL106", desc: "LTE vehicle tracker even in weak or lost GPS areas INS-aided GPS keeps tracking constant & in control.", features:[{icon:"🛰️",label:"GNSS"}] },
+
+        { id: "VL111", imgCount: 1, cat: ["vehicle"], name: "VL111", desc: "Compact yet powerful Fits on motorcycles effortlessly Keeps your fleet running smoothly & connected.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
+
+        { id: "VL113", imgCount: 1, cat: ["vehicle"], name: "VL113", desc: "LTE smart waterproof tracker.", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
+
+        { id: "VL808", imgCount: 1, cat: ["vehicle"], name: "VL808", desc: "LTE Vehicle GNSS Terminal Intelligent Tracking Meets Expanded Fleet Control.", features:[{icon:"📍",label:"LBS"}] },
+
+        { id: "LL701", imgCount: 2, cat: ["asset"], name: "LL701", desc: "Long-Standby Asset Tracker designed for the management of heavy-duty vehicles up to 5 years of working time.", features:[{icon:"🔋",label:"Standby"}] },
+
+        { id: "LL702", imgCount: 2, cat: ["asset"], name: "LL702", desc: "4G GPS Tracker offers ultra-long battery life multi-mode positioning rugged durability ensuring reliable asset monitoring.", features:[{icon:"📦",label:"Asset"}] },
         
-        <div id="home-page" class="page-section active">
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                </div>
-        </div>
+        { id: "LL303Pro", imgCount: 8, cat: ["asset"], name: "LL303Pro", desc: "4G solar Powered GPS tracker with Real-Time tracking IP67 waterproof 10000mAh battery.", features:[{icon:"📦",label:"Asset"}, {icon:"🔋",label:"Big Battery"}] },
 
-        <div id="contact-page" class="page-section bg-white p-10 rounded-3xl shadow-xl flex flex-col lg:flex-row gap-10">
-            <div class="flex-1">
-                <h2 class="text-3xl font-bold mb-6 text-[#007bff]" data-i18n="contact_title">CONTACT US</h2>
-                <form class="flex flex-col gap-4">
-                    <input type="text" data-i18n-placeholder="form_name" placeholder="Full Name" class="p-4 border rounded-xl outline-none">
-                    <input type="email" placeholder="Business Email" class="p-4 border rounded-xl outline-none">
-                    <textarea data-i18n-placeholder="form_message" placeholder="Message" class="p-4 border rounded-xl h-44 outline-none"></textarea>
-                    <button type="button" class="bg-[#007bff] text-white font-bold py-4 rounded-full uppercase shadow-lg" data-i18n="form_submit">Submit Request</button>
-                </form>
-            </div>
-            <div class="flex-1 min-h-[450px] rounded-2xl overflow-hidden border">
-                <iframe width="100%" height="100%" frameborder="0" src="https://maps.google.com/maps?q=45.4642,9.1900&z=15&output=embed"></iframe>
-            </div>
-        </div>
+        { id: "LL301", imgCount: 1, cat: ["asset"], name: "LL301", desc: "Powerful wireless tracker.", features:[{icon:"🔋",label:"Big Battery"}] },
 
-    </main>
+        { id: "PB706", imgCount: 3, cat: ["personal"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
 
-    <footer class="bg-[#0f172a] text-white p-6 mt-12">
-        <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] opacity-40">
-            <div>© 2026 GEOTRACKPRO | <span id="clock"></span> | v22.2.9</div>
-            <div class="flex gap-4 uppercase font-bold text-white/60">
-                <a href="#">Terms</a>
-                <a href="#">Privacy</a>
-            </div>
-        </div>
-    </footer>
+        { id: "PB706", imgCount: 3, cat: ["tags"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
 
-    <script>
-        // Use your updated WAREHOUSE here
-        const WAREHOUSE = [
-            { id: "VL103", imgCount: 1, cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS." },
-            { id: "LL309", imgCount: 5, cat: ["tags"], name: "LL309", desc: "Asset location tag." },
-            { id: "PB706", imgCount: 3, cat: ["tags"], name: "PB706", desc: "BT crowdsourcing network tag." }
-        ];
+        { id: "PB706", imgCount: 3, cat: ["asset"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
 
-        // Global state for carousels
-        const carouselState = {};
+        { id: "PB713", imgCount: 4, cat: ["personal"], name: "PB713 Asset Tag", desc: "Card-style tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Ultra slim BT TAG"}] },
 
-        const TRANSLATIONS = {
-            en: { nav_home: "Home", nav_products: "Products", nav_contact: "Contact Us", contact_title: "CONTACT US", form_submit: "Submit Request", form_name: "Full Name", form_message: "Your Message" },
-            fr: { nav_home: "Accueil", nav_products: "Produits", nav_contact: "Contact", contact_title: "CONTACTEZ-NOUS", form_submit: "Envoyer", form_name: "Nom Complet", form_message: "Votre Message" },
-            it: { nav_home: "Home", nav_products: "Prodotti", nav_contact: "Contatti", contact_title: "CONTATTACI", form_submit: "Invia Richiesta", form_name: "Nome Completo", form_message: "Tuo Messaggio" },
-            es: { nav_home: "Inicio", nav_products: "Productos", nav_contact: "Contáctenos", contact_title: "CONTÁCTENOS", form_submit: "Enviar solicitud", form_name: "Nombre completo", form_message: "Su mensaje" }
-        };
+        { id: "PB713", imgCount: 4, cat: ["tags"], name: "PB713 Asset Tag", desc: "Card-style tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Ultra slim BT TAG"}] },
+        
+        { id: "PB708", imgCount: 1, cat: ["asset"], name: "PB708", desc: "Slim low-power automomus asset tracking terminal.", features:[{icon:"📏",label:"Ultra-slim"}] },
 
-        function showPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(pageId + '-page').classList.add('active');
-        }
+        { id: "PB708Pro", imgCount: 1, cat: ["tags"], name: "PB708Pro Asset Tag", desc: "BT long life precise asset tagging.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
 
-        function updateCarouselImage(productId, direction, max) {
-            if (!carouselState[productId]) carouselState[productId] = 1;
+        { id: "PB704", imgCount: 2, cat: ["tags"], name: "PB704 Asset Tag", desc: "BT Pet locator Mini GPS track for iPhone/Android phone position.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
+
+        { id: "VL505", imgCount: 3, cat: ["obd"], name: "VL505", desc: "Plug & Play OBDII LTE GNSS.", features:[{icon:"🔌",label:"OBDII"},{icon:"📊",label:"CAN"}] },
+
+        { id: "QBIT-M", imgCount: 1, cat: ["personal"], name: "QBIT M", desc: "Mini personal GPS specifically optimized for user convenience especially considering the habits of elderly family members pet owners and other non-expert users.", features:[{icon:"👤",label:"Personal"}] },
+
+        { id: "PL601", imgCount: 1, cat: ["personal"], name: "PL601", desc: "Advanced personal GPS.", features:[{icon:"🔊",label:"Voice"}] },
+
+        { id: "PL200", imgCount: 1, cat: ["personal"], name: "PL200", desc: "Personal safety tracker.", features:[{icon:"🚨",label:"SOS"}] },
+
+        { id: "JC181", imgCount: 9, cat: ["dashcam"], name: "JC181", desc: "Compact 2 views in one dashcam ensuring safety, transparency.", features:[{icon:"📹",label:"HD"}] },
+
+        { id: "JC182", imgCount: 7, cat: ["dashcam"], name: "JC182", desc: "4G Mini DashCam tiny but Mighty 2K Quad HD Camera OBD Plug & Play.", features:[{icon:"📹",label:"HD+"}] },
+
+        { id: "HL365S", imgCount: 1, cat: ["personal"], name: "HL365S", desc: "Domestic security camera clear high-definition 2-megapixel 4G Video Recording.", features:[{icon:"👤",label:"HD+"}] },
+
+        { id: "JC261", imgCount: 1, cat: ["dashcam"], name: "JC261", desc: "LTE AI Dashcam.", features:[{icon:"🤖",label:"AI"}] },
+
+        { id: "JC400", imgCount: 1, cat: ["dashcam"], name: "JC400", desc: "Pro dashcam.", features:[{icon:"📡",label:"LTE"}] },
+
+        { id: "JC450", imgCount: 1, cat: ["dashcam"], name: "JC450", desc: "Multi-channel ADAS.", features:[{icon:"📹",label:"4-Ch"}] },
+
+        { id: "JC170", imgCount: 1, cat: ["dashcam"], name: "JC170", desc: "DMS AI Camera Driver-Aware Safety Elevated.", features:[{icon:"📹",label:"1080p"}] },
+
+        { id: "JC171", imgCount: 1, cat: ["dashcam"], name: "JC171", desc: "AI Camera Sharper Vision Smarter Safety.", features:[{icon:"📹",label:"HD+"}] },
+
+        { id: "CE01", imgCount: 1, imgCount: 1, cat: ["acc"], name: "CE01", desc: "Rear-view waterproof camera.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "CE02", imgCount: 1, imgCount: 1, cat: ["acc"], name: "CE02", desc: "Side-view waterproof camera.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "CE04", imgCount: 1, cat: ["acc"], name: "CE04", desc: "Rear-view waterproof camera with Full light.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "CI06F", imgCount: 1, cat: ["acc"], name: "CI06F", desc: "Cabin-View Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "CI05F", imgCount: 1, cat: ["acc"], name: "CI05F", desc: "Cabin-View Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "CI04", imgCount: 1, cat: ["acc"], name: "CI04", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "CI03", imgCount: 1, cat: ["acc"], name: "CI03", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "CI02", imgCount: 1, cat: ["acc"], name: "CI02", desc: "Cabin-View USB Camera.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "CI01", imgCount: 1, cat: ["acc"], name: "CI01", desc: "Cabin-View Infrared Camera.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "CF01F", imgCount: 1, cat: ["acc"], name: "CF01F", desc: "Road-facing Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "CF02F", imgCount: 1, cat: ["acc"], name: "CF02F", desc: "Road-facing Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
+
+        { id: "VL111_M", imgCount: 1, cat: ["motorcycle"], name: "VL111", desc: "High-IO LTE terminal.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
+
+        { id: "VL113_M", imgCount: 1, cat: ["motorcycle"], name: "VL113", desc: "Smart waterproof tracker.", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
+
+    ];
+
+    const TXT = {
+        en: { h: "VANGUARD GLOBAL", p: "PRODUCTS", v: "Vehicle", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", m: "Motorcycle", abT: "THE VANGUARD STANDARD", abS: "Global Intelligence.", abP1: "Vanguard Global provides the hardware.", abMT: "Our Mission", abMP: "Unblinking eye.", abGT: "Global Reach", abGP: "International connectivity.", abST: "Adaptive Security", abSP: "Custom configurations.", fName: "Full Name *", fComp: "Company *", fEmail: "Email *", fTel: "Phone *", fMsg: "Help? *", submit: "SEND", stTitle: "Sent", stP: "Reviewing shortly.", reset: "Another", country: "Country *", c1: "CONTACT", c2: "DEMO", c3: "SALES" },
+        it: { h: "VANGUARD GLOBALE", p: "PRODOTTI", v: "Veicoli", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personale", ac: "Acc.", tg: "Tags", m: "Moto", abT: "LO STANDARD VANGUARD", abS: "Intelligenza globale.", abP1: "Vanguard fornisce strumenti.", abMT: "Missione", abMP: "Innovazione.", abGT: "Portata", abGP: "Internazionale.", abST: "Sicurezza", abSP: "Su misura.", fName: "Nome *", fComp: "Azienda *", fEmail: "Email *", fTel: "Tel *", fMsg: "Aiuto? *", submit: "INVIA", stTitle: "Inviato", stP: "A breve.", reset: "Altro", country: "Paese *", c1: "CONTATTI", c2: "DEMO", c3: "VENDITE" },
+        es: { h: "VANGUARDIA GLOBAL", p: "PRODUCTOS", v: "Vehículo", a: "Activos", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", m: "Motorcycle", abT: "EL ESTÁNDAR VANGUARD", abS: "Inteligencia.", abP1: "Vanguard Global entrega.", abMT: "Misión", abMP: "Innovación.", abGT: "Alcance", abGP: "Conectividad.", abST: "Seguridad", abSP: "Personalizada.", fName: "Nombre *", fComp: "Empresa *", fEmail: "Correo *", fTel: "Tel *", fMsg: "Ayuda? *", submit: "ENVIAR", stTitle: "Enviado", stP: "Pronto.", reset: "Otro", country: "País *", c1: "CONTACTO", c2: "DEMO", c3: "VENTAS" },
+        fr: { h: "VANGUARD GLOBAL", p: "PRODUITS", v: "Véhicule", a: "Actif", dc: "Dashcam", o: "OBD", s: "Personnel", ac: "Acc.", tg: "Tags", m: "Moto", abT: "LE STANDARD VANGUARD", abS: "Gestion intelligente.", abP1: "Vanguard Global livre.", abMT: "Mission", abMP: "Innovation.", abGT: "Portée", abGP: "Connettivité.", abST: "Sécurité", abSP: "Sur mesure.", fName: "Nom *", fComp: "Entreprise *", fEmail: "Email *", fTel: "Tel *", fMsg: "Aide? *", submit: "ENVOYER", stTitle: "Envoyé", stP: "Sous peu.", reset: "Autre", country: "Pays *", c1: "CONTACT", c2: "DEMO", c3: "VENTES" }
+    };
+
+    let carouselIntervals = {};
+
+    function nav(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        const t = document.getElementById(id); if(t) t.classList.add('active');
+        if(id === 'prod-menu') renderCats();
+        window.scrollTo(0,0);
+    }
+
+    function renderCats() {
+        const lang = document.getElementById('langSelect').value;
+        const t = TXT[lang] || TXT.en;
+        const cats = [{id:'vehicle',n:t.v,i:'🚗'}, {id:'asset',n:t.a,i:'📦'}, {id:'dashcam',n:t.dc,i:'📹'}, {id:'obd',n:t.o,i:'🔌'}, {id:'personal',n:t.s,i:'👤'}, {id:'tags',n:t.tg,i:'🏷️'}, {id:'acc',n:t.ac,i:'⚙️'}, { id: 'motorcycle', n: t.m, i: '🏍️' }];
+        document.getElementById('cat-anchor').innerHTML = cats.map(c => `<div style="background:white; padding:30px; border-radius:20px; text-align:center; border:1px solid #eee; cursor:pointer;" onclick="renderList('${c.id}')"><span>${c.i}</span><h3>${c.n}</h3></div>`).join('');
+    }
+
+    function renderList(cat) {
+        nav('list-view');
+        const items = cat === 'all' ? WAREHOUSE : WAREHOUSE.filter(d => d.cat.includes(cat));
+        
+        document.getElementById('gridAnchor').innerHTML = items.map(d => {
+            const tags = d.features.map(f => `<div class="f-tag"><span class="f-icon">${f.icon}</span> ${f.label}</div>`).join('');
+            let imgHTML = '';
+            let pipHTML = '';
+            const count = d.imgCount || 1;
+            const folder = d.cat[0].toLowerCase();
             
-            carouselState[productId] += direction;
-            if (carouselState[productId] > max) carouselState[productId] = 1;
-            if (carouselState[productId] < 1) carouselState[productId] = max;
+            for(let i=1; i<=count; i++){
+                // FIXED ENGINE: Force lowercase ID and subfolder pathing
+                const suffix = `_${String(i).padStart(2, '0')}`;
+                const activeClass = i === 1 ? 'active' : '';
+                const path = `IMAGES/${folder}/${d.id.toLowerCase()}${suffix}.png`;
+                imgHTML += `<img src="${path}" class="img-stack img-${d.id} ${activeClass}" onerror="this.src='IMAGES/ui/coming-soon.png'">`;
+                if(count > 1) pipHTML += `<div class="pip pip-${d.id} ${activeClass}"></div>`;
+            }
 
-            const imgEl = document.getElementById(`img-${productId}`);
-            const item = WAREHOUSE.find(i => i.id === productId);
-            const folder = item.cat[0];
-            const paddedIndex = String(carouselState[productId]).padStart(2, '0');
-            imgEl.src = `IMAGES/${folder}/${productId.toLowerCase()}_${paddedIndex}.png`;
-        }
-
-        function renderProducts() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = WAREHOUSE.map(item => {
-                const folder = item.cat[0];
-                const initialPath = `IMAGES/${folder}/${item.id.toLowerCase()}_01.png`;
-                const hasMultiple = item.imgCount > 1;
-
-                return `
-                    <div class="bg-white p-6 rounded-3xl shadow-sm flex items-center gap-6 relative">
-                        <div class="w-32 h-32 flex-shrink-0 flex flex-col items-center justify-center relative">
-                            <img id="img-${item.id}" src="${initialPath}" onerror="this.src='https://placehold.co/200x200?text=No+Photo'" class="w-full h-full object-contain">
-                            ${hasMultiple ? `
-                                <div class="absolute bottom-[-10px] flex gap-4">
-                                    <button onclick="updateCarouselImage('${item.id}', -1, ${item.imgCount})" class="carousel-btn text-[#007bff] font-bold"><</button>
-                                    <button onclick="updateCarouselImage('${item.id}', 1, ${item.imgCount})" class="carousel-btn text-[#007bff] font-bold">></button>
-                                </div>
-                            ` : ''}
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold">${item.name}</h3>
-                            <p class="text-[11px] text-gray-500 mb-4">${item.desc}</p>
-                            <div class="flex gap-2">
-                                <button class="bg-slate-200 px-4 py-1.5 rounded-full text-[10px] font-black uppercase">Specs</button>
-                                <button class="bg-[#007bff] text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase">Inquiry</button>
-                            </div>
-                        </div>
+            return `<div class="card" onmouseenter="stopCarousel('${d.id}')" onmouseleave="startCarousel('${d.id}', ${count})">
+                <div class="card-img" onclick="openFullImage('${d.id}')">${imgHTML}<div class="pips">${pipHTML}</div></div>
+                <div class="card-info">
+                    <div><h4 style="margin:0; font-weight:800;">${d.name}</h4><div class="f-grid">${tags}</div><p style="font-size:0.75rem; color:#64748b;">${d.desc}</p></div>
+                    <div style="display:flex; gap:10px; margin-top:auto;">
+                        <a href="DOCS/SPECS/${d.id.toLowerCase()}.pdf" target="_blank" class="btn-v" style="flex:1; background:#64748b;">SPECS</a>
+                        <button onclick="openForm('${d.id}')" class="btn-v" style="flex:1;">INQUIRY</button>
                     </div>
-                `;
-            }).join('');
-        }
+                </div>
+            </div>`;
+        }).join('');
+        items.forEach(d => { if(d.imgCount > 1) startCarousel(d.id, d.imgCount); });
+    }
 
-        function setLang(lang) {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if(TRANSLATIONS[lang][key]) el.innerText = TRANSLATIONS[lang][key];
-            });
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-placeholder');
-                if(TRANSLATIONS[lang][key]) el.placeholder = TRANSLATIONS[lang][key];
-            });
-        }
+    function startCarousel(id, count) {
+        if(carouselIntervals[id]) clearInterval(carouselIntervals[id]);
+        carouselIntervals[id] = setInterval(() => {
+            const imgs = document.querySelectorAll(`.img-${id}`);
+            const pips = document.querySelectorAll(`.pip-${id}`);
+            let current = Array.from(imgs).findIndex(img => img.classList.contains('active'));
+            if(current === -1) return;
+            imgs[current].classList.remove('active');
+            if(pips[current]) pips[current].classList.remove('active');
+            let next = (current + 1) % count;
+            imgs[next].classList.add('active');
+            if(pips[next]) pips[next].classList.add('active');
+        }, 3000);
+    }
 
-        document.getElementById('langSelector').addEventListener('change', (e) => setLang(e.target.value));
-        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
+    function stopCarousel(id) { clearInterval(carouselIntervals[id]); }
+    function openFullImage(id) { const activeImg = document.querySelector(`.img-${id}.active`); if(activeImg) window.open(activeImg.src, '_blank'); }
+    function openForm(subject) { 
+        const lang = document.getElementById('langSelect').value;
+        const t = TXT[lang] || TXT.en;
+        let ds = subject;
+        if(subject==='CONTACT US') ds=t.c1; else if(subject==='DEMO REQUEST') ds=t.c2; else if(subject==='SALES CONSULTATION') ds=t.c3;
+        document.getElementById('f-title').innerText = ds;
+        document.getElementById('email-subject').value = "Website Inquiry: " + subject;
+        nav('contact');
+    }
 
-        renderProducts();
-        setLang('en');
-    </script>
+    function updateLang(l) {
+        const t = TXT[l] || TXT.en;
+        document.getElementById('h-title').innerText = t.h;
+        document.getElementById('nav-prod').innerText = t.p + " ▾";
+        document.getElementById('ab-title').innerText = t.abT;
+        document.getElementById('ab-subtitle').innerText = t.abS;
+        document.getElementById('ab-p1').innerText = t.abP1;
+        document.getElementById('in-name').placeholder = t.fName;
+        document.getElementById('in-comp').placeholder = t.fComp;
+        document.getElementById('in-email').placeholder = t.fEmail;
+        document.getElementById('in-tel').placeholder = t.fTel;
+        document.getElementById('in-msg').placeholder = t.fMsg;
+        document.getElementById('opt-country').innerText = t.country;
+        document.getElementById('btn-submit').innerText = t.submit;
+        renderCats();
+    }
+
+    document.getElementById("contactForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        const res = await fetch(e.target.action, { method: "POST", body: data, headers: { 'Accept': 'application/json' } });
+        if(res.ok) { document.getElementById("form-content").style.display = "none"; document.getElementById("form-status").style.display = "block"; }
+    });
+
+    function resetForm() { document.getElementById("form-content").style.display = "block"; document.getElementById("form-status").style.display = "none"; document.getElementById("contactForm").reset(); }
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
+    window.onload = () => { updateLang('en'); };
+</script>
 </body>
 </html>
