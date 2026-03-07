@@ -3,81 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise v22.6.2</title>
+    <title>GeoTrackPro | Vanguard Enterprise v22.6.3</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #e8ddc7; --navy: #0a0f1d; --charcoal: #1e293b; --accent: #3E63DD; --header-h: 75px; }
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.2s; }
-        body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 60px; overflow-x: hidden; }
+        :root { --gold: #e8ddc7; --navy: #0a0f1d; --charcoal: #1e293b; --accent: #3E63DD; --header-h: 80px; --round: 8px; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s; }
+        body { margin: 0; background: #fcfcfc; color: var(--navy); padding-bottom: 60px; }
 
-        /* HEADER & BRANDING */
-        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2%; z-index: 9999; border-bottom: 1px solid rgba(0,0,0,0.1); }
-        .logo-block { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; }
-        .logo-tag { background: var(--navy); color: white; padding: 4px 8px; border-radius: 4px; font-weight: 800; font-size: 0.9rem; }
-        .logo-text { color: var(--navy); font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
+        /* HEADER - CLEAN & ROUNDED */
+        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 3%; z-index: 9999; }
+        .logo-area { display: flex; align-items: center; cursor: pointer; }
+        .logo-text { color: var(--navy); font-size: 1.4rem; font-weight: 800; letter-spacing: -1px; }
 
-        .nav-wrap { display: flex; align-items: center; gap: 8px; }
-        .btn-v { background: var(--navy); color: white!important; padding: 10px 16px; border-radius: 4px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; white-space: nowrap; }
-        .btn-v:hover { background: var(--charcoal); transform: translateY(-1px); }
+        .nav-wrap { display: flex; align-items: center; gap: 10px; }
+        .btn-v { background: var(--navy); color: white!important; padding: 12px 20px; border-radius: var(--round); font-weight: 800; font-size: 0.7rem; border: none; cursor: pointer; text-transform: uppercase; }
+        .btn-v:hover { background: var(--accent); transform: translateY(-2px); }
+        .btn-platform { background: #059669; }
 
         /* DROPDOWN */
-        .dropdown { position: relative; display: inline-block; }
-        .drop-content { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 4px; top: 100%; left: 0; overflow: hidden; }
+        .dropdown { position: relative; }
+        .drop-content { display: none; position: absolute; background: white; min-width: 190px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: var(--round); top: 100%; left: 0; padding: 10px 0; }
         .dropdown:hover .drop-content { display: block; }
-        .drop-content button { width: 100%; padding: 14px; border: none; background: none; text-align: left; cursor: pointer; font-weight: 700; font-size: 0.7rem; border-bottom: 1px solid #f1f5f9; color: var(--navy); }
+        .drop-content button { width: 100%; padding: 12px 20px; border: none; background: none; text-align: left; cursor: pointer; font-weight: 700; font-size: 0.75rem; color: var(--navy); }
         .drop-content button:hover { background: #f8fafc; color: var(--accent); }
 
-        /* VIEWS */
-        .view { display: none; padding: calc(var(--header-h) + 40px) 5%; min-height: 100vh; }
+        .view { display: none; padding: calc(var(--header-h) + 40px) 7%; min-height: 100vh; }
         .view.active { display: block; }
 
-        /* HOME HERO */
-        .hero { height: 75vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; color: white; text-align: center; border-radius: 0 0 40px 40px; }
-        
-        /* CATALOG CARDS */
-        .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 25px; }
-        .card { background: white; padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0; position: relative; overflow: hidden; }
-        .card h3 { margin: 0 0 10px; color: var(--navy); font-size: 1.3rem; }
-        .card p { color: #64748b; font-size: 0.9rem; line-height: 1.5; }
+        /* HOME HERO - FIXED HEIGHT */
+        .hero { height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(rgba(10,15,29,0.6), rgba(10,15,29,0.6)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; color: white; text-align: center; }
 
-        /* FOOTER & LED */
-        footer { background: var(--navy); color: white; height: 55px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
-        .led { height: 9px; width: 9px; background: #00ff00; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #00ff00; margin: 0 8px; animation: pulse 2s infinite; }
+        /* GRID & CARDS */
+        .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 30px; }
+        .card { background: white; padding: 35px; border-radius: var(--round); border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .card h3 { color: var(--accent); margin-top: 0; }
+
+        /* CONTACT FORM & MAP */
+        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; border-radius: var(--round); overflow: hidden; border: 1px solid #eee; }
+        .form-side { padding: 40px; }
+        input, textarea, select { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: var(--round); background: #fbfbfb; }
+
+        footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.7rem; z-index: 10000; }
+        .led { height: 10px; width: 10px; background: #00ff00; border-radius: 50%; display: inline-block; box-shadow: 0 0 12px #00ff00; margin: 0 10px; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .footer-links a { color: white; text-decoration: none; font-weight: 800; margin-left: 15px; }
-        .footer-links a:hover { color: var(--gold); }
     </style>
 </head>
 <body>
 
 <header>
     <div class="nav-wrap">
-        <div class="logo-block" onclick="nav('home')">
-            <span class="logo-tag">GTP</span>
+        <div class="logo-area" onclick="nav('home')">
             <span class="logo-text">GeoTrackPro</span>
         </div>
         <div class="dropdown">
-            <button class="btn-v" id="nav-company" style="background:var(--charcoal);">COMPANY ▾</button>
+            <button class="btn-v" id="nav-company">COMPANY ▾</button>
             <div class="drop-content">
-                <button onclick="nav('about-us')" id="drop-about">ABOUT US</button>
-                <button onclick="nav('partners')" id="drop-partners">PARTNERS</button>
+                <button onclick="nav('about-us')">ABOUT US</button>
+                <button onclick="nav('partners')">PARTNERS</button>
             </div>
         </div>
-        <button onclick="nav('home')" class="btn-v" id="nav-home">HOME</button>
+        <button onclick="nav('home')" class="btn-v">HOME</button>
     </div>
     <div class="nav-wrap">
         <div class="dropdown">
             <button class="btn-v" id="nav-prod">PRODUCTS ▾</button>
             <div class="drop-content">
-                <button onclick="renderList('all')" id="drop-all">VIEW ALL</button>
-                <button onclick="renderList('vehicle')" id="drop-v">VEHICLE TRACKERS</button>
-                <button onclick="renderList('asset')" id="drop-a">ASSET TRACKERS</button>
+                <button onclick="renderList('all')">VIEW ALL DEVICES</button>
+                <button onclick="renderList('vehicle')">VEHICLE TRACKERS</button>
+                <button onclick="renderList('asset')">ASSET TRACKERS</button>
+                <button onclick="renderList('dashcam')">VIDEO TELEMATICS</button>
             </div>
         </div>
-        <button onclick="openForm('CONTACT')" class="btn-v" id="nav-contact">CONTACT</button>
-        <button onclick="openForm('SALES')" class="btn-v" id="nav-sales">SALES QUERY</button>
-        <button onclick="openForm('DEMO')" class="btn-v" id="nav-demo">DEMO REQUEST</button>
-        <select id="langSelect" onchange="updateLang(this.value)" style="padding:4px; font-weight:800; border-radius:4px; cursor:pointer;">
+        <button onclick="nav('list-view')" class="btn-v">CATALOG</button>
+        <button onclick="openForm('SALES QUERY')" class="btn-v">SALES QUERY</button>
+        <button onclick="openForm('DEMO REQUEST')" class="btn-v">DEMO</button>
+        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v btn-platform">PLATFORM</button>
+        <select id="langSelect" onchange="updateLang(this.value)" style="width:auto; margin:0; padding:5px; font-weight:800;">
             <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option><option value="fr">FR</option>
         </select>
     </div>
@@ -85,164 +86,87 @@
 
 <div id="home" class="view active" style="padding:0;">
     <section class="hero">
-        <h1 id="h-title" style="font-size: 3.5rem; margin:0; letter-spacing:-1px;">VANGUARD GLOBAL</h1>
-        <p id="h-sub" style="font-size: 1.1rem; opacity: 0.8; margin-top: 10px;">INDUSTRIAL TELEMETRY & ASSET INTELLIGENCE</p>
-        <button onclick="renderList('all')" class="btn-v" style="margin-top:30px; padding:15px 40px; font-size:0.8rem;">VIEW CATALOG</button>
+        <h1 id="h-title" style="font-size: 4rem; margin:0;">VANGUARD GLOBAL</h1>
+        <p id="h-sub" style="font-size: 1.2rem; margin-top: 15px; letter-spacing: 2px;">SECURE ASSETS. ELIMINATE VARIABLES.</p>
     </section>
 </div>
 
+<div id="about-us" class="view">
+    <h2 id="ab-title" style="font-size: 2.5rem; border-bottom: 4px solid var(--accent); display:inline-block; margin-bottom:30px;"></h2>
+    <p id="ab-p1" style="font-size: 1.2rem; line-height: 1.8; color: #444; max-width: 900px;"></p>
+    <div class="pillar-grid">
+        <div class="card"><h3 id="ab-m-title"></h3><p id="ab-m-p"></p></div>
+        <div class="card"><h3 id="ab-g-title"></h3><p id="ab-g-p"></p></div>
+        <div class="card"><h3 id="ab-s-title"></h3><p id="ab-s-p"></p></div>
+    </div>
+</div>
+
+<div id="partners" class="view">
+    <h2 style="font-size: 2.5rem;">GLOBAL PARTNERS</h2>
+    <div class="pillar-grid">
+        <div class="card"><h3>Technology Tier</h3><p>Integrating with leading GNSS and LTE chipset providers for maximum uptime.</p></div>
+        <div class="card"><h3>Regional Logistics</h3><p>Strategic warehousing and local technical support across EU and NA markets.</p></div>
+    </div>
+</div>
+
 <div id="list-view" class="view">
-    <h2 id="cat-title" style="font-size: 2rem; border-left: 5px solid var(--accent); padding-left: 15px;">PRODUCT CATALOG</h2>
+    <h2 id="cat-title" style="font-size: 2.5rem;">HARDWARE INVENTORY</h2>
     <div class="pillar-grid" id="gridAnchor"></div>
 </div>
 
-<div id="about-us" class="view">
-    <div style="max-width: 1000px; margin: 0 auto;">
-        <h2 id="ab-title" style="font-size: 2.5rem; color: var(--navy);"></h2>
-        <p id="ab-p1" style="font-size: 1.1rem; line-height: 1.7; color: #475569; margin: 20px 0 40px;"></p>
-        <div class="pillar-grid">
-            <div class="card"><h3 id="ab-m-title"></h3><p id="ab-m-p"></p></div>
-            <div class="card"><h3 id="ab-g-title"></h3><p id="ab-g-p"></p></div>
-            <div class="card"><h3 id="ab-s-title"></h3><p id="ab-s-p"></p></div>
+<div id="contact" class="view">
+    <div class="contact-container">
+        <div class="form-side">
+            <h2 id="f-title" style="margin-top:0;">CONTACT US</h2>
+            <form action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
+                <input type="hidden" name="redirect" value="https://yourdomain.com/thanks.html">
+                <input type="text" name="name" id="in-name" required>
+                <input type="email" name="email" id="in-email" required>
+                <textarea name="message" id="in-msg" rows="6" required></textarea>
+                <button type="submit" id="btn-submit" class="btn-v" style="width:100%; height:60px; font-size:1rem;">SEND MESSAGE</button>
+            </form>
+        </div>
+        <div style="background:#e5e7eb;">
+            <iframe src="https://www.google.com/maps/embed?..." width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
 </div>
 
-<div id="contact" class="view">
-    <div style="max-width: 600px; margin: 0 auto; background:white; padding:40px; border-radius:20px; border:1px solid #e2e8f0;">
-        <h2 id="f-title" style="margin-top:0; color:var(--navy);">CONTACT</h2>
-        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-            <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
-            <input type="text" id="in-name" name="name" placeholder="Full Name" required style="width:100%; padding:14px; margin-bottom:12px; border:1px solid #cbd5e1; border-radius:6px;">
-            <input type="email" id="in-email" name="email" placeholder="Email Address" required style="width:100%; padding:14px; margin-bottom:12px; border:1px solid #cbd5e1; border-radius:6px;">
-            <textarea id="in-msg" name="message" placeholder="Your Inquiry" rows="5" required style="width:100%; padding:14px; margin-bottom:12px; border:1px solid #cbd5e1; border-radius:6px;"></textarea>
-            <button type="submit" id="btn-submit" class="btn-v" style="width:100%; height:55px; background:var(--accent); font-size:0.8rem;">SEND MESSAGE</button>
-        </form>
-    </div>
-</div>
-
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led"></span> | v22.6.2</div>
-    <div class="footer-links">
-        <a href="DOCS/LEGAL/terms.pdf" target="_blank">TERMS</a>
-        <a href="DOCS/LEGAL/privacy.pdf" target="_blank">PRIVACY</a>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led"></span> | v22.6.3</div>
+    <div>
+        <a href="DOCS/LEGAL/terms.pdf" style="color:white; margin-right:20px; text-decoration:none;">TERMS</a>
+        <a href="DOCS/LEGAL/privacy.pdf" style="color:white; text-decoration:none;">PRIVACY</a>
     </div>
 </footer>
 
 <script>
-    // POPULATED DATASET
     const WAREHOUSE = [
-
-        { id: "VL103", imgCount: 1, cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
-
-        { id: "VL106", imgCount: 1, cat: ["vehicle"], name: "VL106", desc: "LTE vehicle tracker even in weak or lost GPS areas INS-aided GPS keeps tracking constant & in control.", features:[{icon:"🛰️",label:"GNSS"}] },
-
-        { id: "VL111", imgCount: 1, cat: ["vehicle"], name: "VL111", desc: "Compact yet powerful Fits on motorcycles effortlessly Keeps your fleet running smoothly & connected.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
-
-        { id: "VL113", imgCount: 1, cat: ["vehicle"], name: "VL113", desc: "LTE smart waterproof tracker.", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
-
-        { id: "VL808", imgCount: 1, cat: ["vehicle"], name: "VL808", desc: "LTE Vehicle GNSS Terminal Intelligent Tracking Meets Expanded Fleet Control.", features:[{icon:"📍",label:"LBS"}] },
-
-        { id: "LL701", imgCount: 2, cat: ["asset"], name: "LL701", desc: "Long-Standby Asset Tracker designed for the management of heavy-duty vehicles up to 5 years of working time.", features:[{icon:"🔋",label:"Standby"}] },
-
-        { id: "LL702", imgCount: 2, cat: ["asset"], name: "LL702", desc: "4G GPS Tracker offers ultra-long battery life multi-mode positioning rugged durability ensuring reliable asset monitoring.", features:[{icon:"📦",label:"Asset"}] },
-        
-        { id: "LL303Pro", imgCount: 8, cat: ["asset"], name: "LL303Pro", desc: "4G solar Powered GPS tracker with Real-Time tracking IP67 waterproof 10000mAh battery.", features:[{icon:"📦",label:"Asset"}, {icon:"🔋",label:"Big Battery"}] },
-
-        { id: "LL301", imgCount: 1, cat: ["asset"], name: "LL301", desc: "Powerful wireless tracker.", features:[{icon:"🔋",label:"Big Battery"}] },
-
-        { id: "PB706", imgCount: 3, cat: ["personal"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
-
-        { id: "PB706", imgCount: 3, cat: ["tags"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
-
-        { id: "PB706", imgCount: 3, cat: ["asset"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
-
-        { id: "PB713", imgCount: 4, cat: ["personal"], name: "PB713 Asset Tag", desc: "Card-style tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Ultra slim BT TAG"}] },
-
-        { id: "PB713", imgCount: 4, cat: ["tags"], name: "PB713 Asset Tag", desc: "Card-style tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Ultra slim BT TAG"}] },
-        
-        { id: "PB708", imgCount: 1, cat: ["asset"], name: "PB708", desc: "Slim low-power automomus asset tracking terminal.", features:[{icon:"📏",label:"Ultra-slim"}] },
-
-        { id: "PB708Pro", imgCount: 1, cat: ["tags"], name: "PB708Pro Asset Tag", desc: "BT long life precise asset tagging.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
-
-        { id: "PB704", imgCount: 2, cat: ["tags"], name: "PB704 Asset Tag", desc: "BT Pet locator Mini GPS track for iPhone/Android phone position.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
-
-        { id: "VL505", imgCount: 3, cat: ["obd"], name: "VL505", desc: "Plug & Play OBDII LTE GNSS.", features:[{icon:"🔌",label:"OBDII"},{icon:"📊",label:"CAN"}] },
-
-        { id: "QBIT-M", imgCount: 1, cat: ["personal"], name: "QBIT M", desc: "Mini personal GPS specifically optimized for user convenience especially considering the habits of elderly family members pet owners and other non-expert users.", features:[{icon:"👤",label:"Personal"}] },
-
-        { id: "PL601", imgCount: 1, cat: ["personal"], name: "PL601", desc: "Advanced personal GPS.", features:[{icon:"🔊",label:"Voice"}] },
-
-        { id: "PL200", imgCount: 1, cat: ["personal"], name: "PL200", desc: "Personal safety tracker.", features:[{icon:"🚨",label:"SOS"}] },
-
-        { id: "JC181", imgCount: 9, cat: ["dashcam"], name: "JC181", desc: "Compact 2 views in one dashcam ensuring safety, transparency.", features:[{icon:"📹",label:"HD"}] },
-
-        { id: "JC182", imgCount: 7, cat: ["dashcam"], name: "JC182", desc: "4G Mini DashCam tiny but Mighty 2K Quad HD Camera OBD Plug & Play.", features:[{icon:"📹",label:"HD+"}] },
-
-        { id: "HL365S", imgCount: 1, cat: ["personal"], name: "HL365S", desc: "Domestic security camera clear high-definition 2-megapixel 4G Video Recording.", features:[{icon:"👤",label:"HD+"}] },
-
-        { id: "JC261", imgCount: 1, cat: ["dashcam"], name: "JC261", desc: "LTE AI Dashcam.", features:[{icon:"🤖",label:"AI"}] },
-
-        { id: "JC400", imgCount: 1, cat: ["dashcam"], name: "JC400", desc: "Pro dashcam.", features:[{icon:"📡",label:"LTE"}] },
-
-        { id: "JC450", imgCount: 1, cat: ["dashcam"], name: "JC450", desc: "Multi-channel ADAS.", features:[{icon:"📹",label:"4-Ch"}] },
-
-        { id: "JC170", imgCount: 1, cat: ["dashcam"], name: "JC170", desc: "DMS AI Camera Driver-Aware Safety Elevated.", features:[{icon:"📹",label:"1080p"}] },
-
-        { id: "JC171", imgCount: 1, cat: ["dashcam"], name: "JC171", desc: "AI Camera Sharper Vision Smarter Safety.", features:[{icon:"📹",label:"HD+"}] },
-
-        { id: "CE01", imgCount: 1, imgCount: 1, cat: ["acc"], name: "CE01", desc: "Rear-view waterproof camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CE02", imgCount: 1, imgCount: 1, cat: ["acc"], name: "CE02", desc: "Side-view waterproof camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CE04", imgCount: 1, cat: ["acc"], name: "CE04", desc: "Rear-view waterproof camera with Full light.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI06F", imgCount: 1, cat: ["acc"], name: "CI06F", desc: "Cabin-View Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI05F", imgCount: 1, cat: ["acc"], name: "CI05F", desc: "Cabin-View Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI04", imgCount: 1, cat: ["acc"], name: "CI04", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI03", imgCount: 1, cat: ["acc"], name: "CI03", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI02", imgCount: 1, cat: ["acc"], name: "CI02", desc: "Cabin-View USB Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI01", imgCount: 1, cat: ["acc"], name: "CI01", desc: "Cabin-View Infrared Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CF01F", imgCount: 1, cat: ["acc"], name: "CF01F", desc: "Road-facing Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CF02F", imgCount: 1, cat: ["acc"], name: "CF02F", desc: "Road-facing Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "VL111", imgCount: 1, cat: ["motorcycle"], name: "VL111", desc: "High-IO LTE terminal.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
-
-        { id: "VL113", imgCount: 1, cat: ["motorcycle"], name: "VL113", desc: "Smart waterproof tracker.", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
-
+        { id: "VL103", cat: "vehicle", name: "VL103 SERIES", desc: "Industrial 4G LTE with external GNSS precision." },
+        { id: "LL303", cat: "asset", name: "LL303 SOLAR", desc: "Rugged solar asset tracker for long-term deployments." },
+        { id: "JC450", cat: "dashcam", name: "JC450 AI DASH", desc: "Multi-channel AI video for fleet safety." }
     ];
 
     const TXT = {
-        en: { h: "VANGUARD GLOBAL", home: "HOME", company: "COMPANY ▾", about: "ABOUT US", partners: "PARTNERS", prod: "PRODUCTS ▾", contact: "CONTACT", sales: "SALES QUERY", demo: "DEMO REQUEST", abT: "THE VANGUARD STANDARD", abP1: "Vanguard Global provides the hardware and telemetry needed to secure assets and eliminate the variables that cost you revenue.", abMT: "Our Mission", abMP: "To provide an unblinking eye over your most valuable assets.", abGT: "Global Reach", abGP: "Hardware engineered for international connectivity and scale.", abST: "Adaptive Security", abSP: "Custom-tailored configurations for high-demand operations.", submit: "SEND MESSAGE" },
-        it: { h: "VANGUARD GLOBALE", home: "HOME", company: "AZIENDA ▾", about: "CHI SIAMO", partners: "PARTNER", prod: "PRODOTTI ▾", contact: "CONTATTI", sales: "VENDITE", demo: "DEMO", abT: "LO STANDARD VANGUARD", abP1: "GeoTrackPro fornisce le fondamenta hardware che mettono in sicurezza gli asset aziendali.", abMT: "Missione", abMP: "Eliminare le variabili che riducono i ricavi fornendo visibilità.", abGT: "Core Tecnico", abGP: "Eccellenza GNSS e LTE per una precisione costante.", abST: "Supporto Esperto", abSP: "Supporto tecnico proattivo per ogni installazione.", submit: "INVIA" },
-        es: { h: "VANGUARDIA GLOBAL", home: "INICIO", company: "EMPRESA ▾", about: "NOSOTROS", partners: "SOCIOS", prod: "PRODUCTOS ▾", contact: "CONTACTO", sales: "VENTAS", demo: "DEMO", abT: "EL ESTÁNDAR VANGUARD", abP1: "Vanguard Global proporciona el hardware y la telemetría necesarios para asegurar los activos.", abMT: "Misión", abMP: "Visibilidad total sobre sus activos más valiosos.", abGT: "Alcance Global", abGP: "Hardware diseñado para la conectividad internacional.", abST: "Seguridad Adaptativa", abSP: "Configuraciones a medida para operaciones exigentes.", submit: "ENVIAR" },
-        fr: { h: "VANGUARD GLOBAL", home: "ACCUEIL", company: "ENTREPRISE ▾", about: "À PROPOS", partners: "PARTENAIRES", prod: "PRODUITS ▾", contact: "CONTACT", sales: "VENTES", demo: "DEMO", abT: "LE STANDARD VANGUARD", abP1: "Vanguard Global fournit le matériel et la télémétrie nécessaires pour sécuriser les actifs.", abMT: "Mission", abMP: "Une visibilité sans faille sur vos actifs les plus précieux.", abGT: "Portée Mondiale", abGP: "Matériel conçu pour la connectivité internationale.", abST: "Sécurité Adaptative", abSP: "Configurations sur mesure pour les opérations exigeantes.", submit: "ENVOYER" }
+        en: { h: "VANGUARD GLOBAL", about: "THE VANGUARD STANDARD", abP1: "Vanguard Global provides the hardware and telemetry needed to secure assets and eliminate variables.", abMT: "Our Mission", abMP: "Unlinking logistics from uncertainty.", abGT: "Global Reach", abGP: "Connectivity without borders.", abST: "Adaptive Security", abSP: "Hardware that learns and protects.", fName: "Name *", fEmail: "Email *", fMsg: "Message *", submit: "SEND" },
+        it: { h: "VANGUARD GLOBALE", about: "LO STANDARD VANGUARD", abP1: "Forniamo le fondamenta hardware per la sicurezza dei tuoi asset.", abMT: "Missione", abMP: "Visibilità totale.", abGT: "Core Tecnico", abGP: "Precisione GNSS costante.", abST: "Supporto", abSP: "Guida tecnica sicura.", fName: "Nome *", fEmail: "Email *", fMsg: "Messaggio *", submit: "INVIA" }
     };
 
     function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        const target = document.getElementById(id);
-        if(target) target.classList.add('active');
+        document.getElementById(id).classList.add('active');
         window.scrollTo(0,0);
     }
 
     function renderList(cat) {
         nav('list-view');
         const items = cat === 'all' ? WAREHOUSE : WAREHOUSE.filter(i => i.cat === cat);
-        const anchor = document.getElementById('gridAnchor');
-        anchor.innerHTML = items.map(i => `
+        document.getElementById('gridAnchor').innerHTML = items.map(i => `
             <div class="card">
-                <span style="font-size:0.6rem; color:var(--accent); font-weight:800; text-transform:uppercase;">${i.cat}</span>
                 <h3>${i.name}</h3>
                 <p>${i.desc}</p>
-                <button class="btn-v" style="margin-top:15px; width:100%;" onclick="openForm('INQUIRY: ${i.name}')">REQUEST SPECS</button>
+                <button class="btn-v" style="width:100%; margin-top:15px;" onclick="openForm('SPECS: ${i.name}')">INQUIRY / SPECS</button>
             </div>
         `).join('');
     }
@@ -250,19 +174,14 @@
     function updateLang(l) {
         const t = TXT[l] || TXT.en;
         document.getElementById('h-title').innerText = t.h;
-        document.getElementById('nav-home').innerText = t.home;
-        document.getElementById('nav-company').innerText = t.company;
-        document.getElementById('drop-about').innerText = t.about;
-        document.getElementById('drop-partners').innerText = t.partners;
-        document.getElementById('nav-prod').innerText = t.prod;
-        document.getElementById('nav-contact').innerText = t.contact;
-        document.getElementById('nav-sales').innerText = t.sales;
-        document.getElementById('nav-demo').innerText = t.demo;
-        document.getElementById('ab-title').innerText = t.abT;
+        document.getElementById('ab-title').innerText = t.about;
         document.getElementById('ab-p1').innerText = t.abP1;
         document.getElementById('ab-m-title').innerText = t.abMT; document.getElementById('ab-m-p').innerText = t.abMP;
         document.getElementById('ab-g-title').innerText = t.abGT; document.getElementById('ab-g-p').innerText = t.abGP;
-        document.getElementById('ab-s-title').innerText = t.abST; document.getElementById('ab-s-p').innerText = t.abST;
+        document.getElementById('ab-s-title').innerText = t.abST; document.getElementById('ab-s-p').innerText = t.abSP;
+        document.getElementById('in-name').placeholder = t.fName;
+        document.getElementById('in-email').placeholder = t.fEmail;
+        document.getElementById('in-msg').placeholder = t.fMsg;
         document.getElementById('btn-submit').innerText = t.submit;
     }
 
