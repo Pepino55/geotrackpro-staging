@@ -2,43 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GeoTrackPro | Enterprise v24.1.7</title>
+    <title>GeoTrackPro | Enterprise v24.1.9</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 85px; }
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { margin: 0; background: #fff; color: var(--navy); padding-bottom: 60px; }
+        body { margin: 0; background: #fff; color: var(--navy); padding-bottom: 60px; overflow-x: hidden; }
         
-        /* HEADER - Restoring Gold Bar & Layout */
-        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2%; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .nav-cluster { display: flex; gap: 10px; align-items: center; }
-        .logo { font-weight: 800; font-size: 1.5rem; color: var(--accent); text-decoration: none; margin-right: 20px; }
+        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2%; z-index: 10000; }
+        .nav-cluster { display: flex; gap: 8px; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--accent); text-decoration: none; margin-right: 15px; }
         
-        /* DROPDOWNS - Restoring About/Partners & Products */
         .dropdown { position: relative; display: inline-block; }
-        .drop-content { display: none; position: absolute; background: white; min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 4px; top: 100%; left: 0; border: 1px solid #eee; }
+        .drop-content { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 4px; top: 100%; left: 0; z-index: 10001; }
         .dropdown:hover .drop-content { display: block; }
-        .drop-content button { width: 100%; padding: 12px; border: none; background: none; text-align: left; cursor: pointer; font-weight: 600; font-size: 0.75rem; border-bottom: 1px solid #f1f5f9; }
-        .drop-content button:hover { background: #f8fafc; color: var(--accent); }
+        .drop-content button { width: 100%; padding: 14px; border: none; background: none; text-align: left; cursor: pointer; font-weight: 600; font-size: 0.75rem; border-bottom: 1px solid #f1f5f9; text-transform: uppercase; }
 
-        .btn-v { background: var(--navy); color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 800; font-size: 0.75rem; cursor: pointer; text-transform: uppercase; }
+        .btn-v { background: var(--navy); color: white; border: none; padding: 10px 14px; border-radius: 6px; font-weight: 800; font-size: 0.7rem; cursor: pointer; text-transform: uppercase; white-space: nowrap; transition: 0.2s; }
+        .btn-v:hover { opacity: 0.9; transform: translateY(-1px); }
         .btn-blue { background: var(--accent); }
         .btn-green { background: #10b981; }
 
         .view { display: none; padding-top: var(--header-h); min-height: 100vh; }
         .view.active { display: block; }
 
-        /* HERO - Re-fixing background image */
-        .hero { height: 85vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('bg-hero.jpeg') center/cover; color: white; text-align: center; }
+        .hero { height: 85vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('bg-hero.jpeg') center/cover; color: white; text-align: center; }
         
-        /* CATALOG & CARDS - Re-adding SPECS button */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 40px 5%; }
-        .card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; }
-        .card img { width: 100%; height: 180px; object-fit: contain; background: #f8fafc; border-radius: 8px; margin-bottom: 15px; }
-        .specs-btn { background: #64748b; color: white; text-decoration: none; padding: 10px; border-radius: 6px; text-align: center; font-size: 0.7rem; font-weight: 800; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 40px 5%; }
+        .card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px; display: flex; flex-direction: column; background: white; }
+        .card img { width: 100%; height: 160px; object-fit: contain; background: #f8fafc; border-radius: 8px; margin-bottom: 15px; }
+        .specs-btn { background: #64748b; color: white; text-decoration: none; padding: 12px; border-radius: 6px; text-align: center; font-size: 0.75rem; font-weight: 800; display: block; }
 
-        /* FOOTER - Re-fixing Clock and Legal Links */
-        footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 3%; font-size: 0.7rem; }
+        .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 60px 5%; }
+        .f-container { background: white; border: 1px solid #e2e8f0; padding: 40px; border-radius: 12px; }
+        .f-container input, .f-container select, .f-container textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; outline-color: var(--accent); }
+
+        footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 3%; font-size: 0.7rem; z-index: 10000; }
     </style>
 </head>
 <body>
@@ -60,10 +59,11 @@
             <button class="btn-v btn-blue" id="nav-prod">PRODUCTS ▾</button>
             <div class="drop-content" id="prod-drop"></div>
         </div>
-        <button onclick="openContact('Sales Query')" class="btn-v" id="nav-sales">SALES QUERY</button>
-        <button onclick="openContact('Demo Request')" class="btn-v" id="nav-demo">DEMO</button>
-        <button class="btn-v btn-green">PLATFORM</button>
-        <select id="langSelect" onchange="updateLang(this.value)" style="border:none; font-weight:800; cursor:pointer; background:none;">
+        <button onclick="nav('catalog')" class="btn-v" id="nav-cat">EXPLORE CATALOG</button>
+        <button onclick="openForm('Sales Query')" class="btn-v" id="nav-sales">SALES QUERY</button>
+        <button onclick="openForm('Demo Request')" class="btn-v" id="nav-demo">DEMO</button>
+        <button onclick="window.open('https://track.geotrackpro.com')" class="btn-v btn-green">PLATFORM</button>
+        <select id="langSelect" onchange="updateLang(this.value)" style="border:none; font-weight:800; background:none; color:var(--navy); cursor:pointer;">
             <option value="en">EN</option><option value="it">IT</option><option value="fr">FR</option><option value="es">ES</option>
         </select>
     </div>
@@ -74,55 +74,60 @@
 </div>
 
 <div id="about" class="view">
-    <div style="padding:50px 10%;">
-        <h2 style="font-size:2.5rem; font-weight:800;">ABOUT GEOTRACKPRO</h2>
-        <p style="font-size:1.2rem; line-height:1.8; max-width:800px;">Powered by the technical lineage of the Jimi Group, we deliver industrial clarity.</p>
+    <div style="padding:80px 10%;">
+        <h2 style="font-size:3rem; font-weight:800;">ABOUT GEOTRACKPRO</h2>
+        <p style="font-size:1.2rem; line-height:2; color:#475569;">Powered by the technical lineage of the Jimi Group, we deliver industrial clarity to global fleet operations.</p>
     </div>
 </div>
 
 <div id="partners" class="view">
-    <div style="padding:50px 10%;">
-        <h2 style="font-size:2.5rem; font-weight:800;">OUR PARTNERS</h2>
-        <p>JimiIoT | Concox | Vanguard Enterprise</p>
+    <div style="padding:80px 10%;">
+        <h2 style="font-size:3rem; font-weight:800;">GLOBAL PARTNERS</h2>
+        <p style="font-size:1.2rem; line-height:2; color:#475569;">JimiIoT | Concox | Vanguard Enterprise Solutions</p>
     </div>
 </div>
 
 <div id="catalog" class="view">
-    <div style="padding:20px 5%; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee;">
-        <h2 id="cat-title" style="margin:0; font-weight:800;">ALL DEVICES</h2>
+    <div style="padding:20px 5%; background:#f8fafc; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+        <h2 id="list-title" style="margin:0; font-weight:800;">ALL DEVICES</h2>
         <button onclick="nav('home')" class="btn-v" style="background:#64748b;">← BACK</button>
     </div>
-    <div class="grid" id="cat-grid"></div>
+    <div class="grid" id="product-grid"></div>
 </div>
 
 <div id="contact" class="view">
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:40px; padding:40px 5%;">
-        <div style="background:white; border:1px solid #e2e8f0; padding:40px; border-radius:12px;">
+    <div class="contact-layout">
+        <div class="f-container">
             <h2 id="f-title" style="margin-top:0; font-weight:800;">CONTACT US</h2>
-            <form id="mainForm" onsubmit="event.preventDefault(); document.getElementById('success').style.display='flex';">
-                <input type="text" placeholder="Full Name *" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;" required>
-                <select id="f-country" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;" required>
+            <form action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
+                <input type="hidden" name="from_name" value="GeoTrackPro Web Portal">
+                <input type="hidden" name="subject" id="f-subject" value="New Website Inquiry">
+                
+                <input type="text" name="name" id="f-name" required placeholder="Full Name *">
+                <input type="text" name="company" id="f-company" required placeholder="Company Name *">
+                <input type="email" name="email" id="f-email" required placeholder="Business Email *">
+                <input type="tel" name="phone" id="f-phone" required placeholder="Phone Number *">
+                
+                <select name="country" id="f-country" required>
                     <option value="">Select Country *</option>
                 </select>
-                <textarea placeholder="Message *" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;" rows="4" required></textarea>
-                <button type="submit" class="btn-v btn-blue" style="width:100%; padding:15px;" id="f-btn">SEND INQUIRY</button>
+                
+                <textarea name="message" id="f-msg" rows="4" required placeholder="How can we help? *"></textarea>
+                
+                <input type="hidden" name="redirect" value="https://geotrackpro.com/#success">
+                
+                <button type="submit" class="btn-v btn-blue" style="width:100%; padding:18px; font-size:1rem;" id="f-btn">SEND INQUIRY</button>
             </form>
         </div>
-        <div style="border-radius:12px; overflow:hidden;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10000000!2d10!3d45!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sfr!4v123456789" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
+        <div style="border-radius:12px; overflow:hidden; border:1px solid #e2e8f0;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.8192432216654!2d-0.1277583!3d51.5073509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604c38c8cd1d9%3A0xb78f2474b9a45aa9!2sLondon%2C%20UK!5e0!3m2!1sen!2sfr!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
         </div>
     </div>
 </div>
 
-<div id="success" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:20000; align-items:center; justify-content:center; flex-direction:column;">
-    <div style="border:4px solid #22c55e; color:#22c55e; width:80px; height:80px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:3rem; font-weight:800; margin-bottom:20px;">✓</div>
-    <h2 id="m-sent">Message Sent</h2>
-    <p id="m-text">A Vanguard specialist will review your request shortly.</p>
-    <button class="btn-v" style="background:#64748b;" onclick="location.reload()">SEND ANOTHER</button>
-</div>
-
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> | v24.1.7</div>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> | v24.1.9</div>
     <div>
         <a href="terms.pdf" target="_blank" style="color:white; text-decoration:none; margin-left:20px; font-weight:800;">TERMS</a>
         <a href="privacy.pdf" target="_blank" style="color:white; text-decoration:none; margin-left:20px; font-weight:800;">PRIVACY</a>
@@ -130,7 +135,14 @@
 </footer>
 
 <script>
-    const CATS = ['vehicle','asset','dashcam','obd','personal','tags','acc','motorcycle'];
+    const CAT_IDS = ['vehicle','asset','dashcam','obd','personal','tags','acc','motorcycle'];
+    const TXT = {
+        en: { h:"THE GENESIS OF PRECISION", comp:"COMPANY ▾", home:"HOME", prod:"PRODUCTS ▾", sales:"SALES QUERY", f_t:"CONTACT US", f_b:"SEND INQUIRY" },
+        fr: { h:"LA GENÈSE DE LA PRÉCISION", comp:"ENTREPRISE ▾", home:"ACCUEIL", prod:"PRODUITS ▾", sales:"VENTES", f_t:"CONTACTEZ-NOUS", f_b:"ENVOYER" },
+        it: { h:"LA GENESI DELLA PRECISIONE", comp:"AZIENDA ▾", home:"HOME", prod:"PRODOTTI ▾", sales:"VENDITE", f_t:"CONTATTACI", f_b:"INVIA" },
+        es: { h:"LA GÉNESIS DE LA PRECISIÓN", comp:"EMPRESA ▾", home:"INICIO", prod:"PRODUCTOS ▾", sales:"VENTAS", f_t:"CONTÁCTENOS", f_b:"ENVIAR" }
+    };
+
         const WAREHOUSE = [
 
         { id: "VL103", imgCount: 1, cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
@@ -219,38 +231,33 @@
 
     ];
 
-    const TXT = {
-        en: { h:"THE GENESIS OF PRECISION", comp:"COMPANY ▾", home:"HOME", prod:"PRODUCTS ▾", sales:"SALES QUERY", f_t:"CONTACT US", f_b:"SEND INQUIRY" },
-        fr: { h:"LA GENÈSE DE LA PRÉCISION", comp:"ENTREPRISE ▾", home:"ACCUEIL", prod:"PRODUITS ▾", sales:"VENTES", f_t:"CONTACTEZ-NOUS", f_b:"ENVOYER" },
-        it: { h:"LA GENESI DELLA PRECISIONE", comp:"AZIENDA ▾", home:"HOME", prod:"PRODOTTI ▾", sales:"VENDITE", f_t:"CONTATTACI", f_b:"INVIA" },
-        es: { h:"LA GÉNESIS DE LA PRECISIÓN", comp:"EMPRESA ▾", home:"INICIO", prod:"PRODUCTOS ▾", sales:"VENTAS", f_t:"CONTÁCTENOS", f_b:"ENVIAR" }
-    };
-
     function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         if(id === 'catalog') renderCatalog('all');
+        window.scrollTo(0,0);
     }
 
     function renderCatalog(filter) {
-        const grid = document.getElementById('cat-grid');
+        const grid = document.getElementById('product-grid');
         const items = filter === 'all' ? WAREHOUSE : WAREHOUSE.filter(i => i.cat === filter);
-        document.getElementById('cat-title').innerText = filter.toUpperCase();
+        document.getElementById('list-title').innerText = filter.toUpperCase() + " DEVICES";
         grid.innerHTML = items.map(i => `
             <div class="card">
                 <img src="IMAGES/${i.id}.png" onerror="this.src='IMAGES/coming-soon.png'">
-                <h3 style="margin:5px 0;">${i.id.toUpperCase()}</h3>
+                <h3 style="margin:10px 0;">${i.name}</h3>
                 <p style="font-size:0.8rem; color:#64748b; flex-grow:1;">${i.desc}</p>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:15px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px;">
                     <a href="DOCS/SPECS/${i.id}.pdf" target="_blank" class="specs-btn">SPECS</a>
-                    <button class="btn-v btn-blue" onclick="openContact('Inquiry: ${i.id}')">INQUIRY</button>
+                    <button class="btn-v btn-blue" onclick="openForm('Inquiry: ${i.id}')">DEVICE INQUIRY</button>
                 </div>
             </div>
         `).join('');
     }
 
-    function openContact(subject) {
+    function openForm(subject) {
         document.getElementById('f-title').innerText = subject.toUpperCase();
+        document.getElementById('f-subject').value = "Web Portal: " + subject;
         nav('contact');
     }
 
@@ -262,16 +269,16 @@
         document.getElementById('nav-prod').innerText = t.prod;
         document.getElementById('nav-sales').innerText = t.sales;
         document.getElementById('f-btn').innerText = t.f_b;
-        document.getElementById('prod-drop').innerHTML = CATS.map(c => `<button onclick="renderCatalog('${c}')">${c.toUpperCase()}</button>`).join('');
+        document.getElementById('prod-drop').innerHTML = CAT_IDS.map(c => `<button onclick="renderCatalog('${c}')">${c.toUpperCase()}</button>`).join('');
     }
 
     window.onload = () => {
         updateLang('en');
-        const countries = ["France", "Italy", "Spain", "Germany", "UK", "USA"];
+        const countries = ["France", "Italy", "Spain", "Germany", "United Kingdom", "United States", "Canada"];
         document.getElementById('f-country').innerHTML += countries.map(c => `<option value="${c}">${c}</option>`).join('');
-        setInterval(() => { 
-            const d = new Date(); 
-            document.getElementById('clock').innerText = d.toLocaleDateString() + " " + d.toLocaleTimeString(); 
+        setInterval(() => {
+            const d = new Date();
+            document.getElementById('clock').innerText = d.toLocaleDateString() + " " + d.toLocaleTimeString();
         }, 1000);
     };
 </script>
