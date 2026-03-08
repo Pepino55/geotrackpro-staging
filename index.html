@@ -2,52 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Vanguard Enterprise</title>
+    <title>GeoTrackPro | Enterprise v24.1.7</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 85px; --led: #22c55e; }
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.2s ease; }
-        body { margin: 0; background: #fff; color: var(--navy); padding-bottom: 60px; overflow-x: hidden; }
+        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 85px; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { margin: 0; background: #fff; color: var(--navy); padding-bottom: 60px; }
         
-        /* HEADER RECONSTRUCTION */
+        /* HEADER - Restoring Gold Bar & Layout */
         header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2%; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .nav-cluster { display: flex; align-items: center; gap: 8px; }
-        .logo { font-weight: 900; font-size: 1.4rem; color: var(--accent); cursor: pointer; text-decoration: none; margin-right: 15px; }
+        .nav-cluster { display: flex; gap: 10px; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--accent); text-decoration: none; margin-right: 20px; }
         
-        /* DROPDOWNS */
-        .drop-container { position: relative; display: inline-block; }
-        .drop-content { display: none; position: absolute; background: var(--navy); min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 4px; top: 100%; left: 0; }
-        .drop-content button { color: white; padding: 12px 16px; text-decoration: none; display: block; width: 100%; border: none; background: none; text-align: left; font-size: 0.7rem; font-weight: 800; border-bottom: 1px solid #1e293b; cursor: pointer; }
-        .drop-content button:hover { background: var(--accent); }
-        .drop-container:hover .drop-content { display: block; }
+        /* DROPDOWNS - Restoring About/Partners & Products */
+        .dropdown { position: relative; display: inline-block; }
+        .drop-content { display: none; position: absolute; background: white; min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 4px; top: 100%; left: 0; border: 1px solid #eee; }
+        .dropdown:hover .drop-content { display: block; }
+        .drop-content button { width: 100%; padding: 12px; border: none; background: none; text-align: left; cursor: pointer; font-weight: 600; font-size: 0.75rem; border-bottom: 1px solid #f1f5f9; }
+        .drop-content button:hover { background: #f8fafc; color: var(--accent); }
 
-        .btn-v { background: var(--navy); color: white; border: none; padding: 10px 14px; border-radius: 6px; font-weight: 800; font-size: 0.7rem; cursor: pointer; text-transform: uppercase; }
+        .btn-v { background: var(--navy); color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 800; font-size: 0.75rem; cursor: pointer; text-transform: uppercase; }
         .btn-blue { background: var(--accent); }
         .btn-green { background: #10b981; }
 
         .view { display: none; padding-top: var(--header-h); min-height: 100vh; }
         .view.active { display: block; }
 
-        /* HERO */
-        .hero { height: 85vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80') center/cover; color: white; }
+        /* HERO - Re-fixing background image */
+        .hero { height: 85vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('bg-hero.jpeg') center/cover; color: white; text-align: center; }
         
-        /* CATALOG MAPPING */
+        /* CATALOG & CARDS - Re-adding SPECS button */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding: 40px 5%; }
-        .card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .card img { width: 100%; height: 180px; object-fit: contain; background: #f1f5f9; border-radius: 8px; margin-bottom: 15px; }
+        .card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; }
+        .card img { width: 100%; height: 180px; object-fit: contain; background: #f8fafc; border-radius: 8px; margin-bottom: 15px; }
+        .specs-btn { background: #64748b; color: white; text-decoration: none; padding: 10px; border-radius: 6px; text-align: center; font-size: 0.7rem; font-weight: 800; }
 
-        /* CONTACT FORM & MAP */
-        .contact-layout { padding: 50px 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .form-container { background: white; border: 1px solid #e2e8f0; padding: 40px; border-radius: 12px; }
-        .form-container input, .form-container select, .form-container textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 6px; }
-
-        /* FEEDBACK MODAL */
-        #feedbackModal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:20000; align-items:center; justify-content:center; text-align:center; }
-        .green-check { width: 60px; height: 60px; border: 3px solid #22c55e; color: #22c55e; font-size: 2.5rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-weight: bold; }
-
-        footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 3%; font-size: 0.7rem; z-index: 10000; }
-        .led-dot { height: 8px; width: 8px; background: var(--led); border-radius: 50%; display: inline-block; margin: 0 8px; box-shadow: 0 0 5px var(--led); }
+        /* FOOTER - Re-fixing Clock and Legal Links */
+        footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 3%; font-size: 0.7rem; }
     </style>
 </head>
 <body>
@@ -55,27 +46,25 @@
 <header>
     <div class="nav-cluster">
         <a href="#" onclick="nav('home')" class="logo">GeoTrackPro®</a>
-        <div class="drop-container">
+        <div class="dropdown">
             <button class="btn-v" id="nav-comp">COMPANY ▾</button>
             <div class="drop-content">
-                <button onclick="alert('Mission: Industrial Clarity')">MISSION</button>
-                <button onclick="alert('The Jimi Group Lineage')">HISTORY</button>
+                <button onclick="nav('about')">ABOUT US</button>
+                <button onclick="nav('partners')">PARTNERS</button>
             </div>
         </div>
         <button onclick="nav('home')" class="btn-v" id="nav-home">HOME</button>
     </div>
     <div class="nav-cluster">
-        <div class="drop-container">
+        <div class="dropdown">
             <button class="btn-v btn-blue" id="nav-prod">PRODUCTS ▾</button>
             <div class="drop-content" id="prod-drop"></div>
         </div>
-        <button onclick="nav('catalog')" class="btn-v btn-blue" id="nav-exp">EXPLORE CATALOG</button>
         <button onclick="openContact('Sales Query')" class="btn-v" id="nav-sales">SALES QUERY</button>
         <button onclick="openContact('Demo Request')" class="btn-v" id="nav-demo">DEMO</button>
-        <button onclick="nav('contact')" class="btn-v" id="nav-cont">CONTACT</button>
-        <button onclick="alert('Redirecting to Platform...')" class="btn-v btn-green" id="nav-plat">PLATFORM</button>
-        <select id="langSelect" onchange="updateLang(this.value)" style="background:none; border:none; font-weight:800; cursor:pointer;">
-            <option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option>
+        <button class="btn-v btn-green">PLATFORM</button>
+        <select id="langSelect" onchange="updateLang(this.value)" style="border:none; font-weight:800; cursor:pointer; background:none;">
+            <option value="en">EN</option><option value="it">IT</option><option value="fr">FR</option><option value="es">ES</option>
         </select>
     </div>
 </header>
@@ -84,64 +73,65 @@
     <div class="hero"><h1 id="h-title" style="font-size:3.5rem; font-weight:800;">THE GENESIS OF PRECISION</h1></div>
 </div>
 
+<div id="about" class="view">
+    <div style="padding:50px 10%;">
+        <h2 style="font-size:2.5rem; font-weight:800;">ABOUT GEOTRACKPRO</h2>
+        <p style="font-size:1.2rem; line-height:1.8; max-width:800px;">Powered by the technical lineage of the Jimi Group, we deliver industrial clarity.</p>
+    </div>
+</div>
+
+<div id="partners" class="view">
+    <div style="padding:50px 10%;">
+        <h2 style="font-size:2.5rem; font-weight:800;">OUR PARTNERS</h2>
+        <p>JimiIoT | Concox | Vanguard Enterprise</p>
+    </div>
+</div>
+
 <div id="catalog" class="view">
-    <div style="padding:30px 5%; display:flex; justify-content:space-between; align-items:center;">
-        <h2 id="cat-title">ALL DEVICES</h2>
+    <div style="padding:20px 5%; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee;">
+        <h2 id="cat-title" style="margin:0; font-weight:800;">ALL DEVICES</h2>
         <button onclick="nav('home')" class="btn-v" style="background:#64748b;">← BACK</button>
     </div>
     <div class="grid" id="cat-grid"></div>
 </div>
 
 <div id="contact" class="view">
-    <div class="contact-layout">
-        <div class="form-container">
-            <h2 id="f-title">CONTACT US</h2>
-            <form id="mainForm" onsubmit="handleInquiry(event)">
-                <input type="text" id="f-name" required placeholder="Full Name *">
-                <input type="text" id="f-comp" required placeholder="Company Name *">
-                <input type="email" id="f-email" required placeholder="Business Email *">
-                <input type="tel" id="f-phone" required placeholder="Phone Number *">
-                <select id="f-country" required><option value="">Select Country *</option></select>
-                <textarea id="f-msg" rows="4" required placeholder="How can we help? *"></textarea>
-                <button type="submit" class="btn-v btn-blue" style="width:100%; padding:18px;" id="f-btn">SEND INQUIRY</button>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:40px; padding:40px 5%;">
+        <div style="background:white; border:1px solid #e2e8f0; padding:40px; border-radius:12px;">
+            <h2 id="f-title" style="margin-top:0; font-weight:800;">CONTACT US</h2>
+            <form id="mainForm" onsubmit="event.preventDefault(); document.getElementById('success').style.display='flex';">
+                <input type="text" placeholder="Full Name *" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;" required>
+                <select id="f-country" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;" required>
+                    <option value="">Select Country *</option>
+                </select>
+                <textarea placeholder="Message *" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;" rows="4" required></textarea>
+                <button type="submit" class="btn-v btn-blue" style="width:100%; padding:15px;" id="f-btn">SEND INQUIRY</button>
             </form>
         </div>
-        <div style="border-radius:12px; overflow:hidden; border:1px solid #e2e8f0;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.011210137748!2d113.9314488!3d22.540108!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403ec0478051793%3A0xc3f3453b379361a4!2sShenzhen!5e0!3m2!1sen!2scn!4v1700000000000!5m2!1sen!2scn" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
+        <div style="border-radius:12px; overflow:hidden;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10000000!2d10!3d45!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sfr!4v123456789" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
         </div>
     </div>
 </div>
 
-<div id="feedbackModal">
-    <div>
-        <div class="green-check">✓</div>
-        <h2 id="m-sent">Message Sent</h2>
-        <p id="m-text">A Vanguard specialist will review your request shortly.</p>
-        <button class="btn-v" style="background:#64748b; padding:12px 30px;" onclick="closeModal()" id="m-btn">SEND ANOTHER</button>
-    </div>
+<div id="success" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:20000; align-items:center; justify-content:center; flex-direction:column;">
+    <div style="border:4px solid #22c55e; color:#22c55e; width:80px; height:80px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:3rem; font-weight:800; margin-bottom:20px;">✓</div>
+    <h2 id="m-sent">Message Sent</h2>
+    <p id="m-text">A Vanguard specialist will review your request shortly.</p>
+    <button class="btn-v" style="background:#64748b;" onclick="location.reload()">SEND ANOTHER</button>
 </div>
 
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span> | v24.1.0</div>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> | v24.1.7</div>
     <div>
-        <a href="javascript:nav('home')" style="color:white; text-decoration:none; margin-right:20px;">TERMS</a>
-        <a href="javascript:nav('home')" style="color:white; text-decoration:none;">PRIVACY</a>
+        <a href="terms.pdf" target="_blank" style="color:white; text-decoration:none; margin-left:20px; font-weight:800;">TERMS</a>
+        <a href="privacy.pdf" target="_blank" style="color:white; text-decoration:none; margin-left:20px; font-weight:800;">PRIVACY</a>
     </div>
 </footer>
 
 <script>
-    const CATS = [
-        {id:'vehicle', n:{en:'Vehicle',fr:'Véhicule',it:'Veicolo',es:'Vehículo'}, i:'🚗'},
-        {id:'asset', n:{en:'Asset',fr:'Actif',it:'Asset',es:'Activo'}, i:'📦'},
-        {id:'dashcam', n:{en:'Dashcam',fr:'Caméra',it:'Dashcam',es:'Cámara'}, i:'📹'},
-        {id:'obd', n:{en:'OBD',fr:'OBD',it:'OBD',es:'OBD'}, i:'🔌'},
-        {id:'personal', n:{en:'Personal',fr:'Personnel',it:'Personale',es:'Personal'}, i:'👤'},
-        {id:'tags', n:{en:'Tags',fr:'Tags',it:'Tag',es:'Etiquetas'}, i:'🏷️'},
-        {id:'acc', n:{en:'Acc.',fr:'Acc.',it:'Acc.',es:'Acc.'}, i:'⚙️'},
-        {id:'motorcycle', n:{en:'Motorcycle',fr:'Moto',it:'Moto',es:'Moto'}, i:'🏍️'}
-    ];
-
-       const WAREHOUSE = [
+    const CATS = ['vehicle','asset','dashcam','obd','personal','tags','acc','motorcycle'];
+        const WAREHOUSE = [
 
         { id: "VL103", imgCount: 1, cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
 
@@ -230,27 +220,31 @@
     ];
 
     const TXT = {
-        en: { h:"THE GENESIS OF PRECISION", comp:"COMPANY ▾", home:"HOME", prod:"PRODUCTS ▾", exp:"EXPLORE CATALOG", sales:"SALES QUERY", demo:"DEMO", cont:"CONTACT", plat:"PLATFORM", f_t:"CONTACT US", f_b:"SEND INQUIRY", m_s:"Message Sent", m_txt:"A Vanguard specialist will review your request shortly.", m_b:"SEND ANOTHER" },
-        fr: { h:"LA GENÈSE DE LA PRÉCISION", comp:"ENTREPRISE ▾", home:"ACCUEIL", prod:"PRODUITS ▾", exp:"EXPLORER", sales:"VENTES", demo:"DEMO", cont:"CONTACT", plat:"PLATEFORME", f_t:"CONTACTEZ-NOUS", f_b:"ENVOYER", m_s:"Message Envoyé", m_txt:"Un spécialiste Vanguard examinera votre demande.", m_b:"ENVOYER UN AUTRE" },
-        it: { h:"LA GENESI DELLA PRECISIONE", comp:"AZIENDA ▾", home:"HOME", prod:"PRODOTTI ▾", exp:"ESPLORA CATALOGO", sales:"VENDITE", demo:"DEMO", cont:"CONTATTO", plat:"PIATTAFORMA", f_t:"CONTATTACI", f_b:"INVIA RICHIESTA", m_s:"Messaggio Inviato", m_txt:"Un esperto Vanguard ti contatterà presto.", m_b:"INVIANE UN ALTRO" },
-        es: { h:"LA GÉNESIS DE LA PRECISIÓN", comp:"EMPRESA ▾", home:"INICIO", prod:"PRODUCTOS ▾", exp:"EXPLORAR", sales:"VENTAS", demo:"DEMO", cont:"CONTACTO", plat:"PLATAFORMA", f_t:"CONTÁCTENOS", f_b:"ENVIAR", m_s:"Mensaje Enviado", m_txt:"Un especialista de Vanguard revisará su solicitud.", m_b:"ENVIAR OTRO" }
+        en: { h:"THE GENESIS OF PRECISION", comp:"COMPANY ▾", home:"HOME", prod:"PRODUCTS ▾", sales:"SALES QUERY", f_t:"CONTACT US", f_b:"SEND INQUIRY" },
+        fr: { h:"LA GENÈSE DE LA PRÉCISION", comp:"ENTREPRISE ▾", home:"ACCUEIL", prod:"PRODUITS ▾", sales:"VENTES", f_t:"CONTACTEZ-NOUS", f_b:"ENVOYER" },
+        it: { h:"LA GENESI DELLA PRECISIONE", comp:"AZIENDA ▾", home:"HOME", prod:"PRODOTTI ▾", sales:"VENDITE", f_t:"CONTATTACI", f_b:"INVIA" },
+        es: { h:"LA GÉNESIS DE LA PRECISIÓN", comp:"EMPRESA ▾", home:"INICIO", prod:"PRODUCTOS ▾", sales:"VENTAS", f_t:"CONTÁCTENOS", f_b:"ENVIAR" }
     };
-
-    const COUNTRIES = ["France", "Italy", "Spain", "Germany", "United Kingdom", "United States", "Canada", "Australia", "China", "United Arab Emirates", "Brazil", "Mexico"];
 
     function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        if(id === 'catalog') renderCatalog();
+        if(id === 'catalog') renderCatalog('all');
     }
 
-    function renderCatalog() {
-        document.getElementById('cat-grid').innerHTML = WAREHOUSE.map(i => `
+    function renderCatalog(filter) {
+        const grid = document.getElementById('cat-grid');
+        const items = filter === 'all' ? WAREHOUSE : WAREHOUSE.filter(i => i.cat === filter);
+        document.getElementById('cat-title').innerText = filter.toUpperCase();
+        grid.innerHTML = items.map(i => `
             <div class="card">
-                <img src="IMAGES/${i.img}" onerror="this.src='https://placehold.co/400x300?text=${i.id}'">
-                <h3>${i.name}</h3>
-                <p style="font-size:0.75rem;">${i.desc}</p>
-                <button class="btn-v btn-blue" onclick="openContact('Inquiry: ${i.id}')" style="width:100%; margin-top:10px;">DEVICE INQUIRY</button>
+                <img src="IMAGES/${i.id}.png" onerror="this.src='IMAGES/coming-soon.png'">
+                <h3 style="margin:5px 0;">${i.id.toUpperCase()}</h3>
+                <p style="font-size:0.8rem; color:#64748b; flex-grow:1;">${i.desc}</p>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:15px;">
+                    <a href="DOCS/SPECS/${i.id}.pdf" target="_blank" class="specs-btn">SPECS</a>
+                    <button class="btn-v btn-blue" onclick="openContact('Inquiry: ${i.id}')">INQUIRY</button>
+                </div>
             </div>
         `).join('');
     }
@@ -260,40 +254,24 @@
         nav('contact');
     }
 
-    function handleInquiry(e) {
-        e.preventDefault();
-        document.getElementById('feedbackModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('feedbackModal').style.display = 'none';
-        document.getElementById('mainForm').reset();
-    }
-
     function updateLang(l) {
         const t = TXT[l];
         document.getElementById('h-title').innerText = t.h;
         document.getElementById('nav-comp').innerText = t.comp;
         document.getElementById('nav-home').innerText = t.home;
         document.getElementById('nav-prod').innerText = t.prod;
-        document.getElementById('nav-exp').innerText = t.exp;
         document.getElementById('nav-sales').innerText = t.sales;
-        document.getElementById('nav-demo').innerText = t.demo;
-        document.getElementById('nav-cont').innerText = t.cont;
-        document.getElementById('nav-plat').innerText = t.plat;
         document.getElementById('f-btn').innerText = t.f_b;
-        document.getElementById('m-sent').innerText = t.m_s;
-        document.getElementById('m-text').innerText = t.m_txt;
-        document.getElementById('m-btn').innerText = t.m_b;
-        document.getElementById('prod-drop').innerHTML = CATS.map(c => `<button onclick="nav('catalog')">${c.n[l]}</button>`).join('');
+        document.getElementById('prod-drop').innerHTML = CATS.map(c => `<button onclick="renderCatalog('${c}')">${c.toUpperCase()}</button>`).join('');
     }
 
     window.onload = () => {
         updateLang('en');
-        document.getElementById('f-country').innerHTML += COUNTRIES.map(c => `<option value="${c}">${c}</option>`).join('');
+        const countries = ["France", "Italy", "Spain", "Germany", "UK", "USA"];
+        document.getElementById('f-country').innerHTML += countries.map(c => `<option value="${c}">${c}</option>`).join('');
         setInterval(() => { 
-            const d = new Date();
-            document.getElementById('clock').innerText = d.toLocaleDateString() + " | " + d.toLocaleTimeString(); 
+            const d = new Date(); 
+            document.getElementById('clock').innerText = d.toLocaleDateString() + " " + d.toLocaleTimeString(); 
         }, 1000);
     };
 </script>
