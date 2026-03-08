@@ -2,40 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GeoTrackPro | Enterprise v24.1.9</title>
+    <title>GeoTrackPro | Vanguard v25.1.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 85px; }
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { margin: 0; background: #fff; color: var(--navy); padding-bottom: 60px; overflow-x: hidden; }
         
-        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2%; z-index: 10000; }
+        header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2%; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .nav-cluster { display: flex; gap: 8px; align-items: center; }
         .logo { font-weight: 800; font-size: 1.5rem; color: var(--accent); text-decoration: none; margin-right: 15px; }
         
         .dropdown { position: relative; display: inline-block; }
-        .drop-content { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 4px; top: 100%; left: 0; z-index: 10001; }
+        .drop-content { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 4px; top: 100%; left: 0; z-index: 10001; border: 1px solid #eee; }
         .dropdown:hover .drop-content { display: block; }
         .drop-content button { width: 100%; padding: 14px; border: none; background: none; text-align: left; cursor: pointer; font-weight: 600; font-size: 0.75rem; border-bottom: 1px solid #f1f5f9; text-transform: uppercase; }
 
         .btn-v { background: var(--navy); color: white; border: none; padding: 10px 14px; border-radius: 6px; font-weight: 800; font-size: 0.7rem; cursor: pointer; text-transform: uppercase; white-space: nowrap; transition: 0.2s; }
-        .btn-v:hover { opacity: 0.9; transform: translateY(-1px); }
         .btn-blue { background: var(--accent); }
         .btn-green { background: #10b981; }
 
         .view { display: none; padding-top: var(--header-h); min-height: 100vh; }
         .view.active { display: block; }
 
-        .hero { height: 85vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('bg-hero.jpeg') center/cover; color: white; text-align: center; }
+        .hero { height: 85vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('bg-hero.jpeg') center/cover no-repeat; color: white; text-align: center; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 40px 5%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 40px 5%; }
         .card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px; display: flex; flex-direction: column; background: white; }
-        .card img { width: 100%; height: 160px; object-fit: contain; background: #f8fafc; border-radius: 8px; margin-bottom: 15px; }
+        .card img { width: 100%; height: 180px; object-fit: contain; background: #f8fafc; border-radius: 8px; margin-bottom: 15px; }
         .specs-btn { background: #64748b; color: white; text-decoration: none; padding: 12px; border-radius: 6px; text-align: center; font-size: 0.75rem; font-weight: 800; display: block; }
 
         .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 60px 5%; }
         .f-container { background: white; border: 1px solid #e2e8f0; padding: 40px; border-radius: 12px; }
-        .f-container input, .f-container select, .f-container textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; outline-color: var(--accent); }
+        .f-container input, .f-container select, .f-container textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; }
+
+        #successModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 20000; align-items: center; justify-content: center; flex-direction: column; }
 
         footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 3%; font-size: 0.7rem; z-index: 10000; }
     </style>
@@ -62,8 +63,8 @@
         <button onclick="nav('catalog')" class="btn-v" id="nav-cat">EXPLORE CATALOG</button>
         <button onclick="openForm('Sales Query')" class="btn-v" id="nav-sales">SALES QUERY</button>
         <button onclick="openForm('Demo Request')" class="btn-v" id="nav-demo">DEMO</button>
-        <button onclick="window.open('https://track.geotrackpro.com')" class="btn-v btn-green">PLATFORM</button>
-        <select id="langSelect" onchange="updateLang(this.value)" style="border:none; font-weight:800; background:none; color:var(--navy); cursor:pointer;">
+        <button onclick="window.open('https://www.tracksolidpro.com', '_blank')" class="btn-v btn-green">PLATFORM</button>
+        <select id="langSelect" onchange="updateLang(this.value)" style="border:none; font-weight:800; background:none; cursor:pointer;">
             <option value="en">EN</option><option value="it">IT</option><option value="fr">FR</option><option value="es">ES</option>
         </select>
     </div>
@@ -74,16 +75,16 @@
 </div>
 
 <div id="about" class="view">
-    <div style="padding:80px 10%;">
-        <h2 style="font-size:3rem; font-weight:800;">ABOUT GEOTRACKPRO</h2>
-        <p style="font-size:1.2rem; line-height:2; color:#475569;">Powered by the technical lineage of the Jimi Group, we deliver industrial clarity to global fleet operations.</p>
+    <div style="padding:80px 10%; max-width:1000px;">
+        <h2 style="font-size:3rem; font-weight:800;">ABOUT US</h2>
+        <p style="font-size:1.1rem; line-height:2;">GeoTrackPro delivers high-end industrial clarity through advanced telematics and IoT integration.</p>
     </div>
 </div>
 
 <div id="partners" class="view">
-    <div style="padding:80px 10%;">
-        <h2 style="font-size:3rem; font-weight:800;">GLOBAL PARTNERS</h2>
-        <p style="font-size:1.2rem; line-height:2; color:#475569;">JimiIoT | Concox | Vanguard Enterprise Solutions</p>
+    <div style="padding:80px 10%; max-width:1000px;">
+        <h2 style="font-size:3rem; font-weight:800;">PARTNERS</h2>
+        <p style="font-size:1.1rem; line-height:2;">Collaborating with global leaders like JimiIoT and Concox to drive fleet innovation.</p>
     </div>
 </div>
 
@@ -99,35 +100,33 @@
     <div class="contact-layout">
         <div class="f-container">
             <h2 id="f-title" style="margin-top:0; font-weight:800;">CONTACT US</h2>
-            <form action="https://api.web3forms.com/submit" method="POST">
+            <form id="mainForm" onsubmit="handleForm(event)">
                 <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
-                <input type="hidden" name="from_name" value="GeoTrackPro Web Portal">
                 <input type="hidden" name="subject" id="f-subject" value="New Website Inquiry">
-                
-                <input type="text" name="name" id="f-name" required placeholder="Full Name *">
-                <input type="text" name="company" id="f-company" required placeholder="Company Name *">
-                <input type="email" name="email" id="f-email" required placeholder="Business Email *">
-                <input type="tel" name="phone" id="f-phone" required placeholder="Phone Number *">
-                
-                <select name="country" id="f-country" required>
-                    <option value="">Select Country *</option>
-                </select>
-                
-                <textarea name="message" id="f-msg" rows="4" required placeholder="How can we help? *"></textarea>
-                
-                <input type="hidden" name="redirect" value="https://geotrackpro.com/#success">
-                
+                <input type="text" name="name" required placeholder="Full Name *">
+                <input type="text" name="company" required placeholder="Company Name *">
+                <input type="email" name="email" required placeholder="Business Email *">
+                <input type="tel" name="phone" required placeholder="Phone Number *">
+                <select name="country" id="f-country" required><option value="">Select Country *</option></select>
+                <textarea name="message" rows="4" required placeholder="How can we help? *"></textarea>
                 <button type="submit" class="btn-v btn-blue" style="width:100%; padding:18px; font-size:1rem;" id="f-btn">SEND INQUIRY</button>
             </form>
         </div>
         <div style="border-radius:12px; overflow:hidden; border:1px solid #e2e8f0;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.8192432216654!2d-0.1277583!3d51.5073509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604c38c8cd1d9%3A0xb78f2474b9a45aa9!2sLondon%2C%20UK!5e0!3m2!1sen!2sfr!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.991625693759!2d2.2922926156743895!3d48.85837007928746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sEiffel%20Tower!5e0!3m2!1sen!2sfr!4v1647854652391!5m2!1sen!2sfr" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
         </div>
     </div>
 </div>
 
+<div id="successModal">
+    <div style="width:80px; height:80px; border:4px solid #22c55e; color:#22c55e; display:flex; align-items:center; justify-content:center; font-size:3rem; margin-bottom:20px; font-weight:800;">✓</div>
+    <h2 id="m-sent">Message Sent</h2>
+    <p id="m-text">A Vanguard specialist will review your request shortly.</p>
+    <button class="btn-v" style="background:#64748b; padding:12px 30px;" onclick="closeModal()">CLOSE</button>
+</div>
+
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> | v24.1.9</div>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> | v25.1.0</div>
     <div>
         <a href="terms.pdf" target="_blank" style="color:white; text-decoration:none; margin-left:20px; font-weight:800;">TERMS</a>
         <a href="privacy.pdf" target="_blank" style="color:white; text-decoration:none; margin-left:20px; font-weight:800;">PRIVACY</a>
@@ -143,92 +142,44 @@
         es: { h:"LA GÉNESIS DE LA PRECISIÓN", comp:"EMPRESA ▾", home:"INICIO", prod:"PRODUCTOS ▾", sales:"VENTAS", f_t:"CONTÁCTENOS", f_b:"ENVIAR" }
     };
 
-        const WAREHOUSE = [
-
-        { id: "VL103", imgCount: 1, cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
-
-        { id: "VL106", imgCount: 1, cat: ["vehicle"], name: "VL106", desc: "LTE vehicle tracker even in weak or lost GPS areas INS-aided GPS keeps tracking constant & in control.", features:[{icon:"🛰️",label:"GNSS"}] },
-
-        { id: "VL111", imgCount: 1, cat: ["vehicle"], name: "VL111", desc: "Compact yet powerful Fits on motorcycles effortlessly Keeps your fleet running smoothly & connected.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
-
-        { id: "VL113", imgCount: 1, cat: ["vehicle"], name: "VL113", desc: "LTE smart waterproof tracker.", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
-
-        { id: "VL808", imgCount: 1, cat: ["vehicle"], name: "VL808", desc: "LTE Vehicle GNSS Terminal Intelligent Tracking Meets Expanded Fleet Control.", features:[{icon:"📍",label:"LBS"}] },
-
-        { id: "LL701", imgCount: 2, cat: ["asset"], name: "LL701", desc: "Long-Standby Asset Tracker designed for the management of heavy-duty vehicles up to 5 years of working time.", features:[{icon:"🔋",label:"Standby"}] },
-
-        { id: "LL702", imgCount: 2, cat: ["asset"], name: "LL702", desc: "4G GPS Tracker offers ultra-long battery life multi-mode positioning rugged durability ensuring reliable asset monitoring.", features:[{icon:"📦",label:"Asset"}] },
-        
-        { id: "LL303Pro", imgCount: 8, cat: ["asset"], name: "LL303Pro", desc: "4G solar Powered GPS tracker with Real-Time tracking IP67 waterproof 10000mAh battery.", features:[{icon:"📦",label:"Asset"}, {icon:"🔋",label:"Big Battery"}] },
-
-        { id: "LL301", imgCount: 1, cat: ["asset"], name: "LL301", desc: "Powerful wireless tracker.", features:[{icon:"🔋",label:"Big Battery"}] },
-
-        { id: "PB706", imgCount: 3, cat: ["personal"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
-
-        { id: "PB706", imgCount: 3, cat: ["tags"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
-
-        { id: "PB706", imgCount: 3, cat: ["asset"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
-
-        { id: "PB713", imgCount: 4, cat: ["personal"], name: "PB713 Asset Tag", desc: "Card-style tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Ultra slim BT TAG"}] },
-
-        { id: "PB713", imgCount: 4, cat: ["tags"], name: "PB713 Asset Tag", desc: "Card-style tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Ultra slim BT TAG"}] },
-        
-        { id: "PB708", imgCount: 1, cat: ["asset"], name: "PB708", desc: "Slim low-power automomus asset tracking terminal.", features:[{icon:"📏",label:"Ultra-slim"}] },
-
-        { id: "PB708Pro", imgCount: 1, cat: ["tags"], name: "PB708Pro Asset Tag", desc: "BT long life precise asset tagging.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
-
-        { id: "PB704", imgCount: 2, cat: ["tags"], name: "PB704 Asset Tag", desc: "BT Pet locator Mini GPS track for iPhone/Android phone position.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
-
-        { id: "VL505", imgCount: 3, cat: ["obd"], name: "VL505", desc: "Plug & Play OBDII LTE GNSS.", features:[{icon:"🔌",label:"OBDII"},{icon:"📊",label:"CAN"}] },
-
-        { id: "QBIT-M", imgCount: 1, cat: ["personal"], name: "QBIT M", desc: "Mini personal GPS specifically optimized for user convenience especially considering the habits of elderly family members pet owners and other non-expert users.", features:[{icon:"👤",label:"Personal"}] },
-
-        { id: "PL601", imgCount: 1, cat: ["personal"], name: "PL601", desc: "Advanced personal GPS.", features:[{icon:"🔊",label:"Voice"}] },
-
-        { id: "PL200", imgCount: 1, cat: ["personal"], name: "PL200", desc: "Personal safety tracker.", features:[{icon:"🚨",label:"SOS"}] },
-
-        { id: "JC181", imgCount: 9, cat: ["dashcam"], name: "JC181", desc: "Compact 2 views in one dashcam ensuring safety, transparency.", features:[{icon:"📹",label:"HD"}] },
-
-        { id: "JC182", imgCount: 7, cat: ["dashcam"], name: "JC182", desc: "4G Mini DashCam tiny but Mighty 2K Quad HD Camera OBD Plug & Play.", features:[{icon:"📹",label:"HD+"}] },
-
-        { id: "HL365S", imgCount: 1, cat: ["personal"], name: "HL365S", desc: "Domestic security camera clear high-definition 2-megapixel 4G Video Recording.", features:[{icon:"👤",label:"HD+"}] },
-
-        { id: "JC261", imgCount: 1, cat: ["dashcam"], name: "JC261", desc: "LTE AI Dashcam.", features:[{icon:"🤖",label:"AI"}] },
-
-        { id: "JC400", imgCount: 1, cat: ["dashcam"], name: "JC400", desc: "Pro dashcam.", features:[{icon:"📡",label:"LTE"}] },
-
-        { id: "JC450", imgCount: 1, cat: ["dashcam"], name: "JC450", desc: "Multi-channel ADAS.", features:[{icon:"📹",label:"4-Ch"}] },
-
-        { id: "JC170", imgCount: 1, cat: ["dashcam"], name: "JC170", desc: "DMS AI Camera Driver-Aware Safety Elevated.", features:[{icon:"📹",label:"1080p"}] },
-
-        { id: "JC171", imgCount: 1, cat: ["dashcam"], name: "JC171", desc: "AI Camera Sharper Vision Smarter Safety.", features:[{icon:"📹",label:"HD+"}] },
-
-        { id: "CE01", imgCount: 1, imgCount: 1, cat: ["acc"], name: "CE01", desc: "Rear-view waterproof camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CE02", imgCount: 1, imgCount: 1, cat: ["acc"], name: "CE02", desc: "Side-view waterproof camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CE04", imgCount: 1, cat: ["acc"], name: "CE04", desc: "Rear-view waterproof camera with Full light.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI06F", imgCount: 1, cat: ["acc"], name: "CI06F", desc: "Cabin-View Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI05F", imgCount: 1, cat: ["acc"], name: "CI05F", desc: "Cabin-View Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI04", imgCount: 1, cat: ["acc"], name: "CI04", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI03", imgCount: 1, cat: ["acc"], name: "CI03", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI02", imgCount: 1, cat: ["acc"], name: "CI02", desc: "Cabin-View USB Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI01", imgCount: 1, cat: ["acc"], name: "CI01", desc: "Cabin-View Infrared Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CF01F", imgCount: 1, cat: ["acc"], name: "CF01F", desc: "Road-facing Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CF02F", imgCount: 1, cat: ["acc"], name: "CF02F", desc: "Road-facing Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "VL111", imgCount: 1, cat: ["motorcycle"], name: "VL111", desc: "High-IO LTE terminal.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
-
-        { id: "VL113", imgCount: 1, cat: ["motorcycle"], name: "VL113", desc: "Smart waterproof tracker.", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
-
+    const WAREHOUSE = [
+        { id: "VL103", imgCount: 1, cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS." },
+        { id: "VL106", imgCount: 1, cat: ["vehicle"], name: "VL106", desc: "LTE vehicle tracker even in weak or lost GPS areas." },
+        { id: "VL111", imgCount: 1, cat: ["vehicle", "motorcycle"], name: "VL111", desc: "Compact yet powerful Fits on motorcycles effortlessly." },
+        { id: "VL113", imgCount: 1, cat: ["vehicle", "motorcycle"], name: "VL113", desc: "LTE smart waterproof tracker." },
+        { id: "VL808", imgCount: 1, cat: ["vehicle"], name: "VL808", desc: "LTE Vehicle GNSS Terminal Fleet Control." },
+        { id: "LL701", imgCount: 2, cat: ["asset"], name: "LL701", desc: "Long-Standby Asset Tracker designed for heavy-duty vehicles." },
+        { id: "LL702", imgCount: 2, cat: ["asset"], name: "LL702", desc: "4G GPS Tracker offers ultra-long battery life rugged durability." },
+        { id: "LL303Pro", imgCount: 8, cat: ["asset"], name: "LL303Pro", desc: "4G solar Powered GPS tracker Real-Time tracking IP67." },
+        { id: "LL301", imgCount: 1, cat: ["asset"], name: "LL301", desc: "Powerful wireless tracker." },
+        { id: "PB706", imgCount: 3, cat: ["personal", "tags", "asset"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network." },
+        { id: "PB713", imgCount: 4, cat: ["personal", "tags"], name: "PB713 Asset Tag", desc: "Card-style tag harnessing a BT crowdsourcing network." },
+        { id: "PB708", imgCount: 1, cat: ["asset"], name: "PB708", desc: "Slim low-power autonomous asset tracking terminal." },
+        { id: "PB708Pro", imgCount: 1, cat: ["tags"], name: "PB708Pro Asset Tag", desc: "BT long life precise asset tagging." },
+        { id: "PB704", imgCount: 2, cat: ["tags"], name: "PB704 Asset Tag", desc: "BT Pet locator Mini GPS track." },
+        { id: "VL505", imgCount: 3, cat: ["obd"], name: "VL505", desc: "Plug & Play OBDII LTE GNSS." },
+        { id: "QBIT-M", imgCount: 1, cat: ["personal"], name: "QBIT M", desc: "Mini personal GPS optimized for user convenience." },
+        { id: "PL601", imgCount: 1, cat: ["personal"], name: "PL601", desc: "Advanced personal GPS." },
+        { id: "PL200", imgCount: 1, cat: ["personal"], name: "PL200", desc: "Personal safety tracker." },
+        { id: "JC181", imgCount: 9, cat: ["dashcam"], name: "JC181", desc: "Compact 2 views in one dashcam safety transparency." },
+        { id: "JC182", imgCount: 7, cat: ["dashcam"], name: "JC182", desc: "4G Mini DashCam tiny Mighty 2K Quad HD Camera." },
+        { id: "HL365S", imgCount: 1, cat: ["personal"], name: "HL365S", desc: "Domestic security camera clear 4G Recording." },
+        { id: "JC261", imgCount: 1, cat: ["dashcam"], name: "JC261", desc: "LTE AI Dashcam." },
+        { id: "JC400", imgCount: 1, cat: ["dashcam"], name: "JC400", desc: "Pro dashcam LTE." },
+        { id: "JC450", imgCount: 1, cat: ["dashcam"], name: "JC450", desc: "Multi-channel ADAS." },
+        { id: "JC170", imgCount: 1, cat: ["dashcam"], name: "JC170", desc: "DMS AI Camera Driver-Aware Safety." },
+        { id: "JC171", imgCount: 1, cat: ["dashcam"], name: "JC171", desc: "AI Camera Sharper Vision Smarter Safety." },
+        { id: "CE01", imgCount: 1, cat: ["acc"], name: "CE01", desc: "Rear-view waterproof camera." },
+        { id: "CE02", imgCount: 1, cat: ["acc"], name: "CE02", desc: "Side-view waterproof camera." },
+        { id: "CE04", imgCount: 1, cat: ["acc"], name: "CE04", desc: "Rear-view waterproof camera with Full light." },
+        { id: "CI06F", imgCount: 1, cat: ["acc"], name: "CI06F", desc: "Cabin-View Full AHD Camera." },
+        { id: "CI05F", imgCount: 1, cat: ["acc"], name: "CI05F", desc: "Cabin-View Full AHD Camera." },
+        { id: "CI04", imgCount: 1, cat: ["acc"], name: "CI04", desc: "Camera accessory." },
+        { id: "CI03", imgCount: 1, cat: ["acc"], name: "CI03", desc: "Camera accessory." },
+        { id: "CI02", imgCount: 1, cat: ["acc"], name: "CI02", desc: "Cabin-View USB Camera." },
+        { id: "CI01", imgCount: 1, cat: ["acc"], name: "CI01", desc: "Cabin-View Infrared Camera." },
+        { id: "CF01F", imgCount: 1, cat: ["acc"], name: "CF01F", desc: "Road-facing Full AHD Camera." },
+        { id: "CF02F", imgCount: 1, cat: ["acc"], name: "CF02F", desc: "Road-facing Full AHD Camera." }
     ];
 
     function nav(id) {
@@ -240,16 +191,16 @@
 
     function renderCatalog(filter) {
         const grid = document.getElementById('product-grid');
-        const items = filter === 'all' ? WAREHOUSE : WAREHOUSE.filter(i => i.cat === filter);
+        const items = filter === 'all' ? WAREHOUSE : WAREHOUSE.filter(i => i.cat.includes(filter));
         document.getElementById('list-title').innerText = filter.toUpperCase() + " DEVICES";
         grid.innerHTML = items.map(i => `
             <div class="card">
-                <img src="IMAGES/${i.id}.png" onerror="this.src='IMAGES/coming-soon.png'">
+                <img src="IMAGES/${i.id}_1.png" onerror="this.src='IMAGES/coming-soon.png'">
                 <h3 style="margin:10px 0;">${i.name}</h3>
                 <p style="font-size:0.8rem; color:#64748b; flex-grow:1;">${i.desc}</p>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px;">
                     <a href="DOCS/SPECS/${i.id}.pdf" target="_blank" class="specs-btn">SPECS</a>
-                    <button class="btn-v btn-blue" onclick="openForm('Inquiry: ${i.id}')">DEVICE INQUIRY</button>
+                    <button class="btn-v btn-blue" onclick="openForm('Inquiry: ${i.id}')">INQUIRY</button>
                 </div>
             </div>
         `).join('');
@@ -260,6 +211,30 @@
         document.getElementById('f-subject').value = "Web Portal: " + subject;
         nav('contact');
     }
+
+    async function handleForm(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+
+        try {
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: json
+            });
+            if (response.status === 200) {
+                document.getElementById('successModal').style.display = 'flex';
+                form.reset();
+            }
+        } catch (error) {
+            alert("Submission failed. Check connection.");
+        }
+    }
+
+    function closeModal() { document.getElementById('successModal').style.display = 'none'; }
 
     function updateLang(l) {
         const t = TXT[l];
@@ -274,7 +249,7 @@
 
     window.onload = () => {
         updateLang('en');
-        const countries = ["France", "Italy", "Spain", "Germany", "United Kingdom", "United States", "Canada"];
+        const countries = ["France", "Italy", "Spain", "Germany", "United Kingdom", "USA", "Canada"];
         document.getElementById('f-country').innerHTML += countries.map(c => `<option value="${c}">${c}</option>`).join('');
         setInterval(() => {
             const d = new Date();
