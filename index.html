@@ -3,128 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoTrackPro | Enterprise Intelligence</title>
+    <title>GeoTrackPro | Vanguard Enterprise</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 80px; --led: #22c55e; }
+        :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --header-h: 85px; --led: #22c55e; }
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.2s ease; }
-        body { margin: 0; background: #fff; color: var(--navy); padding-bottom: 60px; }
+        body { margin: 0; background: #fff; color: var(--navy); padding-bottom: 60px; overflow-x: hidden; }
         
         header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2%; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .nav-cluster { display: flex; align-items: center; gap: 6px; }
-        .logo { font-weight: 900; font-size: 1.4rem; color: var(--accent); cursor: pointer; text-decoration: none; margin-right: 10px; }
+        .logo { font-weight: 900; font-size: 1.4rem; color: var(--accent); cursor: pointer; margin-right: 10px; text-decoration: none; }
         
         .btn-v { background: var(--navy); color: white; border: none; padding: 10px 12px; border-radius: 6px; font-weight: 800; font-size: 0.65rem; cursor: pointer; text-transform: uppercase; white-space: nowrap; }
         .btn-blue { background: var(--accent); }
         .btn-green { background: #10b981; }
 
-        .dropdown { position: relative; display: inline-block; }
-        .drop-menu { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 0 0 8px 8px; top: 100%; left: 0; border: 1px solid #eee; }
-        .dropdown:hover .drop-menu { display: block; }
-        .drop-menu button { width: 100%; padding: 12px 20px; border: none; background: none; text-align: left; cursor: pointer; font-weight: 600; font-size: 0.75rem; border-bottom: 1px solid #f8fafc; }
-
         .view { display: none; padding-top: var(--header-h); min-height: 100vh; }
         .view.active { display: block; }
+
+        /* HERO */
+        .hero { height: 85vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: linear-gradient(rgba(10,15,29,0.3), rgba(10,15,29,0.3)), url('bg-hero.jpeg') center/cover; color: white; }
         
-        .hero { height: 85vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: linear-gradient(rgba(10,15,29,0.4), rgba(10,15,29,0.4)), url('bg-hero.jpeg') center/cover; color: white; }
+        /* CATALOG */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 30px 5%; }
+        .card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; position: relative; }
+        .card img { max-width: 100%; height: 160px; object-fit: contain; background: #f8fafc; border-radius: 8px; margin-bottom: 15px; }
+
+        /* CONTACT FORM */
+        .form-container { background: white; border: 1px solid #e2e8f0; padding: 40px; border-radius: 20px; }
+        .form-container input, .form-container select, .form-container textarea { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 30px 5%; }
-        .card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; }
-        .card img { width: 100%; height: 160px; object-fit: contain; margin-bottom: 15px; }
+        /* MODAL */
+        #feedbackModal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.98); z-index:20000; align-items:center; justify-content:center; text-align:center; }
+        .check-box { width: 80px; height: 80px; border: 4px solid #22c55e; color: #22c55e; font-size: 3rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-weight: 800; }
 
         footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 3%; font-size: 0.65rem; z-index: 10000; }
-        .led-dot { width: 8px; height: 8px; background: var(--led); border-radius: 50%; display: inline-block; margin: 0 5px; box-shadow: 0 0 8px var(--led); }
-        .foot-link { color: white; text-decoration: none; margin-left: 15px; cursor: pointer; font-weight: 800; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="nav-cluster">
-        <div class="logo" onclick="nav('home')">GeoTrackPro®</div>
-        <div class="dropdown">
-            <button class="btn-v" id="nav-comp">COMPANY ▾</button>
-            <div class="drop-menu">
-                <button onclick="nav('about')" id="btn-ab-nav">About Us</button>
-                <button onclick="nav('partners')">Partners</button>
-            </div>
-        </div>
+        <a href="#" onclick="nav('home')" class="logo">GeoTrackPro®</a>
+        <button onclick="nav('about')" class="btn-v" id="nav-comp">COMPANY ▾</button>
         <button onclick="nav('home')" class="btn-v" id="nav-home">HOME</button>
     </div>
-
     <div class="nav-cluster">
-        <div class="dropdown">
-            <button class="btn-v btn-blue" id="nav-prod">PRODUCTS ▾</button>
-            <div class="drop-menu" id="prod-drop"></div>
-        </div>
-        <button onclick="nav('contact')" class="btn-v" id="nav-sales">SALES QUERY</button>
-        <button onclick="nav('contact')" class="btn-v" id="nav-demo">DEMO</button>
-        <button class="btn-v btn-green">PLATFORM</button>
-        <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:4px; height:32px; font-weight:800; border:none; cursor:pointer;">
-            <option value="en">EN</option>
-            <option value="it">IT</option>
-            <option value="fr">FR</option>
-            <option value="es">ES</option>
+        <button onclick="nav('catalog')" class="btn-v btn-blue" id="nav-exp">EXPLORE CATALOG</button>
+        <button onclick="openContact('Sales Query')" class="btn-v" id="nav-sales">SALES QUERY</button>
+        <button onclick="openContact('Demo Request')" class="btn-v" id="nav-demo">DEMO</button>
+        <button class="btn-v btn-green" id="nav-plat">PLATFORM</button>
+        <select id="langSelect" onchange="updateLang(this.value)" style="border:none; font-weight:800; cursor:pointer;">
+            <option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option>
         </select>
     </div>
 </header>
 
 <div id="home" class="view active">
-    <div class="hero">
-        <h1 id="h-title" style="font-size:3.5rem; margin:0; font-weight:800;">THE GENESIS OF PRECISION</h1>
-        <button onclick="nav('list-view')" class="btn-v btn-blue" style="margin-top:30px; padding:18px 50px; font-size:0.9rem;" id="h-btn">EXPLORE HARDWARE</button>
-    </div>
+    <div class="hero"><h1 id="h-title" style="font-size:3.5rem; font-weight:800;">THE GENESIS OF PRECISION</h1></div>
 </div>
 
-<div id="about" class="view">
-    <div style="padding:60px 10%; max-width:1100px;">
-        <h2 id="ab-t" style="font-size:2.8rem; font-weight:800;">About us</h2>
-        <p id="ab-p1" style="line-height:2; color:#334155; font-size:1.15rem; margin-bottom:20px;">
-            Every great journey begins with a single step. For us, it began many years ago with one simple idea: what if fleet management and assets protection could be made easier, smarter, and more meaningful? 
-        </p>
-        <p id="ab-p2" style="line-height:2; color:#334155; font-size:1.15rem;">
-            What started as a spark of innovation now powers fleets, safeguards assets, and connects people around the world. Powered by the technical lineage of the Jimi Group, GeoTrackPro was founded to solve a single problem: making asset visibility a constant.
-        </p>
+<div id="catalog" class="view">
+    <div style="padding:20px 5%; display:flex; justify-content:space-between; align-items:center;">
+        <h2 id="cat-title">ALL DEVICES</h2>
+        <button onclick="nav('home')" class="btn-v" style="background:#64748b;">← BACK</button>
     </div>
-</div>
-
-<div id="list-view" class="view">
-    <div style="padding:20px 5%; background:#f8fafc; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-        <h2 id="list-title" style="margin:0; font-weight:800; text-transform:uppercase;">ALL DEVICES</h2>
-        <button onclick="nav('home')" class="btn-v">← BACK</button>
-    </div>
-    <div class="grid" id="product-grid"></div>
+    <div class="grid" id="cat-grid"></div>
 </div>
 
 <div id="contact" class="view">
     <div style="padding:60px 5%; display:grid; grid-template-columns: 1fr 1fr; gap:40px;">
-        <div style="background:white; border:1px solid #e2e8f0; padding:40px; border-radius:20px;">
-            <h2 id="c-title" style="margin-top:0; font-weight:800;">CONTACT US</h2>
-            <input type="text" id="f-name" style="width:100%; padding:14px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
-            <input type="text" id="f-comp" style="width:100%; padding:14px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
-            <input type="email" id="f-email" style="width:100%; padding:14px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
-            <textarea id="f-msg" rows="5" style="width:100%; padding:14px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;"></textarea>
-            <button class="btn-v btn-blue" style="width:100%; padding:18px;" id="f-btn">SEND INQUIRY</button>
+        <div class="form-container">
+            <h2 id="f-title">CONTACT US</h2>
+            <form id="mainForm" onsubmit="handleInquiry(event)">
+                <input type="text" id="f-name" required placeholder="Full Name *">
+                <input type="text" id="f-comp" required placeholder="Company Name *">
+                <input type="email" id="f-email" required placeholder="Business Email *">
+                <input type="tel" id="f-phone" required placeholder="Phone Number *">
+                <select id="f-country" required><option value="" id="f-c-opt">Select Country *</option></select>
+                <textarea id="f-msg" rows="4" required placeholder="How can we help? *"></textarea>
+                <button type="submit" class="btn-v btn-blue" style="width:100%; padding:18px;" id="f-btn">SEND INQUIRY</button>
+            </form>
         </div>
         <div style="border-radius:20px; overflow:hidden; border:1px solid #e2e8f0;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.018299107066!2d113.9262243!3d22.5332506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDMxJzU5LjciTiAxMTPCsDU1JzM0LjQiRQ!5e0!3m2!1sen!2shk!4v1620000000000!5m2!1sen!2shk" width="100%" height="100%" style="border:0;" allowfullscreen=""></iframe>
+            <iframe src="http://googleusercontent.com/maps.google.com/9" width="100%" height="100%" style="border:0;" allowfullscreen></iframe>
         </div>
     </div>
 </div>
 
-<div id="terms" class="view"><div style="padding:60px 10%;"><h2>Terms of Service</h2><p>Enterprise Legal Content v22.8</p></div></div>
-<div id="privacy" class="view"><div style="padding:60px 10%;"><h2>Privacy Policy</h2><p>Data Protection Protocols.</p></div></div>
+<div id="feedbackModal">
+    <div>
+        <div class="check-box">✓</div>
+        <h2 id="m-sent">Message Sent</h2>
+        <p id="m-text">A Vanguard specialist will review your request shortly.</p>
+        <button class="btn-v" style="background:#64748b; padding:12px 30px;" onclick="closeModal()" id="m-btn">SEND ANOTHER</button>
+    </div>
+</div>
 
 <footer>
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span> | v22.8.0</div>
-    <div style="display:flex;">
-        <span class="foot-link" onclick="nav('terms')">TERMS</span>
-        <span class="foot-link" onclick="nav('privacy')">PRIVACY</span>
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span> | v23.1.0</div>
+    <div class="nav-cluster">
+        <a href="terms.pdf" target="_blank" style="color:white; text-decoration:none; margin-right:20px;">TERMS</a>
+        <a href="privacy.pdf" target="_blank" style="color:white; text-decoration:none;">PRIVACY</a>
     </div>
 </footer>
 
 <script>
-    const CATS = ['Vehicle','Asset','Dashcam','OBD','Personal','Tags','Motorcycle','Accessories'];
         const WAREHOUSE = [
 
         { id: "VL103", imgCount: 1, cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
@@ -214,31 +198,42 @@
     ];
 
     const TXT = {
-        en: { h:"THE GENESIS OF PRECISION", comp:"COMPANY ▾", home:"HOME", prod:"PRODUCTS ▾", sales:"SALES QUERY", ct:"CONTACT", f_n:"Full Name*", f_c:"Company*", f_e:"Email*", f_m:"Message*", f_b:"SEND INQUIRY", ab_t:"About Us", c_t:"CONTACT US" },
-        it: { h:"LA GENESI DELLA PRECISIONE", comp:"AZIENDA ▾", home:"HOME", prod:"PRODOTTI ▾", sales:"VENDITE", ct:"CONTATTI", f_n:"Nome*", f_c:"Azienda*", f_e:"Email*", f_m:"Messaggio*", f_b:"INVIA", ab_t:"Chi Siamo", c_t:"CONTATTACI" },
-        fr: { h:"LA GENÈSE DE LA PRÉCISION", comp:"ENTREPRISE ▾", home:"ACCUEIL", prod:"PRODUITS ▾", sales:"VENTES", ct:"CONTACT", f_n:"Nom*", f_c:"Société*", f_e:"E-mail*", f_m:"Message*", f_b:"ENVOYER", ab_t:"À Propos", c_t:"CONTACTEZ-NOUS" },
-        es: { h:"LA GÉNESIS DE LA PRECISIÓN", comp:"EMPRESA ▾", home:"INICIO", prod:"PRODUCTOS ▾", sales:"VENTAS", ct:"CONTACTO", f_n:"Nombre*", f_c:"Empresa*", f_e:"Correo*", f_m:"Mensaje*", f_b:"ENVIAR", ab_t:"Nosotros", c_t:"CONTACTO" }
+        en: { h:"THE GENESIS OF PRECISION", comp:"COMPANY ▾", home:"HOME", exp:"EXPLORE CATALOG", sales:"SALES QUERY", demo:"DEMO", plat:"PLATFORM", f_t:"CONTACT US", f_n:"Full Name *", f_c:"Company Name *", f_e:"Business Email *", f_p:"Phone Number *", f_co:"Select Country *", f_h:"How can we help? *", f_b:"SEND INQUIRY", m_s:"Message Sent", m_txt:"A Vanguard specialist will review your request shortly.", m_b:"SEND ANOTHER" },
+        fr: { h:"LA GENÈSE DE LA PRÉCISION", comp:"ENTREPRISE ▾", home:"ACCUEIL", exp:"EXPLORER LE CATALOGUE", sales:"VENTES", demo:"DÉMO", plat:"PLATEFORME", f_t:"CONTACTEZ-NOUS", f_n:"Nom Complet *", f_c:"Nom de l'entreprise *", f_e:"Email Professionnel *", f_p:"Téléphone *", f_co:"Choisir le Pays *", f_h:"Comment aider? *", f_b:"ENVOYER", m_s:"Message Envoyé", m_txt:"Un spécialiste Vanguard examinera votre demande.", m_b:"ENVOYER UN AUTRE" },
+        it: { h:"LA GENESI DELLA PRECISIONE", comp:"AZIENDA ▾", home:"HOME", exp:"ESPLORA CATALOGO", sales:"VENDITE", demo:"DEMO", plat:"PIATTAFORMA", f_t:"CONTATTACI", f_n:"Nome Completo *", f_c:"Nome Azienda *", f_e:"Email Aziendale *", f_p:"Telefono *", f_co:"Seleziona Paese *", f_h:"Come possiamo aiutare? *", f_b:"INVIA RICHIESTA", m_s:"Messaggio Inviato", m_txt:"Un esperto Vanguard ti contatterà presto.", m_b:"INVIANE UN ALTRO" },
+        es: { h:"LA GÉNESIS DE LA PRECISIÓN", comp:"EMPRESA ▾", home:"INICIO", exp:"EXPLORAR CATÁLOGO", sales:"VENTAS", demo:"DEMO", plat:"PLATAFORMA", f_t:"CONTÁCTENOS", f_n:"Nombre Completo *", f_c:"Nombre Empresa *", f_e:"Email de Empresa *", f_p:"Teléfono *", f_co:"Seleccionar País *", f_h:"¿Cómo podemos ayudar? *", f_b:"ENVIAR SOLICITUD", m_s:"Mensaje Enviado", m_txt:"Un especialista de Vanguard revisará su solicitud.", m_b:"ENVIAR OTRO" }
     };
 
     function nav(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        const target = document.getElementById(id);
-        if(target) target.classList.add('active');
-        window.scrollTo(0,0);
+        document.getElementById(id).classList.add('active');
+        if(id === 'catalog') renderCatalog();
     }
 
-    function renderList(cat) {
-        nav('list-view');
-        const items = cat === 'all' ? WAREHOUSE : WAREHOUSE.filter(i => i.cat === cat);
-        document.getElementById('list-title').innerText = cat;
-        document.getElementById('product-grid').innerHTML = items.map(i => `
+    function renderCatalog() {
+        document.getElementById('cat-grid').innerHTML = WAREHOUSE.map(i => `
             <div class="card">
-                <img src="IMAGES/${i.id}.png" onerror="this.src='IMAGES/coming-soon.png'">
+                <img src="IMAGES/${i.id}_1.png" onerror="this.src='IMAGES/ui/coming-soon.png'">
                 <h3>${i.name}</h3>
-                <div style="font-size:0.75rem; color:var(--accent); font-weight:800;">${i.feat}</div>
-                <button class="btn-v btn-blue" onclick="nav('contact')" style="margin-top:20px;">INQUIRY</button>
+                <p style="font-size:0.75rem;">${i.desc}</p>
+                <button class="btn-v btn-blue" onclick="openContact('Inquiry: ${i.id}')" style="margin-top:auto;">INQUIRY</button>
             </div>
         `).join('');
+    }
+
+    function openContact(subject) {
+        currentSubject = subject;
+        nav('contact');
+    }
+
+    function handleInquiry(e) {
+        e.preventDefault();
+        document.getElementById('feedbackModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('feedbackModal').style.display = 'none';
+        document.getElementById('mainForm').reset();
     }
 
     function updateLang(l) {
@@ -246,23 +241,26 @@
         document.getElementById('h-title').innerText = t.h;
         document.getElementById('nav-comp').innerText = t.comp;
         document.getElementById('nav-home').innerText = t.home;
-        document.getElementById('nav-prod').innerText = t.prod;
+        document.getElementById('nav-exp').innerText = t.exp;
         document.getElementById('nav-sales').innerText = t.sales;
-        document.getElementById('ab-t').innerText = t.ab_t;
-        document.getElementById('c-title').innerText = t.c_t;
+        document.getElementById('nav-demo').innerText = t.demo;
+        document.getElementById('nav-plat').innerText = t.plat;
+        document.getElementById('f-title').innerText = t.f_t;
         document.getElementById('f-name').placeholder = t.f_n;
         document.getElementById('f-comp').placeholder = t.f_c;
         document.getElementById('f-email').placeholder = t.f_e;
-        document.getElementById('f-msg').placeholder = t.f_m;
+        document.getElementById('f-phone').placeholder = t.f_p;
+        document.getElementById('f-c-opt').innerText = t.f_co;
+        document.getElementById('f-msg').placeholder = t.f_h;
         document.getElementById('f-btn').innerText = t.f_b;
-        
-        document.getElementById('prod-drop').innerHTML = `<button onclick="renderList('all')">VIEW ALL</button>` + 
-            CATS.map(c => `<button onclick="renderList('${c}')">${c}</button>`).join('');
+        document.getElementById('m-sent').innerText = t.m_s;
+        document.getElementById('m-text').innerText = t.m_txt;
+        document.getElementById('m-btn').innerText = t.m_b;
     }
 
     window.onload = () => {
         updateLang('en');
-        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
     };
 </script>
 </body>
