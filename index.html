@@ -1,729 +1,1175 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>GeoTrackPro | Vanguard Enterprise v22.1.4</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-
     <style>
-
         :root { --gold: #e8ddc7; --accent: #3E63DD; --navy: #0a0f1d; --whatsapp: #25D366; --header-h: 75px; }
-
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.2s ease; }
-
         body { margin: 0; background: #f8fafc; color: var(--navy); padding-bottom: 60px; overflow-x: hidden; }
-
         
-
-        /* HEADER & NAVIGATION */
-
         header { background: var(--gold); height: var(--header-h); position: fixed; top: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-
         .nav-group { display: flex; align-items: center; gap: 12px; }
-
         .btn-v { background: var(--accent); color: white!important; padding: 10px 18px; border-radius: 50px; font-weight: 800; font-size: 0.65rem; border: none; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
-
         .btn-v:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
-
-
-        /* DROPDOWNS */
-
         .dropdown { position: relative; display: inline-block; }
-
-        .drop-content { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 12px; top: 100%; left: 0; overflow: hidden; padding: 5px 0; border: 1px solid #e2e8f0; }
-
+        .drop-content { display: none; position: absolute; background: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 12px; top: 100%; left: 0; overflow: hidden; padding: 5px 0; border: 1px solid #e2e8f0; z-index: 1000; }
         .dropdown:hover .drop-content { display: block; }
-
         .drop-content button { width: 100%; padding: 12px 20px; border: none; background: none; text-align: left; cursor: pointer; font-weight: 600; font-size: 0.75rem; color: var(--navy); border-bottom: 1px solid #f1f5f9; }
-
         .drop-content button:hover { background: #f8fafc; color: var(--accent); }
 
-
-
-        /* VIEWS & LAYOUT */
-
         .view { display: none; padding: calc(var(--header-h) + 40px) 5%; min-height: 100vh; }
-
         .view.active { display: block; }
-
-        .hero { background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)), url('IMAGES/ui/hero-bg.jpg') center/cover no-repeat; height: 75vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
-
         
+        .hero { position: relative; height: 45vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; overflow: hidden; }
+        .hero-bg-carousel { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.5s ease-in-out; }
+        .hero-slide.active { opacity: 1; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(10,15,29,0.7), rgba(10,15,29,0.7)); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; padding: 0 20px; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; margin: 0; }
+        .hero-dots { display: flex; gap: 10px; margin-top: 40px; justify-content: center; position: relative; z-index: 3; }
+        .hero-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: all 0.3s; }
+        .hero-dot.active { background: white; transform: scale(1.2); }
 
-        /* PRODUCT CARDS & CAROUSEL */
+        .featured-strip { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 50px 5%; border-top: 4px solid var(--gold); position: relative; }
+        .featured-header { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto 30px; }
+        .featured-header h2 { font-size: 1.8rem; font-weight: 800; color: var(--navy); margin: 0; position: relative; padding-bottom: 10px; }
+        .featured-header h2::after { content: ''; position: absolute; bottom: 0; left: 0; width: 60px; height: 4px; background: var(--accent); border-radius: 2px; }
+        .featured-nav { display: flex; gap: 10px; }
+        .featured-arrow { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--accent); background: white; color: var(--accent); font-size: 1.2rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .featured-arrow:hover { background: var(--accent); color: white; transform: scale(1.1); }
+        .featured-carousel { display: flex; gap: 25px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; padding: 20px 0; max-width: 1400px; margin: 0 auto; }
+        .featured-carousel::-webkit-scrollbar { display: none; }
+        .featured-item { flex: 0 0 260px; background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .featured-item:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.12); border-color: var(--gold); }
+        .featured-item::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent); transform: scaleX(0); transition: transform 0.3s; }
+        .featured-item:hover::before { transform: scaleX(1); }
+        .featured-img { width: 100%; height: 160px; object-fit: contain; margin-bottom: 15px; background: #f8fafc; border-radius: 12px; padding: 10px; }
+        .featured-cat { display: inline-block; background: var(--gold); color: var(--navy); padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .featured-name { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+        .featured-desc { font-size: 0.8rem; color: #64748b; line-height: 1.4; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 45px; }
+        .featured-btn { width: 100%; padding: 10px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 0.7rem; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
+        .featured-btn:hover { background: #2c4fc7; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(62, 99, 221, 0.3); }
+        .featured-dots { display: flex; justify-content: center; gap: 8px; margin-top: 25px; }
+        .featured-dot { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: all 0.3s; }
+        .featured-dot.active { background: var(--accent); width: 30px; border-radius: 5px; }
 
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 450px)); gap: 25px; margin-top: 30px; justify-content: center; }
-
         .card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; padding: 25px; display: flex; gap: 20px; height: 320px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-
-        
-
         .card-img { flex: 0 0 150px; background: #fcfcfc; border-radius: 15px; border: 1px solid #f1f5f9; position: relative; overflow: hidden; cursor: zoom-in; }
-
         .img-stack { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; padding: 10px; opacity: 0; transition: opacity 0.6s ease-in-out; }
-
         .img-stack.active { opacity: 1; }
-
-
-
         .pips { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 10; }
-
         .pip { width: 6px; height: 6px; background: rgba(0,0,0,0.15); border-radius: 50%; transition: all 0.3s ease; }
-
         .pip.active { background: var(--accent); width: 14px; border-radius: 4px; }
-
-
-
         .card-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-
         .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
-
         .f-tag { font-size: 0.6rem; font-weight: 800; color: #475569; display: flex; align-items: center; gap: 4px; }
-
         .f-icon { background: #f1f5f9; padding: 3px; border-radius: 4px; width: 20px; text-align: center; }
 
-
-
-        /* CONTACT FORM */
-
         .contact-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 40px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 1100px; margin: 0 auto; }
-
         input, textarea, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 12px; font-size: 0.9rem; background: white; }
 
-
-
-        /* FOOTER */
-
         footer { background: var(--navy); color: white; height: 60px; position: fixed; bottom: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; font-size: 0.65rem; z-index: 10000; }
-
         .led-dot { height: 8px; width: 8px; background: #00FF00; border-radius: 50%; box-shadow: 0 0 8px #00FF00; display: inline-block; margin-left: 5px; }
-
         footer a { color: white; text-decoration: none; font-weight: 800; }
 
+        @media (max-width: 768px) {
+            .hero { height: 60vh; }
+            .hero h1 { font-size: 2.5rem; }
+            .featured-item { flex: 0 0 220px; }
+            .featured-header h2 { font-size: 1.4rem; }
+            .product-grid { grid-template-columns: 1fr; }
+            .card { flex-direction: column; height: auto; }
+            .card-img { width: 100%; height: 200px; flex: none; }
+            .contact-stack { grid-template-columns: 1fr; }
+        }
     </style>
-
 </head>
-
 <body>
 
-
-
 <header>
-
     <div class="nav-group">
-
         <img src="IMAGES/ui/logo.png" height="30" onclick="nav('home')" style="cursor:pointer" alt="Logo" onerror="this.outerHTML='<b>GEOTRACKPRO</b>'">
-
         <div class="dropdown">
-
-            <button class="btn-v" style="background:#475569;">Company ▾</button>
-
+            <button class="btn-v" style="background:#475569;" id="btn-company">Company ▾</button>
             <div class="drop-content">
-
-                <button onclick="nav('about-us')">About Us</button>
-
-                <button onclick="nav('partners')">Partners</button>
-
+                <button onclick="nav('about-us')" id="menu-about">About Us</button>
+                <button onclick="nav('partners')" id="menu-partners">Partners</button>
             </div>
-
         </div>
-
-        <button onclick="nav('home')" class="btn-v" style="background:#1e293b;">Home</button>
-
+        <button onclick="nav('home')" class="btn-v" style="background:#3DAD64;" id="btn-home">Home</button>
+        <button onclick="openForm('SALES CONSULTATION')" class="btn-v" style="background:#4D6BC9;padding:10px 10px;" id="btn-sales">Sales Consultation</button>
+        <button onclick="nav('prod-menu')" class="btn-v" style="padding:10px 10px;" id="btn-explore">Explore Catalog</button>
     </div>
-
     <div class="nav-group">
-
         <div class="dropdown">
-
             <button class="btn-v" id="nav-prod">PRODUCTS ▾</button>
-
             <div class="drop-content">
-
-                <button onclick="renderList('all')" style="color:var(--accent); font-weight:800;">View All</button>
-
-                <button onclick="renderList('vehicle')">Vehicle</button>
-
-                <button onclick="renderList('asset')">Asset</button>
-
-                <button onclick="renderList('dashcam')">Dashcam</button>
-
-                <button onclick="renderList('obd')">OBD</button>
-
-                <button onclick="renderList('personal')">Personal</button>
-
-                <button onclick="renderList('tags')">Tags</button>
-
-                <button onclick="renderList('motorcycle')">Motorcycle</button>
-
-                <button onclick="renderList('acc')">Accessories</button>
-
+                <button onclick="renderList('all')" style="color:var(--accent); font-weight:800;" id="menu-viewall">View All</button>
+                <button onclick="renderList('vehicle')" id="menu-vehicle">Vehicle</button>
+                <button onclick="renderList('asset')" id="menu-asset">Asset</button>
+                <button onclick="renderList('dashcam')" id="menu-dashcam">Dashcam</button>
+                <button onclick="renderList('obd')" id="menu-obd">OBD</button>
+                <button onclick="renderList('personal')" id="menu-personal">Personal</button>
+                <button onclick="renderList('tags')" id="menu-tags">Tags</button>
+                <button onclick="renderList('motorcycle')" id="menu-motorcycle">Motorcycle</button>
+                <button onclick="renderList('acc')" id="menu-acc">Accessories</button>
             </div>
-
         </div>
-
-        <button onclick="openForm('CONTACT US')" class="btn-v">Contact</button>
-
-        <button onclick="openForm('DEMO REQUEST')" class="btn-v" style="background:#6366f1;">Demo Request</button>
-
-        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" style="background:#059669;">PLATFORM</button>
-
-       <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:50px; font-weight:800; font-size:0.65rem; padding: 0 10px; background: var(--accent); color: white; border: none; width: auto; cursor:pointer; height: 30px; margin-bottom: 4px; outline: none; text-align: center; vertical-align: middle;">
-
-            <option value="en">EN</option><option value="it">IT</option><option value="es">ES</option><option value="fr">FR</option>
-
+        <button onclick="openForm('CONTACT US')" class="btn-v" id="btn-contact">Contact</button>
+        <button onclick="openForm('DEMO REQUEST')" class="btn-v" style="background:#4D6BC9;" id="btn-demo">Demo Request</button>
+        <button onclick="window.open('https://tracksolidpro.com')" class="btn-v" style="background:#4D6BC9;" id="btn-platform">PLATFORM</button>
+        <select id="langSelect" onchange="updateLang(this.value)" style="border-radius:50px; font-weight:800; font-size:0.65rem; padding: 0 10px; background: var(--accent); color: white; border: none; width: auto; cursor:pointer; height: 30px; margin-bottom: 4px; outline: none; text-align: center; vertical-align: middle;">
+            <option value="en">EN</option>
+            <option value="it">IT</option>
+            <option value="es">ES</option>
+            <option value="fr">FR</option>
         </select>
-
     </div>
-
 </header>
 
-
-
 <div id="home" class="view active" style="padding:0;">
-
     <section class="hero">
-
-        <h1 id="h-title" style="font-size: 3.5rem; font-weight: 800; margin:0;">VANGUARD GLOBAL</h1>
-
-        <div style="display:flex; gap:15px; margin-top:20px;">
-
-            <button onclick="nav('prod-menu')" class="btn-v" style="padding:15px 40px;">Explore Catalog</button>
-
-            <button onclick="openForm('SALES CONSULTATION')" class="btn-v" style="background:white; color:black!important; padding:15px 40px;">Sales Consultation</button>
-
+        <div class="hero-bg-carousel">
+            <div class="hero-slide active" style="background-image: url('IMAGES/ui/hero-bg.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('IMAGES/hero/slide1.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('IMAGES/hero/slide2.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('IMAGES/hero/slide3.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('IMAGES/hero/slide4.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('IMAGES/hero/slide5.jpg');"></div>
         </div>
-
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 id="h-title">VANGUARD GLOBAL</h1>
+            <p style="margin:20px 0; font-size:1.2rem;" id="hero-subtitle">Advanced GPS Tracking Solutions for Enterprise Asset Management</p>
+            <div class="hero-dots">
+                <span class="hero-dot active" onclick="goToHeroSlide(0)"></span>
+                <span class="hero-dot" onclick="goToHeroSlide(1)"></span>
+                <span class="hero-dot" onclick="goToHeroSlide(2)"></span>
+                <span class="hero-dot" onclick="goToHeroSlide(3)"></span>
+                <span class="hero-dot" onclick="goToHeroSlide(4)"></span>
+                <span class="hero-dot" onclick="goToHeroSlide(5)"></span>
+            </div>
+        </div>
     </section>
 
+    <section class="featured-strip">
+        <div class="featured-header">
+            <h2 id="featured-title">Featured Devices</h2>
+            <div class="featured-nav">
+                <button class="featured-arrow" onclick="scrollFeatured('left')">‹</button>
+                <button class="featured-arrow" onclick="scrollFeatured('right')">›</button>
+            </div>
+        </div>
+        <div class="featured-carousel" id="featured-container"></div>
+        <div class="featured-dots" id="featured-dots"></div>
+    </section>
 </div>
-
-
 
 <div id="about-us" class="view">
-
     <div style="max-width: 1000px; margin: 0 auto;">
-
         <h2 id="ab-title" style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 30px;">THE VANGUARD STANDARD</h2>
-
         <p id="ab-subtitle" style="font-weight:800; color:var(--accent); font-size: 1.1rem;"></p>
-
         <p id="ab-p1"></p>
-
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;">
-
             <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
-
                 <h3 id="ab-m-title" style="margin-top:0; color: var(--accent);">Our Mission</h3>
-
                 <p id="ab-m-p" style="font-size: 0.9rem; margin-bottom:0;"></p>
-
             </div>
-
             <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
-
                 <h3 id="ab-g-title" style="margin-top:0; color: var(--accent);">Global Reach</h3>
-
                 <p id="ab-g-p" style="font-size: 0.9rem; margin-bottom:0;"></p>
-
             </div>
-
             <div style="background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
-
                 <h3 id="ab-s-title" style="margin-top:0; color: var(--accent);">Adaptive Security</h3>
-
                 <p id="ab-s-p" style="font-size: 0.9rem; margin-bottom:0;"></p>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
-
-
 
 <div id="partners" class="view">
-
     <div style="max-width: 1000px; margin: 0 auto;">
-
-        <h2 style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 30px;">GLOBAL PARTNERS</h2>
-
-        <p>Ecosystem of excellence in hardware and software telemetry integration.</p>
-
-        <div style="background:white; padding:40px; border-radius:24px; border:1px solid #e2e8f0; margin-top:20px;">
-
+        <h2 id="partners-title" style="font-size: 2.5rem; font-weight: 800; border-bottom: 4px solid var(--accent); display: inline-block; margin-bottom: 30px;">GLOBAL PARTNERS</h2>
+        <p id="partners-desc">Ecosystem of excellence in hardware and software telemetry integration.</p>
+        <div style="background:white; padding:40px; border-radius:24px; border:1px solid #e2e8f0; margin-top:20px;" id="partners-sync">
             Partner directory is currently being synchronized.
-
         </div>
-
     </div>
-
 </div>
-
-
 
 <div id="prod-menu" class="view"><div class="product-grid" id="cat-anchor"></div></div>
-
-<div id="list-view" class="view"><button onclick="nav('prod-menu')" class="btn-v" style="background:#64748b; margin-bottom:20px;">← Back</button><div class="product-grid" id="gridAnchor"></div></div>
-
-
+<div id="list-view" class="view"><button onclick="nav('prod-menu')" class="btn-v" style="background:#64748b; margin-bottom:20px;" id="btn-back">← Back</button><div class="product-grid" id="gridAnchor"></div></div>
 
 <div id="contact" class="view">
-
     <div class="contact-stack">
-
         <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-
             <input type="hidden" name="access_key" value="8c8df878-746f-4fd6-9847-7c1edff3622c">
-
             <h2 id="f-title">CONTACT</h2>
-
             <div id="form-content">
-
                 <input type="text" name="name" id="in-name" placeholder="Full Name *" required>
-
                 <input type="text" name="company" id="in-comp" placeholder="Company Name *" required>
-
                 <input type="email" name="email" id="in-email" placeholder="Business Email *" required>
-
                 <input type="tel" name="phone" id="in-tel" placeholder="Phone Number *" required>
-
                 <select name="country" id="in-country" required>
-
                     <option value="" disabled selected id="opt-country">Select Country *</option>
-
-                    <option value="Italy">Italy</option><option value="Spain">Spain</option><option value="France">France</option><option value="United Kingdom">United Kingdom</option><option value="USA">USA</option><option value="Other">Other</option>
-
+                    <option value="Italy">Italy</option>
+                    <option value="Spain">Spain</option>
+                    <option value="France">France</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="USA">USA</option>
+                    <option value="Other">Other</option>
                 </select>
-
                 <input type="hidden" name="subject" id="email-subject" value="New Website Submission">
-
                 <textarea name="message" id="in-msg" rows="4" placeholder="How can we help? *" required></textarea>
-
                 <button type="submit" id="btn-submit" class="btn-v" style="width:100%; height:50px;">SEND INQUIRY</button>
-
             </div>
-
             <div id="form-status" style="display:none; text-align:center; padding:40px 0;">
-
                 <span style="font-size:3rem;">✅</span>
-
                 <h3 id="st-title">Message Sent</h3>
-
                 <p id="st-p">A Vanguard specialist will review your request shortly.</p>
-
                 <button type="button" onclick="resetForm()" class="btn-v" id="btn-reset" style="background:#64748b;">Send Another</button>
-
             </div>
-
         </form>
-
         <div style="border-radius:20px; overflow:hidden; background:#eee;"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509374!2d144.9537353153224!3d-37.81627977975171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d2254555e3a8!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sus!4v1633000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
-
     </div>
-
 </div>
 
-
-
 <footer>
-
-    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span> | v22.1.4</div>
-
+    <div>© 2026 GEOTRACKPRO | <span id="clock"></span> <span class="led-dot"></span> | v22.1.4_bis</div>
     <div style="display:flex; gap:20px;">
-
-        <a href="DOCS/LEGAL/terms.pdf" target="_blank">TERMS</a>
-
-        <a href="DOCS/LEGAL/privacy.pdf" target="_blank">PRIVACY</a>
-
+        <a href="DOCS/LEGAL/terms.pdf" target="_blank" id="footer-terms">TERMS</a>
+        <a href="DOCS/LEGAL/privacy.pdf" target="_blank" id="footer-privacy">PRIVACY</a>
     </div>
-
 </footer>
 
-
-
 <script>
-
-    // WAREHOUSE: Central Catalog
-
-    const WAREHOUSE = [
-
-        { id: "VL103", imgCount: 1, cat: ["vehicle"], name: "VL103", desc: "Hardwired vehicle tracker LTE GNSS.", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
-
-        { id: "VL106", imgCount: 1, cat: ["vehicle"], name: "VL106", desc: "LTE vehicle tracker even in weak or lost GPS areas INS-aided GPS keeps tracking constant & in control.", features:[{icon:"🛰️",label:"GNSS"}] },
-
-        { id: "VL111", imgCount: 1, cat: ["vehicle"], name: "VL111", desc: "Compact yet powerful Fits on motorcycles effortlessly Keeps your fleet running smoothly & connected.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
-
-        { id: "VL113", imgCount: 1, cat: ["vehicle"], name: "VL113", desc: "LTE smart waterproof tracker.", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
-
-        { id: "VL808", imgCount: 1, cat: ["vehicle"], name: "VL808", desc: "LTE Vehicle GNSS Terminal Intelligent Tracking Meets Expanded Fleet Control.", features:[{icon:"📍",label:"LBS"}] },
-
-        { id: "LL701", imgCount: 2, cat: ["asset"], name: "LL701", desc: "Long-Standby Asset Tracker designed for the management of heavy-duty vehicles up to 5 years of working time.", features:[{icon:"🔋",label:"Standby"}] },
-
-        { id: "LL702", imgCount: 2, cat: ["asset"], name: "LL702", desc: "4G GPS Tracker offers ultra-long battery life multi-mode positioning rugged durability ensuring reliable asset monitoring.", features:[{icon:"📦",label:"Asset"}] },
+    // TRANSLATION SYSTEM
+    const TRANSLATIONS = {
+        en: {
+            // Header & Navigation
+            company: "Company ▾",
+            about: "About Us",
+            partners: "Partners",
+            home: "Home",
+            salesConsultation: "Sales Consultation",
+            exploreCatalog: "Explore Catalog",
+            products: "PRODUCTS ▾",
+            viewAll: "View All",
+            vehicle: "Vehicle",
+            asset: "Asset",
+            dashcam: "Dashcam",
+            obd: "OBD",
+            personal: "Personal",
+            tags: "Tags",
+            motorcycle: "Motorcycle",
+            accessories: "Accessories",
+            contact: "Contact",
+            demoRequest: "Demo Request",
+            platform: "PLATFORM",
+            
+            // Hero
+            heroTitle: "VANGUARD GLOBAL",
+            heroSubtitle: "Advanced GPS Tracking Solutions for Enterprise Asset Management",
+            
+            // Featured
+            featuredDevices: "Featured Devices",
+            viewDetails: "View Details",
+            
+            // About
+            aboutTitle: "THE VANGUARD STANDARD",
+            aboutSubtitle: "Global Asset Intelligence for the Modern Enterprise.",
+            aboutP1: "Vanguard Global provides the hardware and telemetry needed to secure assets and eliminate variables.",
+            missionTitle: "Our Mission",
+            missionText: "To provide an unblinking eye over your most valuable assets.",
+            globalTitle: "Global Reach",
+            globalText: "Hardware engineered for international connectivity.",
+            securityTitle: "Adaptive Security",
+            securityText: "Custom configurations for your operational landscape.",
+            
+            // Partners
+            partnersTitle: "GLOBAL PARTNERS",
+            partnersDesc: "Ecosystem of excellence in hardware and software telemetry integration.",
+            partnersSync: "Partner directory is currently being synchronized.",
+            
+            // Catalog
+            back: "← Back",
+            specs: "SPECS",
+            inquiry: "INQUIRY",
+            
+            // Contact Form
+            contactTitle: "CONTACT",
+            fullName: "Full Name *",
+            companyName: "Company Name *",
+            businessEmail: "Business Email *",
+            phoneNumber: "Phone Number *",
+            selectCountry: "Select Country *",
+            howCanWeHelp: "How can we help? *",
+            sendInquiry: "SEND INQUIRY",
+            messageSent: "Message Sent",
+            messageSentText: "A Vanguard specialist will review your request shortly.",
+            sendAnother: "Send Another",
+            
+            // Footer
+            terms: "TERMS",
+            privacy: "PRIVACY",
+            
+            // Countries
+            italy: "Italy",
+            spain: "Spain",
+            france: "France",
+            uk: "United Kingdom",
+            usa: "USA",
+            other: "Other",
+            
+            // Featured Devices Descriptions
+            featJC182: "4K Mini DashCam with OBD Plug & Play connectivity.",
+            featLL303: "Solar powered GPS tracker with 10000mAh battery.",
+            featVL505: "Plug & Play OBDII tracker with CAN bus support.",
+            featPB713: "Ultra-slim BLE asset tag for global tracking.",
+            featJC181: "Compact dual-view dashcam for complete coverage.",
+            featVL103: "Hardwired vehicle tracker with LTE GNSS."
+        },
         
-        { id: "LL303Pro", imgCount: 8, cat: ["asset"], name: "LL303Pro", desc: "4G solar Powered GPS tracker with Real-Time tracking IP67 waterproof 10000mAh battery.", features:[{icon:"📦",label:"Asset"}, {icon:"🔋",label:"Big Battery"}] },
-
-        { id: "LL301", imgCount: 1, cat: ["asset"], name: "LL301", desc: "Powerful wireless tracker.", features:[{icon:"🔋",label:"Big Battery"}] },
-
-        { id: "PB706", imgCount: 3, cat: ["personal"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
-
-        { id: "PB706", imgCount: 3, cat: ["tags"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
-
-        { id: "PB706", imgCount: 3, cat: ["asset"], name: "PB706 Asset Tag", desc: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small BT TAG"}] },
-
-        { id: "PB713", imgCount: 4, cat: ["personal"], name: "PB713 Asset Tag", desc: "Card-style tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Ultra slim BT TAG"}] },
-
-        { id: "PB713", imgCount: 4, cat: ["tags"], name: "PB713 Asset Tag", desc: "Card-style tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Ultra slim BT TAG"}] },
+        it: {
+            // Header & Navigation
+            company: "Azienda ▾",
+            about: "Chi Siamo",
+            partners: "Partner",
+            home: "Home",
+            salesConsultation: "Consulenza Vendite",
+            exploreCatalog: "Esplora Catalogo",
+            products: "PRODOTTI ▾",
+            viewAll: "Vedi Tutti",
+            vehicle: "Veicoli",
+            asset: "Asset",
+            dashcam: "Dashcam",
+            obd: "OBD",
+            personal: "Personale",
+            tags: "Tag",
+            motorcycle: "Moto",
+            accessories: "Accessori",
+            contact: "Contatti",
+            demoRequest: "Richiesta Demo",
+            platform: "PIATTAFORMA",
+            
+            // Hero
+            heroTitle: "VANGUARD GLOBAL",
+            heroSubtitle: "Soluzioni Avanzate di Tracciamento GPS per la Gestione di Asset Enterprise",
+            
+            // Featured
+            featuredDevices: "Dispositivi in Evidenza",
+            viewDetails: "Vedi Dettagli",
+            
+            // About
+            aboutTitle: "LO STANDARD VANGUARD",
+            aboutSubtitle: "Intelligenza Globale degli Asset per l'Impresa Moderna.",
+            aboutP1: "Vanguard Global fornisce l'hardware e la telemetria necessari per proteggere gli asset ed eliminare le variabili.",
+            missionTitle: "La Nostra Missione",
+            missionText: "Fornire un occhio vigile sui vostri asset più preziosi.",
+            globalTitle: "Portata Globale",
+            globalText: "Hardware progettato per la connettività internazionale.",
+            securityTitle: "Sicurezza Adattiva",
+            securityText: "Configurazioni personalizzate per il vostro scenario operativo.",
+            
+            // Partners
+            partnersTitle: "PARTNER GLOBALI",
+            partnersDesc: "Ecosistema di eccellenza nell'integrazione di hardware e software di telemetria.",
+            partnersSync: "La directory dei partner è attualmente in sincronizzazione.",
+            
+            // Catalog
+            back: "← Indietro",
+            specs: "SCHEDE",
+            inquiry: "RICHIESTA",
+            
+            // Contact Form
+            contactTitle: "CONTATTI",
+            fullName: "Nome Completo *",
+            companyName: "Nome Azienda *",
+            businessEmail: "Email Aziendale *",
+            phoneNumber: "Numero di Telefono *",
+            selectCountry: "Seleziona Paese *",
+            howCanWeHelp: "Come possiamo aiutarvi? *",
+            sendInquiry: "INVIA RICHIESTA",
+            messageSent: "Messaggio Inviato",
+            messageSentText: "Uno specialista Vanguard esaminerà la vostra richiesta a breve.",
+            sendAnother: "Invia un Altro",
+            
+            // Footer
+            terms: "TERMINI",
+            privacy: "PRIVACY",
+            
+            // Countries
+            italy: "Italia",
+            spain: "Spagna",
+            france: "Francia",
+            uk: "Regno Unito",
+            usa: "USA",
+            other: "Altro",
+            
+            // Featured Devices Descriptions
+            featJC182: "DashCam Mini 4K con connettività OBD Plug & Play.",
+            featLL303: "Tracker GPS solare con batteria da 10000mAh.",
+            featVL505: "Tracker OBDII Plug & Play con supporto CAN bus.",
+            featPB713: "Tag asset BLE ultra-sottile per tracciamento globale.",
+            featJC181: "Dashcam doppia visuale compatta per copertura completa.",
+            featVL103: "Tracker veicolo cablato con LTE GNSS."
+        },
         
-        { id: "PB708", imgCount: 1, cat: ["asset"], name: "PB708", desc: "Slim low-power automomus asset tracking terminal.", features:[{icon:"📏",label:"Ultra-slim"}] },
-
-        { id: "PB708Pro", imgCount: 1, cat: ["tags"], name: "PB708Pro Asset Tag", desc: "BT long life precise asset tagging.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
-
-        { id: "PB704", imgCount: 2, cat: ["tags"], name: "PB704 Asset Tag", desc: "BT Pet locator Mini GPS track for iPhone/Android phone position.", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
-
-        { id: "VL505", imgCount: 3, cat: ["obd"], name: "VL505", desc: "Plug & Play OBDII LTE GNSS.", features:[{icon:"🔌",label:"OBDII"},{icon:"📊",label:"CAN"}] },
-
-        { id: "QBIT-M", imgCount: 1, cat: ["personal"], name: "QBIT M", desc: "Mini personal GPS specifically optimized for user convenience especially considering the habits of elderly family members pet owners and other non-expert users.", features:[{icon:"👤",label:"Personal"}] },
-
-        { id: "PL601", imgCount: 1, cat: ["personal"], name: "PL601", desc: "Advanced personal GPS.", features:[{icon:"🔊",label:"Voice"}] },
-
-        { id: "PL200", imgCount: 1, cat: ["personal"], name: "PL200", desc: "Personal safety tracker.", features:[{icon:"🚨",label:"SOS"}] },
-
-        { id: "JC181", imgCount: 9, cat: ["dashcam"], name: "JC181", desc: "Compact 2 views in one dashcam ensuring safety, transparency.", features:[{icon:"📹",label:"HD"}] },
-
-        { id: "JC182", imgCount: 7, cat: ["dashcam"], name: "JC182", desc: "4G Mini DashCam tiny but Mighty 2K Quad HD Camera OBD Plug & Play.", features:[{icon:"📹",label:"HD+"}] },
-
-        { id: "HL365S", imgCount: 1, cat: ["personal"], name: "HL365S", desc: "Domestic security camera clear high-definition 2-megapixel 4G Video Recording.", features:[{icon:"👤",label:"HD+"}] },
-
-        { id: "JC261", imgCount: 1, cat: ["dashcam"], name: "JC261", desc: "LTE AI Dashcam.", features:[{icon:"🤖",label:"AI"}] },
-
-        { id: "JC400", imgCount: 1, cat: ["dashcam"], name: "JC400", desc: "Pro dashcam.", features:[{icon:"📡",label:"LTE"}] },
-
-        { id: "JC450", imgCount: 1, cat: ["dashcam"], name: "JC450", desc: "Multi-channel ADAS.", features:[{icon:"📹",label:"4-Ch"}] },
-
-        { id: "JC170", imgCount: 1, cat: ["dashcam"], name: "JC170", desc: "DMS AI Camera Driver-Aware Safety Elevated.", features:[{icon:"📹",label:"1080p"}] },
-
-        { id: "JC171", imgCount: 1, cat: ["dashcam"], name: "JC171", desc: "AI Camera Sharper Vision Smarter Safety.", features:[{icon:"📹",label:"HD+"}] },
-
-        { id: "CE01", imgCount: 1, imgCount: 1, cat: ["acc"], name: "CE01", desc: "Rear-view waterproof camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CE02", imgCount: 1, imgCount: 1, cat: ["acc"], name: "CE02", desc: "Side-view waterproof camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CE04", imgCount: 1, cat: ["acc"], name: "CE04", desc: "Rear-view waterproof camera with Full light.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI06F", imgCount: 1, cat: ["acc"], name: "CI06F", desc: "Cabin-View Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI05F", imgCount: 1, cat: ["acc"], name: "CI05F", desc: "Cabin-View Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI04", imgCount: 1, cat: ["acc"], name: "CI04", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI03", imgCount: 1, cat: ["acc"], name: "CI03", desc: "Camera accessory.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI02", imgCount: 1, cat: ["acc"], name: "CI02", desc: "Cabin-View USB Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CI01", imgCount: 1, cat: ["acc"], name: "CI01", desc: "Cabin-View Infrared Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CF01F", imgCount: 1, cat: ["acc"], name: "CF01F", desc: "Road-facing Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "CF02F", imgCount: 1, cat: ["acc"], name: "CF02F", desc: "Road-facing Full AHD Camera.", features:[{icon:"⚙️",label:"Acc"}] },
-
-        { id: "VL111", imgCount: 1, cat: ["motorcycle"], name: "VL111", desc: "High-IO LTE terminal.", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"Cut-off"}] },
-
-        { id: "VL113", imgCount: 1, cat: ["motorcycle"], name: "VL113", desc: "Smart waterproof tracker.", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
-
-    ];
-
-
-
-    const TXT = {
-
-        en: { h: "VANGUARD GLOBAL", p: "PRODUCTS", v: "Vehicle", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", m: "Motorcycle", abT: "THE VANGUARD STANDARD", abS: "Global Asset Intelligence for the Modern Enterprise.", abP1: "Vanguard Global provides the hardware and telemetry needed to secure assets and eliminate variables.", abMT: "Our Mission", abMP: "To provide an unblinking eye over your most valuable assets.", abGT: "Global Reach", abGP: "Hardware engineered for international connectivity.", abST: "Adaptive Security", abSP: "Custom configurations for your operational landscape.", fName: "Full Name *", fComp: "Company Name *", fEmail: "Business Email *", fTel: "Phone Number *", fMsg: "How can we help? *", submit: "SEND INQUIRY", stTitle: "Message Sent", stP: "A Vanguard specialist will review your request shortly.", reset: "Send Another", country: "Select Country *", c1: "CONTACT US", c2: "DEMO REQUEST", c3: "SALES CONSULTATION" },
-
-        it: { h: "VANGUARD GLOBALE", p: "PRODOTTI", v: "Veicoli", a: "Asset", dc: "Dashcam", o: "OBD", s: "Personale", ac: "Acc.", tg: "Tags", m: "Moto", abT: "LO STANDARD VANGUARD", abS: "Intelligenza globale per l'impresa moderna.", abP1: "Vanguard Global fornisce strumenti di precisione per proteggere i vostri asset strategici.", abMT: "Missione", abMP: "Eliminare i punti ciechi con l'innovazione tecnologica.", abGT: "Portata Globale", abGP: "Hardware progettato per la connettività internazionale.", abST: "Sicurezza Adattiva", abSP: "Configurazioni su misura per le vostre esigenze.", fName: "Nome Completo *", fComp: "Nome Azienda *", fEmail: "Email Aziendale *", fTel: "Telefono *", fMsg: "Come possiamo aiutarvi? *", submit: "INVIA RICHIESTA", stTitle: "Messaggio Inviato", stP: "Un esperto Vanguard esaminerà la vostra richiesta a breve.", reset: "Invia un altro", country: "Seleziona Paese *", c1: "CONTATTACI", c2: "RICHIESTA DEMO", c3: "CONSULENZA VENDITE" },
-
-        es: { h: "VANGUARDIA GLOBAL", p: "PRODUCTOS", v: "Vehículo", a: "Activos", dc: "Dashcam", o: "OBD", s: "Personal", ac: "Acc.", tg: "Tags", m: "Motorcycle", abT: "EL ESTÁNDAR VANGUARD", abS: "Inteligencia para la empresa moderna.", abP1: "Vanguard Global entrega herramientas de precisión para asegurar activos.", abMT: "Misión", abMP: "Proporcionar visión constante mediante innovación.", abGT: "Alcance Global", abGP: "Hardware diseñado para conectividad internacional.", abST: "Seguridad Adattiva", abSP: "Configuraciones personalizadas.", fName: "Nombre Completo *", fComp: "Empresa *", fEmail: "Correo Electrónico *", fTel: "Teléfono *", fMsg: "¿Cómo podemos ayudarle? *", submit: "ENVIAR", stTitle: "Mensaje Enviado", stP: "Un especialista de Vanguard revisará su solicitud pronto.", reset: "Enviar otro", country: "Seleccionar País *", c1: "CONTÁCTENOS", c2: "SOLICITUD DE DEMO", c3: "CONSULTA DE VENTAS" },
-
-        fr: { h: "VANGUARD GLOBAL", p: "PRODUITS", v: "Véhicule", a: "Actif", dc: "Dashcam", o: "OBD", s: "Personnel", ac: "Acc.", tg: "Tags", m: "Moto", abT: "LE STANDARD VANGUARD", abS: "Gestion intelligente et globale des actifs pour l’entreprise moderne.", abP1: "Vanguard Global livre les outils de précision.", abMT: "Notre Mission", abMP: "Fournir un œil vigilant grâce à l'innovation.", abGT: "Portée Mondiale", abGP: "Matériel conçu pour la connettivité internationale.", abST: "Adaptive Security", abSP: "Configurations sur mesure.", fName: "Nom Complet *", fComp: "Nom de l'entreprise *", fEmail: "Email Professionnel *", fTel: "Téléphone *", fMsg: "Comment pouvons-nous vous aider? *", submit: "ENVOYER", stTitle: "Message Envoyé", stP: "Un spécialiste Vanguard examinera votre demande sous peu.", reset: "Envoyer un autre", country: "Choisir Pays *", c1: "CONTACTEZ-US", c2: "DEMANDE DE DÉMO", c3: "CONSULTATION VENTES" }
-
+        es: {
+            // Header & Navigation
+            company: "Empresa ▾",
+            about: "Sobre Nosotros",
+            partners: "Socios",
+            home: "Inicio",
+            salesConsultation: "Consulta de Ventas",
+            exploreCatalog: "Explorar Catálogo",
+            products: "PRODUCTOS ▾",
+            viewAll: "Ver Todo",
+            vehicle: "Vehículo",
+            asset: "Activos",
+            dashcam: "Dashcam",
+            obd: "OBD",
+            personal: "Personal",
+            tags: "Tags",
+            motorcycle: "Motocicleta",
+            accessories: "Accesorios",
+            contact: "Contacto",
+            demoRequest: "Solicitud de Demo",
+            platform: "PLATAFORMA",
+            
+            // Hero
+            heroTitle: "VANGUARD GLOBAL",
+            heroSubtitle: "Soluciones Avanzadas de Rastreo GPS para la Gestión de Activos Empresariales",
+            
+            // Featured
+            featuredDevices: "Dispositivos Destacados",
+            viewDetails: "Ver Detalles",
+            
+            // About
+            aboutTitle: "EL ESTÁNDAR VANGUARD",
+            aboutSubtitle: "Inteligencia Global de Activos para la Empresa Moderna.",
+            aboutP1: "Vanguard Global proporciona el hardware y la telemetría necesarios para asegurar activos y eliminar variables.",
+            missionTitle: "Nuestra Misión",
+            missionText: "Proporcionar un ojo vigilante sobre sus activos más valiosos.",
+            globalTitle: "Alcance Global",
+            globalText: "Hardware diseñado para la conectividad internacional.",
+            securityTitle: "Seguridad Adaptativa",
+            securityText: "Configuraciones personalizadas para su entorno operativo.",
+            
+            // Partners
+            partnersTitle: "SOCIOS GLOBALES",
+            partnersDesc: "Ecosistema de excelencia en integración de hardware y software de telemetría.",
+            partnersSync: "El directorio de socios está siendo sincronizado actualmente.",
+            
+            // Catalog
+            back: "← Volver",
+            specs: "ESPECIFICACIONES",
+            inquiry: "CONSULTA",
+            
+            // Contact Form
+            contactTitle: "CONTACTO",
+            fullName: "Nombre Completo *",
+            companyName: "Nombre de la Empresa *",
+            businessEmail: "Email Empresarial *",
+            phoneNumber: "Número de Teléfono *",
+            selectCountry: "Seleccionar País *",
+            howCanWeHelp: "¿Cómo podemos ayudarle? *",
+            sendInquiry: "ENVIAR CONSULTA",
+            messageSent: "Mensaje Enviado",
+            messageSentText: "Un especialista de Vanguard revisará su solicitud en breve.",
+            sendAnother: "Enviar Otro",
+            
+            // Footer
+            terms: "TÉRMINOS",
+            privacy: "PRIVACIDAD",
+            
+            // Countries
+            italy: "Italia",
+            spain: "España",
+            france: "Francia",
+            uk: "Reino Unido",
+            usa: "EE.UU.",
+            other: "Otro",
+            
+            // Featured Devices Descriptions
+            featJC182: "DashCam Mini 4K con conectividad OBD Plug & Play.",
+            featLL303: "Rastreador GPS solar con batería de 10000mAh.",
+            featVL505: "Rastreador OBDII Plug & Play con soporte CAN bus.",
+            featPB713: "Tag de activos BLE ultra-delgado para rastreo global.",
+            featJC181: "Dashcam de doble vista compacta para cobertura completa.",
+            featVL103: "Rastreador de vehículo cableado con LTE GNSS."
+        },
+        
+        fr: {
+            // Header & Navigation
+            company: "Entreprise ▾",
+            about: "À Propos",
+            partners: "Partenaires",
+            home: "Accueil",
+            salesConsultation: "Consultation Ventes",
+            exploreCatalog: "Explorer le Catalogue",
+            products: "PRODUITS ▾",
+            viewAll: "Voir Tout",
+            vehicle: "Véhicule",
+            asset: "Actif",
+            dashcam: "Dashcam",
+            obd: "OBD",
+            personal: "Personnel",
+            tags: "Tags",
+            motorcycle: "Moto",
+            accessories: "Accessoires",
+            contact: "Contact",
+            demoRequest: "Demande de Démo",
+            platform: "PLATEFORME",
+            
+            // Hero
+            heroTitle: "VANGUARD GLOBAL",
+            heroSubtitle: "Solutions Avancées de Suivi GPS pour la Gestion d'Actifs d'Entreprise",
+            
+            // Featured
+            featuredDevices: "Appareils en Vedette",
+            viewDetails: "Voir Détails",
+            
+            // About
+            aboutTitle: "LE STANDARD VANGUARD",
+            aboutSubtitle: "Intelligence Globale des Actifs pour l'Entreprise Moderne.",
+            aboutP1: "Vanguard Global fournit le matériel et la télémétrie nécessaires pour sécuriser les actifs et éliminer les variables.",
+            missionTitle: "Notre Mission",
+            missionText: "Fournir un œil vigilant sur vos actifs les plus précieux.",
+            globalTitle: "Portée Mondiale",
+            globalText: "Matériel conçu pour la connectivité internationale.",
+            securityTitle: "Sécurité Adaptative",
+            securityText: "Configurations personnalisées pour votre environnement opérationnel.",
+            
+            // Partners
+            partnersTitle: "PARTENAIRES MONDIAUX",
+            partnersDesc: "Écosystème d'excellence dans l'intégration de matériel et de logiciels de télémétrie.",
+            partnersSync: "L'annuaire des partenaires est actuellement en cours de synchronisation.",
+            
+            // Catalog
+            back: "← Retour",
+            specs: "FICHES",
+            inquiry: "DEMANDE",
+            
+            // Contact Form
+            contactTitle: "CONTACT",
+            fullName: "Nom Complet *",
+            companyName: "Nom de l'Entreprise *",
+            businessEmail: "Email Professionnel *",
+            phoneNumber: "Numéro de Téléphone *",
+            selectCountry: "Choisir Pays *",
+            howCanWeHelp: "Comment pouvons-nous vous aider? *",
+            sendInquiry: "ENVOYER DEMANDE",
+            messageSent: "Message Envoyé",
+            messageSentText: "Un spécialiste Vanguard examinera votre demande sous peu.",
+            sendAnother: "Envoyer un Autre",
+            
+            // Footer
+            terms: "CONDITIONS",
+            privacy: "CONFIDENTIALITÉ",
+            
+            // Countries
+            italy: "Italie",
+            spain: "Espagne",
+            france: "France",
+            uk: "Royaume-Uni",
+            usa: "États-Unis",
+            other: "Autre",
+            
+            // Featured Devices Descriptions
+            featJC182: "DashCam Mini 4K avec connectivité OBD Plug & Play.",
+            featLL303: "Traceur GPS solaire avec batterie 10000mAh.",
+            featVL505: "Traceur OBDII Plug & Play avec support CAN bus.",
+            featPB713: "Tag d'actifs BLE ultra-fin pour suivi global.",
+            featJC181: "Dashcam double vue compacte pour couverture complète.",
+            featVL103: "Traceur véhicule câblé avec LTE GNSS."
+        }
     };
 
+    // WAREHOUSE DATA with translatable descriptions
+    const WAREHOUSE = [
+        { id: "VL103", imgCount: 1, cat: ["vehicle"], name: "VL103", descKey: "descVL103", features:[{icon:"📡",label:"4G"},{icon:"⚡",label:"Power"}] },
+        { id: "VL106", imgCount: 1, cat: ["vehicle"], name: "VL106", descKey: "descVL106", features:[{icon:"🛰️",label:"GNSS"}] },
+        { id: "VL111", imgCount: 1, cat: ["vehicle"], name: "VL111", descKey: "descVL111", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"CutOff"}] },
+        { id: "VL113", imgCount: 1, cat: ["vehicle"], name: "VL113", descKey: "descVL113", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] },
+        { id: "VL808", imgCount: 1, cat: ["vehicle"], name: "VL808", descKey: "descVL808", features:[{icon:"📍",label:"LBS"}] },
+        { id: "LL701", imgCount: 2, cat: ["asset"], name: "LL701", descKey: "descLL701", features:[{icon:"🔋",label:"Standby"}] },
+        { id: "LL702", imgCount: 2, cat: ["asset"], name: "LL702", descKey: "descLL702", features:[{icon:"📦",label:"Asset"}] },
+        { id: "LL303Pro", imgCount: 8, cat: ["asset"], name: "LL303Pro", descKey: "descLL303Pro", features:[{icon:"📦",label:"Asset"}, {icon:"🔋",label:"Solar"}] },
+        { id: "LL301", imgCount: 1, cat: ["asset"], name: "LL301", descKey: "descLL301", features:[{icon:"🔋",label:"BigBattery"}] },
+        { id: "PB706", imgCount: 3, cat: ["personal"], name: "PB706 Asset Tag", descKey: "descPB706", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
+        { id: "PB706", imgCount: 3, cat: ["tags"], name: "PB706 Asset Tag", descKey: "descPB706", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
+        { id: "PB706", imgCount: 3, cat: ["asset"], name: "PB706 Asset Tag", descKey: "descPB706", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
+        { id: "PB713", imgCount: 4, cat: ["personal"], name: "PB713 Asset Tag", descKey: "descPB713", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"UltraSlim"}] },
+        { id: "PB713", imgCount: 4, cat: ["tags"], name: "PB713 Asset Tag", descKey: "descPB713", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"UltraSlim"}] },
+        { id: "PB708", imgCount: 1, cat: ["asset"], name: "PB708", descKey: "descPB708", features:[{icon:"📏",label:"UltraSlim"}] },
+        { id: "PB708Pro", imgCount: 1, cat: ["tags"], name: "PB708Pro Asset Tag", descKey: "descPB708Pro", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
+        { id: "PB704", imgCount: 2, cat: ["tags"], name: "PB704 Asset Tag", descKey: "descPB704", features:[{icon:"🏷️",label:"BLE"},{icon:"📦",label:"Small"}] },
+        { id: "VL505", imgCount: 3, cat: ["obd"], name: "VL505", descKey: "descVL505", features:[{icon:"🔌",label:"OBDII"},{icon:"📊",label:"CAN"}] },
+        { id: "QBIT-M", imgCount: 1, cat: ["personal"], name: "QBIT M", descKey: "descQBIT", features:[{icon:"👤",label:"Personal"}] },
+        { id: "PL601", imgCount: 1, cat: ["personal"], name: "PL601", descKey: "descPL601", features:[{icon:"🔊",label:"Voice"}] },
+        { id: "PL200", imgCount: 1, cat: ["personal"], name: "PL200", descKey: "descPL200", features:[{icon:"🚨",label:"SOS"}] },
+        { id: "JC181", imgCount: 9, cat: ["dashcam"], name: "JC181", descKey: "descJC181", features:[{icon:"📹",label:"HD"}] },
+        { id: "JC182", imgCount: 7, cat: ["dashcam"], name: "JC182", descKey: "descJC182", features:[{icon:"📹",label:"HD+"}] },
+        { id: "HL365S", imgCount: 1, cat: ["personal"], name: "HL365S", descKey: "descHL365S", features:[{icon:"👤",label:"HD+"}] },
+        { id: "JC261", imgCount: 1, cat: ["dashcam"], name: "JC261", descKey: "descJC261", features:[{icon:"🤖",label:"AI"}] },
+        { id: "JC400", imgCount: 1, cat: ["dashcam"], name: "JC400", descKey: "descJC400", features:[{icon:"📡",label:"LTE"}] },
+        { id: "JC450", imgCount: 1, cat: ["dashcam"], name: "JC450", descKey: "descJC450", features:[{icon:"📹",label:"4-Ch"}] },
+        { id: "JC170", imgCount: 1, cat: ["dashcam"], name: "JC170", descKey: "descJC170", features:[{icon:"📹",label:"1080p"}] },
+        { id: "JC171", imgCount: 1, cat: ["dashcam"], name: "JC171", descKey: "descJC171", features:[{icon:"📹",label:"HD+"}] },
+        { id: "CE01", imgCount: 1, cat: ["acc"], name: "CE01", descKey: "descCE01", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CE02", imgCount: 1, cat: ["acc"], name: "CE02", descKey: "descCE02", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CE04", imgCount: 1, cat: ["acc"], name: "CE04", descKey: "descCE04", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CI06F", imgCount: 1, cat: ["acc"], name: "CI06F", descKey: "descCI06F", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CI05F", imgCount: 1, cat: ["acc"], name: "CI05F", descKey: "descCI05F", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CI04", imgCount: 1, cat: ["acc"], name: "CI04", descKey: "descCI04", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CI03", imgCount: 1, cat: ["acc"], name: "CI03", descKey: "descCI03", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CI02", imgCount: 1, cat: ["acc"], name: "CI02", descKey: "descCI02", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CI01", imgCount: 1, cat: ["acc"], name: "CI01", descKey: "descCI01", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CF01F", imgCount: 1, cat: ["acc"], name: "CF01F", descKey: "descCF01F", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "CF02F", imgCount: 1, cat: ["acc"], name: "CF02F", descKey: "descCF02F", features:[{icon:"⚙️",label:"Acc"}] },
+        { id: "VL111", imgCount: 1, cat: ["motorcycle"], name: "VL111", descKey: "descVL111M", features:[{icon:"📡",label:"4G"},{icon:"✂️",label:"CutOff"}] },
+        { id: "VL113", imgCount: 1, cat: ["motorcycle"], name: "VL113", descKey: "descVL113M", features:[{icon:"🛡️",label:"IP66"},{icon:"⚡",label:"9-90V"}] }
+    ];
 
+    // Device descriptions by language
+    const DEVICE_DESCRIPTIONS = {
+        en: {
+            descVL103: "Hardwired vehicle tracker LTE GNSS.",
+            descVL106: "LTE vehicle tracker even in weak or lost GPS areas INS-aided GPS keeps tracking constant & in control.",
+            descVL111: "Compact yet powerful Fits on motorcycles effortlessly Keeps your fleet running smoothly & connected.",
+            descVL113: "LTE smart waterproof tracker.",
+            descVL808: "LTE Vehicle GNSS Terminal Intelligent Tracking Meets Expanded Fleet Control.",
+            descLL701: "Long-Standby Asset Tracker designed for the management of heavy-duty vehicles up to 5 years of working time.",
+            descLL702: "4G GPS Tracker offers ultra-long battery life multi-mode positioning rugged durability ensuring reliable asset monitoring.",
+            descLL303Pro: "4G solar Powered GPS tracker with Real-Time tracking IP67 waterproof 10000mAh battery.",
+            descLL301: "Powerful wireless tracker.",
+            descPB706: "Cutting-edge tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.",
+            descPB713: "Card-style tag harnessing a BT crowdsourcing network to globally track objects without the need for SIM card.",
+            descPB708: "Slim low-power automomus asset tracking terminal.",
+            descPB708Pro: "BT long life precise asset tagging.",
+            descPB704: "BT Pet locator Mini GPS track for iPhone/Android phone position.",
+            descVL505: "Plug & Play OBDII LTE GNSS.",
+            descQBIT: "Mini personal GPS specifically optimized for user convenience especially considering the habits of elderly family members pet owners and other non-expert users.",
+            descPL601: "Advanced personal GPS.",
+            descPL200: "Personal safety tracker.",
+            descJC181: "Compact 2 views in one dashcam ensuring safety, transparency.",
+            descJC182: "4G Mini DashCam tiny but Mighty 2K Quad HD Camera OBD Plug & Play.",
+            descHL365S: "Domestic security camera clear high-definition 2-megapixel 4G Video Recording.",
+            descJC261: "LTE AI Dashcam.",
+            descJC400: "Pro dashcam.",
+            descJC450: "Multi-channel ADAS.",
+            descJC170: "DMS AI Camera Driver-Aware Safety Elevated.",
+            descJC171: "AI Camera Sharper Vision Smarter Safety.",
+            descCE01: "Rear-view waterproof camera.",
+            descCE02: "Side-view waterproof camera.",
+            descCE04: "Rear-view waterproof camera with Full light.",
+            descCI06F: "Cabin-View Full AHD Camera.",
+            descCI05F: "Cabin-View Full AHD Camera.",
+            descCI04: "Camera accessory.",
+            descCI03: "Camera accessory.",
+            descCI02: "Cabin-View USB Camera.",
+            descCI01: "Cabin-View Infrared Camera.",
+            descCF01F: "Road-facing Full AHD Camera.",
+            descCF02F: "Road-facing Full AHD Camera.",
+            descVL111M: "High-IO LTE terminal.",
+            descVL113M: "Smart waterproof tracker."
+        },
+        it: {
+            descVL103: "Localizzatore veicolo cablato LTE GNSS.",
+            descVL106: "Localizzatore LTE anche in aree GPS deboli o perse, GPS assistito INS mantiene il tracciamento costante e sotto controllo.",
+            descVL111: "Compatto ma potente, si adatta facilmente alle moto, mantiene la flotta funzionante senza problemi e connessa.",
+            descVL113: "Localizzatore intelligente impermeabile LTE.",
+            descVL808: "Terminale GNSS Veicoli LTE, Tracciamento Intelligente incontra il Controllo Espanso della Flotta.",
+            descLL701: "Localizzatore Asset Long-Standby progettato per la gestione di veicoli pesanti fino a 5 anni di tempo di lavoro.",
+            descLL702: "Localizzatore GPS 4G offre batteria ultra-lunga, posizionamento multimodale, robustezza per garantire monitoraggio affidabile.",
+            descLL303Pro: "Localizzatore GPS solare 4G con tracciamento Real-Time, impermeabile IP67, batteria 10000mAh.",
+            descLL301: "Localizzatore wireless potente.",
+            descPB706: "Tag all'avanguardia che sfrutta una rete di crowdsourcing BT per tracciare oggetti globalmente senza necessità di SIM card.",
+            descPB713: "Tag stile carta che sfrutta una rete di crowdsourcing BT per tracciare oggetti globalmente senza necessità di SIM card.",
+            descPB708: "Terminale di tracciamento asset autonomo sottile e a basso consumo.",
+            descPB708Pro: "Tagging asset preciso BT a lunga durata.",
+            descPB704: "Localizzatore Mini GPS BT per animali domestici per posizione iPhone/Android.",
+            descVL505: "OBDII LTE GNSS Plug & Play.",
+            descQBIT: "GPS personale mini ottimizzato specificamente per la convenienza utente considerando le abitudini di anziani, proprietari di animali e altri utenti non esperti.",
+            descPL601: "GPS personale avanzato.",
+            descPL200: "Localizzatore sicurezza personale.",
+            descJC181: "Dashcam compatta 2 viste in una che garantisce sicurezza e trasparenza.",
+            descJC182: "DashCam Mini 4G piccola ma potente, Camera 2K Quad HD, OBD Plug & Play.",
+            descHL365S: "Camera sicurezza domestica ad alta definizione chiara, 2 megapixel, Registrazione Video 4G.",
+            descJC261: "Dashcam AI LTE.",
+            descJC400: "Dashcam professionale.",
+            descJC450: "ADAS multicanale.",
+            descJC170: "Camera AI DMS, Sicurezza Consapevole del Conducente Elevata.",
+            descJC171: "Camera AI, Visione più Nitida, Sicurezza più Intelligente.",
+            descCE01: "Camera impermeabile vista posteriore.",
+            descCE02: "Camera impermeabile vista laterale.",
+            descCE04: "Camera impermeabile vista posteriore con luce piena.",
+            descCI06F: "Camera AHD Full Cabina-View.",
+            descCI05F: "Camera AHD Full Cabina-View.",
+            descCI04: "Accessorio camera.",
+            descCI03: "Accessorio camera.",
+            descCI02: "Camera USB Cabina-View.",
+            descCI01: "Camera Infrarossi Cabina-View.",
+            descCF01F: "Camera AHD Full Frontale.",
+            descCF02F: "Camera AHD Full Frontale.",
+            descVL111M: "Terminale LTE High-IO.",
+            descVL113M: "Localizzatore intelligente impermeabile."
+        },
+        es: {
+            descVL103: "Rastreador de vehículo cableado LTE GNSS.",
+            descVL106: "Rastreador LTE incluso en áreas GPS débiles o perdidas, GPS asistido por INS mantiene el seguimiento constante y bajo control.",
+            descVL111: "Compacto pero potente, se adapta fácilmente a motocicletas, mantiene la flota funcionando sin problemas y conectada.",
+            descVL113: "Rastreador inteligente impermeable LTE.",
+            descVL808: "Terminal GNSS Vehículos LTE, Seguimiento Inteligente se encuentra con Control Expandido de Flota.",
+            descLL701: "Rastreador de Activos Long-Standby diseñado para la gestión de vehículos pesados hasta 5 años de tiempo de trabajo.",
+            descLL702: "Rastreador GPS 4G ofrece batería ultra-larga, posicionamiento multimodal, robustez para garantizar monitoreo confiable.",
+            descLL303Pro: "Rastreador GPS solar 4G con seguimiento Real-Time, impermeable IP67, batería 10000mAh.",
+            descLL301: "Rastreador inalámbrico potente.",
+            descPB706: "Etiqueta de vanguardia que aprovecha una red de crowdsourcing BT para rastrear objetos globalmente sin necesidad de tarjeta SIM.",
+            descPB713: "Etiqueta estilo tarjeta que aprovecha una red de crowdsourcing BT para rastrear objetos globalmente sin necesidad de tarjeta SIM.",
+            descPB708: "Terminal de rastreo de activos autónomo delgado y de bajo consumo.",
+            descPB708Pro: "Etiquetado de activos preciso BT de larga duración.",
+            descPB704: "Localizador Mini GPS BT para mascotas para posición iPhone/Android.",
+            descVL505: "OBDII LTE GNSS Plug & Play.",
+            descQBIT: "GPS personal mini optimizado específicamente para la conveniencia del usuario considerando los hábitos de ancianos, dueños de mascotas y otros usuarios no expertos.",
+            descPL601: "GPS personal avanzado.",
+            descPL200: "Rastreador de seguridad personal.",
+            descJC181: "Dashcam compacta 2 vistas en una que garantiza seguridad y transparencia.",
+            descJC182: "DashCam Mini 4G pequeña pero poderosa, Cámara 2K Quad HD, OBD Plug & Play.",
+            descHL365S: "Cámara de seguridad doméstica de alta definición clara, 2 megapíxeles, Grabación de Video 4G.",
+            descJC261: "Dashcam AI LTE.",
+            descJC400: "Dashcam profesional.",
+            descJC450: "ADAS multicanal.",
+            descJC170: "Cámara AI DMS, Seguridad Consciente del Conductor Elevada.",
+            descJC171: "Cámara AI, Visión más Nítida, Seguridad más Inteligente.",
+            descCE01: "Cámara impermeable vista trasera.",
+            descCE02: "Cámara impermeable vista lateral.",
+            descCE04: "Cámara impermeable vista trasera con luz completa.",
+            descCI06F: "Cámara AHD Full Cabina-View.",
+            descCI05F: "Cámara AHD Full Cabina-View.",
+            descCI04: "Accesorio de cámara.",
+            descCI03: "Accesorio de cámara.",
+            descCI02: "Cámara USB Cabina-View.",
+            descCI01: "Cámara Infrarroja Cabina-View.",
+            descCF01F: "Cámara AHD Full Frontal.",
+            descCF02F: "Cámara AHD Full Frontal.",
+            descVL111M: "Terminal LTE High-IO.",
+            descVL113M: "Rastreador inteligente impermeable."
+        },
+        fr: {
+            descVL103: "Traceur de véhicule câblé LTE GNSS.",
+            descVL106: "Traceur LTE même dans les zones GPS faibles ou perdues, GPS assisté par INS maintient le suivi constant et sous contrôle.",
+            descVL111: "Compact mais puissant, s'adapte facilement aux motos, maintient la flotte fonctionnant sans problème et connectée.",
+            descVL113: "Traceur intelligent étanche LTE.",
+            descVL808: "Terminal GNSS Véhicules LTE, Suivi Intelligent rencontre le Contrôle Étendu de Flotte.",
+            descLL701: "Traceur d'Actifs Long-Standby conçu pour la gestion de véhicules lourds jusqu'à 5 ans de temps de travail.",
+            descLL702: "Traceur GPS 4G offre batterie ultra-longue, positionnement multimodal, robustesse pour garantir un monitoring fiable.",
+            descLL303Pro: "Traceur GPS solaire 4G avec suivi Real-Time, étanche IP67, batterie 10000mAh.",
+            descLL301: "Traceur sans fil puissant.",
+            descPB706: "Étiquette de pointe exploitant un réseau de crowdsourcing BT pour tracer des objets globalement sans besoin de carte SIM.",
+            descPB713: "Étiquette style carte exploitant un réseau de crowdsourcing BT pour tracer des objets globalement sans besoin de carte SIM.",
+            descPB708: "Terminal de suivi d'actifs autonome fin et à faible consommation.",
+            descPB708Pro: "Étiquetage d'actifs précis BT longue durée.",
+            descPB704: "Localisateur Mini GPS BT pour animaux de compagnie pour position iPhone/Android.",
+            descVL505: "OBDII LTE GNSS Plug & Play.",
+            descQBIT: "GPS personnel mini optimisé spécifiquement pour la commodité de l'utilisateur en considérant les habitudes des personnes âgées, propriétaires d'animaux et autres utilisateurs non experts.",
+            descPL601: "GPS personnel avancé.",
+            descPL200: "Traceur de sécurité personnelle.",
+            descJC181: "Dashcam compacte 2 vues en une qui garantit sécurité et transparence.",
+            descJC182: "DashCam Mini 4G petite mais puissante, Caméra 2K Quad HD, OBD Plug & Play.",
+            descHL365S: "Caméra de sécurité domestique haute définition claire, 2 mégapixels, Enregistrement Vidéo 4G.",
+            descJC261: "Dashcam AI LTE.",
+            descJC400: "Dashcam professionnelle.",
+            descJC450: "ADAS multicanal.",
+            descJC170: "Caméra AI DMS, Sécurité Consciente du Conducteur Élevée.",
+            descJC171: "Caméra AI, Vision plus Nette, Sécurité plus Intelligente.",
+            descCE01: "Caméra étanche vue arrière.",
+            descCE02: "Caméra étanche vue latérale.",
+            descCE04: "Caméra étanche vue arrière avec lumière complète.",
+            descCI06F: "Caméra AHD Full Cabine-View.",
+            descCI05F: "Caméra AHD Full Cabine-View.",
+            descCI04: "Accessoire de caméra.",
+            descCI03: "Accessoire de caméra.",
+            descCI02: "Caméra USB Cabine-View.",
+            descCI01: "Caméra Infrarouge Cabine-View.",
+            descCF01F: "Caméra AHD Full Frontale.",
+            descCF02F: "Caméra AHD Full Frontale.",
+            descVL111M: "Terminal LTE High-IO.",
+            descVL113M: "Traceur intelligent étanche."
+        }
+    };
+
+    // Feature labels translation
+    const FEATURE_LABELS = {
+        en: { "4G": "4G", "Power": "Power", "GNSS": "GNSS", "CutOff": "Cut-off", "IP66": "IP66", "9-90V": "9-90V", "LBS": "LBS", "Standby": "Standby", "Asset": "Asset", "Solar": "Solar", "BigBattery": "Big Battery", "BLE": "BLE", "Small": "Small", "UltraSlim": "Ultra-slim", "OBDII": "OBDII", "CAN": "CAN", "Personal": "Personal", "Voice": "Voice", "SOS": "SOS", "HD": "HD", "HD+": "HD+", "AI": "AI", "LTE": "LTE", "4-Ch": "4-Ch", "1080p": "1080p", "Acc": "Acc" },
+        it: { "4G": "4G", "Power": "Alimentazione", "GNSS": "GNSS", "CutOff": "Taglio", "IP66": "IP66", "9-90V": "9-90V", "LBS": "LBS", "Standby": "Standby", "Asset": "Asset", "Solar": "Solare", "BigBattery": "Grande Batteria", "BLE": "BLE", "Small": "Piccolo", "UltraSlim": "Ultra-sottile", "OBDII": "OBDII", "CAN": "CAN", "Personal": "Personale", "Voice": "Voce", "SOS": "SOS", "HD": "HD", "HD+": "HD+", "AI": "AI", "LTE": "LTE", "4-Ch": "4-Canali", "1080p": "1080p", "Acc": "Acc" },
+        es: { "4G": "4G", "Power": "Alimentación", "GNSS": "GNSS", "CutOff": "Corte", "IP66": "IP66", "9-90V": "9-90V", "LBS": "LBS", "Standby": "Standby", "Asset": "Activo", "Solar": "Solar", "BigBattery": "Gran Batería", "BLE": "BLE", "Small": "Pequeño", "UltraSlim": "Ultra-delgado", "OBDII": "OBDII", "CAN": "CAN", "Personal": "Personal", "Voice": "Voz", "SOS": "SOS", "HD": "HD", "HD+": "HD+", "AI": "IA", "LTE": "LTE", "4-Ch": "4-Canales", "1080p": "1080p", "Acc": "Acc" },
+        fr: { "4G": "4G", "Power": "Alimentation", "GNSS": "GNSS", "CutOff": "Coupure", "IP66": "IP66", "9-90V": "9-90V", "LBS": "LBS", "Standby": "Standby", "Asset": "Actif", "Solar": "Solaire", "BigBattery": "Grande Batterie", "BLE": "BLE", "Small": "Petit", "UltraSlim": "Ultra-fin", "OBDII": "OBDII", "CAN": "CAN", "Personal": "Personnel", "Voice": "Voix", "SOS": "SOS", "HD": "HD", "HD+": "HD+", "AI": "IA", "LTE": "LTE", "4-Ch": "4-Canaux", "1080p": "1080p", "Acc": "Acc" }
+    };
 
     let carouselIntervals = {};
+    let currentHeroSlide = 0;
+    const totalHeroSlides = 6;
+    let heroInterval = null;
+    let currentLang = 'en';
 
+    function rotateHero() {
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.hero-dot');
+        if(slides.length === 0) return;
+        if(currentHeroSlide >= slides.length) currentHeroSlide = 0;
+        slides[currentHeroSlide].classList.remove('active');
+        if(dots[currentHeroSlide]) dots[currentHeroSlide].classList.remove('active');
+        currentHeroSlide = (currentHeroSlide + 1) % totalHeroSlides;
+        if(slides[currentHeroSlide]) slides[currentHeroSlide].classList.add('active');
+        if(dots[currentHeroSlide]) dots[currentHeroSlide].classList.add('active');
+    }
 
+    function goToHeroSlide(n) {
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.hero-dot');
+        if(slides.length === 0) return;
+        slides[currentHeroSlide].classList.remove('active');
+        if(dots[currentHeroSlide]) dots[currentHeroSlide].classList.remove('active');
+        currentHeroSlide = n;
+        if(slides[currentHeroSlide]) slides[currentHeroSlide].classList.add('active');
+        if(dots[currentHeroSlide]) dots[currentHeroSlide].classList.add('active');
+        if(heroInterval) {
+            clearInterval(heroInterval);
+            heroInterval = setInterval(rotateHero, 5000);
+        }
+    }
+
+    const featuredDevices = [
+        { id: "JC182", cat: "dashcam", name: "JC182", descKey: "featJC182" },
+        { id: "LL303Pro", cat: "asset", name: "LL303Pro", descKey: "featLL303" },
+        { id: "VL505", cat: "obd", name: "VL505", descKey: "featVL505" },
+        { id: "PB713", cat: "tags", name: "PB713", descKey: "featPB713" },
+        { id: "JC181", cat: "dashcam", name: "JC181", descKey: "featJC181" },
+        { id: "VL103", cat: "vehicle", name: "VL103", descKey: "featVL103" }
+    ];
+
+    let featuredInterval = null;
+
+    function initFeaturedCarousel() {
+        const container = document.getElementById('featured-container');
+        const dotsContainer = document.getElementById('featured-dots');
+        if (!container || !dotsContainer) return;
+        
+        const t = TRANSLATIONS[currentLang];
+        
+        let html = '';
+        featuredDevices.forEach((device) => {
+            const folder = device.cat;
+            const imgPath = `IMAGES/${folder}/${device.id.toLowerCase()}_01.png`;
+            const desc = t[device.descKey] || device.descKey;
+            html += `
+                <div class="featured-item" onclick="openForm('${device.id}')">
+                    <img src="${imgPath}" class="featured-img" alt="${device.name}" onerror="this.onerror=null; this.src='IMAGES/ui/coming-soon.png'">
+                    <div class="featured-cat">${t[device.cat] || device.cat}</div>
+                    <div class="featured-name">${device.name}</div>
+                    <div class="featured-desc">${desc}</div>
+                    <button class="featured-btn" onclick="event.stopPropagation(); openForm('${device.id}')">${t.viewDetails}</button>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        
+        let dotsHtml = '';
+        featuredDevices.forEach((_, index) => {
+            dotsHtml += `<span class="featured-dot ${index === 0 ? 'active' : ''}" onclick="goToFeatured(${index})"></span>`;
+        });
+        dotsContainer.innerHTML = dotsHtml;
+        
+        startFeaturedAutoScroll();
+        container.addEventListener('scroll', updateFeaturedDots);
+    }
+
+    function scrollFeatured(direction) {
+        const container = document.getElementById('featured-container');
+        if (!container) return;
+        const scrollAmount = 285;
+        if (direction === 'left') container.scrollLeft -= scrollAmount;
+        else container.scrollLeft += scrollAmount;
+        updateFeaturedDots();
+    }
+
+    function goToFeatured(index) {
+        const container = document.getElementById('featured-container');
+        if (!container) return;
+        container.scrollLeft = index * 285;
+        updateFeaturedDots();
+    }
+
+    function updateFeaturedDots() {
+        const container = document.getElementById('featured-container');
+        if (!container) return;
+        const dots = document.querySelectorAll('.featured-dot');
+        const index = Math.round(container.scrollLeft / 285);
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+    }
+
+    function startFeaturedAutoScroll() {
+        if(featuredInterval) clearInterval(featuredInterval);
+        featuredInterval = setInterval(() => {
+            const container = document.getElementById('featured-container');
+            if (!container) return;
+            const maxScroll = container.scrollWidth - container.clientWidth;
+            if (container.scrollLeft >= maxScroll - 10) container.scrollLeft = 0;
+            else scrollFeatured('right');
+        }, 4000);
+    }
+
+    function stopFeaturedAutoScroll() {
+        if(featuredInterval) clearInterval(featuredInterval);
+    }
 
     function nav(id) {
-
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-
-        const t = document.getElementById(id); if(t) t.classList.add('active');
-
-        if(id === 'prod-menu') renderCats();
-
-        window.scrollTo(0,0);
-
+        const t = document.getElementById(id); 
+        if(t) {
+            t.classList.add('active');
+            window.scrollTo(0,0);
+            if(id === 'prod-menu') renderCats();
+        }
     }
-
-
 
     function renderCats() {
-
-        const lang = document.getElementById('langSelect').value;
-
-        const t = TXT[lang] || TXT.en;
-
-        const cats = [{id:'vehicle',n:t.v,i:'🚗'}, {id:'asset',n:t.a,i:'📦'}, {id:'dashcam',n:t.dc,i:'📹'}, {id:'obd',n:t.o,i:'🔌'}, {id:'personal',n:t.s,i:'👤'}, {id:'tags',n:t.tg,i:'🏷️'}, {id:'acc',n:t.ac,i:'⚙️'}, { id: 'motorcycle', n: t.m, i: '🏍️' }];
-
-        document.getElementById('cat-anchor').innerHTML = cats.map(c => `<div style="background:white; padding:30px; border-radius:20px; text-align:center; border:1px solid #eee; cursor:pointer;" onclick="renderList('${c.id}')"><span>${c.i}</span><h3>${c.n}</h3></div>`).join('');
-
+        const t = TRANSLATIONS[currentLang];
+        const cats = [
+            {id:'vehicle',n:t.vehicle,i:'🚗'}, 
+            {id:'asset',n:t.asset,i:'📦'}, 
+            {id:'dashcam',n:t.dashcam,i:'📹'}, 
+            {id:'obd',n:t.obd,i:'🔌'}, 
+            {id:'personal',n:t.personal,i:'👤'}, 
+            {id:'tags',n:t.tags,i:'🏷️'}, 
+            {id:'acc',n:t.accessories,i:'⚙️'}, 
+            {id:'motorcycle', n:t.motorcycle, i:'🏍️'}
+        ];
+        const anchor = document.getElementById('cat-anchor');
+        if(anchor) {
+            anchor.innerHTML = cats.map(c => 
+                `<div style="background:white; padding:30px; border-radius:20px; text-align:center; border:1px solid #eee; cursor:pointer; transition:all 0.3s;" onmouseenter="this.style.transform='translateY(-5px)';this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseleave="this.style.transform='';this.style.boxShadow=''" onclick="renderList('${c.id}')"><div style="font-size:3rem; margin-bottom:10px;">${c.i}</div><h3 style="margin:0; color:var(--navy);">${c.n}</h3></div>`
+            ).join('');
+        }
     }
 
-
+    function getUniqueDevices() {
+        const seen = new Set();
+        return WAREHOUSE.filter(item => {
+            if (seen.has(item.id)) return false;
+            seen.add(item.id);
+            return true;
+        });
+    }
 
     function renderList(cat) {
-
         nav('list-view');
-
-        const items = cat === 'all' ? WAREHOUSE : WAREHOUSE.filter(d => d.cat.includes(cat));
-
+        const t = TRANSLATIONS[currentLang];
+        const items = cat === 'all' ? getUniqueDevices() : WAREHOUSE.filter(d => d.cat.includes(cat));
+        const gridAnchor = document.getElementById('gridAnchor');
+        if(!gridAnchor) return;
         
-
-        document.getElementById('gridAnchor').innerHTML = items.map(d => {
-
-            const tags = d.features.map(f => `<div class="f-tag"><span class="f-icon">${f.icon}</span> ${f.label}</div>`).join('');
-
+        const descriptions = DEVICE_DESCRIPTIONS[currentLang] || DEVICE_DESCRIPTIONS.en;
+        const features = FEATURE_LABELS[currentLang] || FEATURE_LABELS.en;
+        
+        gridAnchor.innerHTML = items.map(d => {
+            const deviceDesc = descriptions[d.descKey] || d.descKey;
+            const tags = d.features.map(f => {
+                const label = features[f.label] || f.label;
+                return `<div class="f-tag"><span class="f-icon">${f.icon}</span> ${label}</div>`;
+            }).join('');
             
-
             let imgHTML = '';
-
             let pipHTML = '';
-
             const count = d.imgCount || 1;
-
             const folder = d.cat[0].toLowerCase();
-
             
-
             for(let i=1; i<=count; i++){
-
-                const suffix = d.imgCount ? `_${String(i).padStart(2, '0')}` : '';
-
+                const suffix = `_${String(i).padStart(2, '0')}`;
                 const activeClass = i === 1 ? 'active' : '';
-
-                imgHTML += `<img src="IMAGES/${folder}/${d.id.toLowerCase().split('_')[0]}${suffix}.png" class="img-stack img-${d.id} ${activeClass}" onerror="this.src='IMAGES/ui/coming-soon.png'">`;
-
+                const imgPath = `IMAGES/${folder}/${d.id.toLowerCase()}${suffix}.png`;
+                imgHTML += `<img src="${imgPath}" class="img-stack img-${d.id} ${activeClass}" onerror="this.onerror=null; this.src='IMAGES/ui/coming-soon.png'">`;
                 if(count > 1) pipHTML += `<div class="pip pip-${d.id} ${activeClass}"></div>`;
-
             }
 
-
-
             return `
-
             <div class="card" onmouseenter="stopCarousel('${d.id}')" onmouseleave="startCarousel('${d.id}', ${count})">
-
                 <div class="card-img" onclick="openFullImage('${d.id}')">
-
                     ${imgHTML}
-
                     <div class="pips">${pipHTML}</div>
-
                 </div>
-
                 <div class="card-info">
-
-                    <div><h4 style="margin:0; font-weight:800;">${d.name}</h4><div class="f-grid">${tags}</div><p style="font-size:0.75rem; color:#64748b;">${d.desc}</p></div>
-
+                    <div><h4 style="margin:0; font-weight:800;">${d.name}</h4><div class="f-grid">${tags}</div><p style="font-size:0.75rem; color:#64748b;">${deviceDesc}</p></div>
                     <div style="display:flex; gap:10px; margin-top:auto;">
-
-                        <a href="DOCS/SPECS/${d.id.toLowerCase().split('_')[0]}.pdf" target="_blank" class="btn-v" style="flex:1; background:#64748b;">SPECS</a>
-
-                        <button onclick="openForm('${d.id}')" class="btn-v" style="flex:1;">INQUIRY</button>
-
+                        <a href="DOCS/SPECS/${d.id.toLowerCase()}.pdf" target="_blank" class="btn-v" style="flex:1; background:#64748b; text-decoration:none; display:flex; align-items:center; justify-content:center;">${t.specs}</a>
+                        <button onclick="openForm('${d.id}')" class="btn-v" style="flex:1;">${t.inquiry}</button>
                     </div>
-
                 </div>
-
             </div>`;
-
         }).join('');
 
-
-
         items.forEach(d => { if(d.imgCount > 1) startCarousel(d.id, d.imgCount); });
-
     }
-
-
 
     function startCarousel(id, count) {
-
         if(carouselIntervals[id]) clearInterval(carouselIntervals[id]);
-
         carouselIntervals[id] = setInterval(() => {
-
             const imgs = document.querySelectorAll(`.img-${id}`);
-
             const pips = document.querySelectorAll(`.pip-${id}`);
-
+            if(imgs.length === 0) return;
             let current = Array.from(imgs).findIndex(img => img.classList.contains('active'));
-
-            if(current === -1) return;
-
-            
-
+            if(current === -1) current = 0;
             imgs[current].classList.remove('active');
-
             if(pips[current]) pips[current].classList.remove('active');
-
-            
-
             let next = (current + 1) % count;
-
             imgs[next].classList.add('active');
-
             if(pips[next]) pips[next].classList.add('active');
-
         }, 3000);
-
     }
-
-
 
     function stopCarousel(id) {
-
-        clearInterval(carouselIntervals[id]);
-
+        if(carouselIntervals[id]) clearInterval(carouselIntervals[id]);
     }
-
-
 
     function openFullImage(id) {
-
         const activeImg = document.querySelector(`.img-${id}.active`);
-
         if(activeImg) window.open(activeImg.src, '_blank');
-
     }
-
-
 
     function openForm(subject) {
-
-        const lang = document.getElementById('langSelect').value;
-
-        const t = TXT[lang] || TXT.en;
-
+        const t = TRANSLATIONS[currentLang];
         let displaySubject = subject;
-
-        if(subject === 'CONTACT US') displaySubject = t.c1;
-
-        if(subject === 'DEMO REQUEST') displaySubject = t.c2;
-
-        if(subject === 'SALES CONSULTATION') displaySubject = t.c3;
-
-
-
+        if(subject === 'CONTACT US') displaySubject = t.contact;
+        else if(subject === 'DEMO REQUEST') displaySubject = t.demoRequest;
+        else if(subject === 'SALES CONSULTATION') displaySubject = t.salesConsultation;
         document.getElementById('f-title').innerText = displaySubject;
-
         document.getElementById('email-subject').value = "Website Inquiry: " + subject;
-
         nav('contact');
-
     }
-
-
 
     function updateLang(l) {
-
-        const t = TXT[l] || TXT.en;
-
-        document.getElementById('h-title').innerText = t.h;
-
-        document.getElementById('nav-prod').innerText = t.p + " ▾";
-
-        document.getElementById('ab-title').innerText = t.abT;
-
-        document.getElementById('ab-subtitle').innerText = t.abS;
-
-        document.getElementById('ab-p1').innerText = t.abP1;
-
-        document.getElementById('ab-m-title').innerText = t.abMT;
-
-        document.getElementById('ab-m-p').innerText = t.abMP;
-
-        document.getElementById('ab-g-title').innerText = t.abGT;
-
-        document.getElementById('ab-g-p').innerText = t.abGP;
-
-        document.getElementById('ab-s-title').innerText = t.abST;
-
-        document.getElementById('ab-s-p').innerText = t.abSP;
-
-        document.getElementById('in-name').placeholder = t.fName;
-
-        document.getElementById('in-comp').placeholder = t.fComp;
-
-        document.getElementById('in-email').placeholder = t.fEmail;
-
-        document.getElementById('in-tel').placeholder = t.fTel;
-
-        document.getElementById('in-msg').placeholder = t.fMsg;
-
-        document.getElementById('opt-country').innerText = t.country;
-
-        document.getElementById('btn-submit').innerText = t.submit;
-
-        document.getElementById('st-title').innerText = t.stTitle;
-
-        document.getElementById('st-p').innerText = t.stP;
-
-        document.getElementById('btn-reset').innerText = t.reset;
-
+        currentLang = l;
+        const t = TRANSLATIONS[l];
+        
+        // Update all UI elements
+        document.getElementById('btn-company').innerText = t.company;
+        document.getElementById('menu-about').innerText = t.about;
+        document.getElementById('menu-partners').innerText = t.partners;
+        document.getElementById('btn-home').innerText = t.home;
+        document.getElementById('btn-sales').innerText = t.salesConsultation;
+        document.getElementById('btn-explore').innerText = t.exploreCatalog;
+        document.getElementById('nav-prod').innerText = t.products;
+        document.getElementById('menu-viewall').innerText = t.viewAll;
+        document.getElementById('menu-vehicle').innerText = t.vehicle;
+        document.getElementById('menu-asset').innerText = t.asset;
+        document.getElementById('menu-dashcam').innerText = t.dashcam;
+        document.getElementById('menu-obd').innerText = t.obd;
+        document.getElementById('menu-personal').innerText = t.personal;
+        document.getElementById('menu-tags').innerText = t.tags;
+        document.getElementById('menu-motorcycle').innerText = t.motorcycle;
+        document.getElementById('menu-acc').innerText = t.accessories;
+        document.getElementById('btn-contact').innerText = t.contact;
+        document.getElementById('btn-demo').innerText = t.demoRequest;
+        document.getElementById('btn-platform').innerText = t.platform;
+        
+        document.getElementById('h-title').innerText = t.heroTitle;
+        document.getElementById('hero-subtitle').innerText = t.heroSubtitle;
+        document.getElementById('featured-title').innerText = t.featuredDevices;
+        
+        document.getElementById('ab-title').innerText = t.aboutTitle;
+        document.getElementById('ab-subtitle').innerText = t.aboutSubtitle;
+        document.getElementById('ab-p1').innerText = t.aboutP1;
+        document.getElementById('ab-m-title').innerText = t.missionTitle;
+        document.getElementById('ab-m-p').innerText = t.missionText;
+        document.getElementById('ab-g-title').innerText = t.globalTitle;
+        document.getElementById('ab-g-p').innerText = t.globalText;
+        document.getElementById('ab-s-title').innerText = t.securityTitle;
+        document.getElementById('ab-s-p').innerText = t.securityText;
+        
+        document.getElementById('partners-title').innerText = t.partnersTitle;
+        document.getElementById('partners-desc').innerText = t.partnersDesc;
+        document.getElementById('partners-sync').innerText = t.partnersSync;
+        
+        document.getElementById('btn-back').innerText = t.back;
+        
+        document.getElementById('f-title').innerText = t.contactTitle;
+        document.getElementById('in-name').placeholder = t.fullName;
+        document.getElementById('in-comp').placeholder = t.companyName;
+        document.getElementById('in-email').placeholder = t.businessEmail;
+        document.getElementById('in-tel').placeholder = t.phoneNumber;
+        document.getElementById('opt-country').innerText = t.selectCountry;
+        document.getElementById('in-msg').placeholder = t.howCanWeHelp;
+        document.getElementById('btn-submit').innerText = t.sendInquiry;
+        document.getElementById('st-title').innerText = t.messageSent;
+        document.getElementById('st-p').innerText = t.messageSentText;
+        document.getElementById('btn-reset').innerText = t.sendAnother;
+        
+        document.getElementById('footer-terms').innerText = t.terms;
+        document.getElementById('footer-privacy').innerText = t.privacy;
+        
+        // Update country options
+        const countrySelect = document.getElementById('in-country');
+        if(countrySelect) {
+            countrySelect.options[1].text = t.italy;
+            countrySelect.options[2].text = t.spain;
+            countrySelect.options[3].text = t.france;
+            countrySelect.options[4].text = t.uk;
+            countrySelect.options[5].text = t.usa;
+            countrySelect.options[6].text = t.other;
+        }
+        
+        // Refresh displayed content
         renderCats();
-
+        initFeaturedCarousel();
+        
+        // If in list view, refresh it
+        const listView = document.getElementById('list-view');
+        if(listView && listView.classList.contains('active')) {
+            // Re-render current category
+            const currentCat = document.querySelector('.view.active') === listView ? 'all' : 'all';
+            renderList('all'); // Default to all, or store current category in a variable
+        }
     }
 
-
-
     document.getElementById("contactForm").addEventListener("submit", async function(e) {
-
         e.preventDefault();
-
         const data = new FormData(e.target);
-
         const res = await fetch(e.target.action, { method: "POST", body: data, headers: { 'Accept': 'application/json' } });
-
-        if(res.ok) { document.getElementById("form-content").style.display = "none"; document.getElementById("form-status").style.display = "block"; }
-
+        if(res.ok) { 
+            document.getElementById("form-content").style.display = "none"; 
+            document.getElementById("form-status").style.display = "block"; 
+        }
     });
 
+    function resetForm() { 
+        document.getElementById("form-content").style.display = "block"; 
+        document.getElementById("form-status").style.display = "none"; 
+        document.getElementById("contactForm").reset(); 
+    }
 
-
-    function resetForm() { document.getElementById("form-content").style.display = "block"; document.getElementById("form-status").style.display = "none"; document.getElementById("contactForm").reset(); }
-
-
-
-    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleString(); }, 1000);
-
-    window.onload = () => { updateLang('en'); };
-
+    setInterval(() => { 
+        document.getElementById('clock').innerText = new Date().toLocaleString(); 
+    }, 1000);
+    
+    window.addEventListener('load', () => { 
+        updateLang('en'); 
+        heroInterval = setInterval(rotateHero, 5000);
+        initFeaturedCarousel();
+        const container = document.getElementById('featured-container');
+        if (container) {
+            container.addEventListener('mouseenter', stopFeaturedAutoScroll);
+            container.addEventListener('mouseleave', startFeaturedAutoScroll);
+        }
+    });
 </script>
 
 </body>
-
 </html>
-
-
